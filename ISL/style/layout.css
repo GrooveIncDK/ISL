@@ -1,0 +1,66 @@
+/*======= index.html =======*/
+#page1 article{width:672px;}
+#page1 section{width:651px;}
+#page1 .colum{width:275px; float:left;}
+#page1 aside{ width:280px;}
+#page2 aside section{width:280px;}
+
+/*======= index-1.html =======*/
+#page2 article{width:672px;}
+#page2 section{width:651px;}
+#page2 .colum{width:275px; float:left;}
+#page2 .colum2{width:300px; float:left;}
+#page2 aside{ width:280px;}
+#page2 aside section{width:280px;}
+
+/*======= index-2.html =======*/
+#page3 article{width:672px;}
+#page3 section{width:651px;}
+#page3 .colum{width:275px; float:left;}
+#page3 .sect{width:300px; margin-bottom:40px; overflow:hidden;}
+#page3 .colum2{width:300px; float:left;}
+#page3 aside{ width:280px;}
+#page3 aside section{width:280px;}
+
+/*======= index-3.html =======*/
+#page4 article{width:672px;}
+#page4 section{width:651px;}
+#page4 .colum{width:275px; float:left;}
+#page4 .sect{width:300px; margin-bottom:40px; overflow:hidden;}
+#page4 .colum2{width:300px; float:left;}
+#page4 aside{ width:280px;}
+#page4 aside section{width:280px;}
+
+/*======= index-4.html =======*/
+#page5 article{width:672px;}
+#page5 section{width:651px;}
+#page5 .colum{width:275px; float:left;}
+#page5 .sect{width:300px; margin-bottom:40px; overflow:hidden;}
+#page5 .colum2{width:300px; float:left;}
+#page5 aside{ width:280px;}
+#page5 aside section{width:280px;}
+
+/*======= index-5.html =======*/
+#page6 article{width:672px;}
+#page6 section{width:651px;}
+#page6 .colum{width:275px; float:left;}
+#page6 .sect{width:300px; margin-bottom:40px; overflow:hidden;}
+#page6 .colum2{width:300px; float:left;}
+#page6 aside{ width:280px;}
+#page6 aside section{width:280px;}
+
+/*======= index-6.html =======*/
+#page7 article{width:672px;}
+#page7 section{width:651px;}
+#page7 .colum{width:275px; float:left;}
+#page7 .sect{width:300px; margin-bottom:40px; overflow:hidden;}
+#page7 .colum2{width:300px; float:left;}
+#page7 aside{ width:280px;}
+#page7 aside section{width:280px;}
+
+/*======= index-7.html =======*/
+#page8 article{width:950px;}
+#page8 menu{ width:215px; float:left; padding-left:35px; margin-bottom:0; margin-top:-3px;}
+/*=========================*/
+
+

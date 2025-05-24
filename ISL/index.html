@@ -1,0 +1,47 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ISLearning</title>
+<link rel="shortcut icon" href="images/logo.ico" />
+</head>
+<script type="text/javascript">
+/* <![CDATA[ */
+var curl = location.search.substring(1) ? unescape(location.search.substring(1)) : 'main.html';
+document.writeln('<frameset rows="160,*,80" frameborder="0" border="1" framespacing="0">');
+document.writeln('<frame src="frames/top_nav.html" name="topNav"\/>');
+document.writeln('<frameset cols="120,*,120"frameborder="0" border="1" framespacing="0">');
+document.writeln('<frame src="frames/left_blanc.html" name="left_blanc"\/>');
+document.writeln('<frame src="'+curl+'" name="main" \/>');
+document.writeln('<frame src="frames/right_blanc.html" name="right_blanc"\/>');
+document.writeln('<\/frameset>');
+document.writeln('<frame src="frames/footer.html" name="footer"\/>');
+document.writeln('<noframes>');
+document.writeln('<body>');
+document.writeln('<p>Note that this site requires a browser that supports frames.<\/p>');
+document.writeln('<\/body>');
+document.writeln('<\/noframes>');
+document.writeln('<\/frameset>');
+/* ]]> */
+</script>
+<noscript>
+
+<frameset rows="160,*,80," frameborder="0" border="1" framespacing="0">
+  <frame name="topNav" src="frames/top_nav.html" scrolling="no" noresize>
+  <frameset cols="120,*,120," frameborder="0" border="1" framespacing="0">
+	<frame name="left_blanc" src="frames/left_blanc.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
+	<frame name="main" src="main.html" marginheight="0" marginwidth="0" scrolling="auto" noresize>
+	<frame name="right_blanc" src="frames/right_blanc.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
+</frameset>
+
+  <frame name="footer" src="frames/footer.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
+
+<noframes>
+<p>Your browser doesn't support frames.go to www.ISLearning.org/simple.html</p>
+</noframes>
+
+</frameset>
+</noscript>
+</html>
+                    
