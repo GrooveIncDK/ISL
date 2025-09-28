@@ -1,0 +1,52 @@
+body{
+  height: 100vh;
+  margin: 0;
+}
+.carousel-item{
+	max-height: 550px;
+}
+.carouselExampleDark{
+
+}
+
+.carousel-inner{
+  border-radius: 500px 500px 0 0; /* Rounds the bottom-left and bottom-right corners */
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes spin-prev {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+.carousel-spin .carousel-item {
+    /* Apply the animation to both directions */
+    animation-name: spin-prev;
+    animation-duration: 1s; /* Adjust duration as needed */
+    animation-iteration-count: 1; /* Play once per transition */
+    animation-timing-function: ease-in-out; /* Smooth acceleration and deceleration */
+    animation-fill-mode: forwards; /* Retain the end state */
+}
+
+ /* Optional: Reset the animation for the next item when it enters */
+    .carousel-spin .carousel-item.carousel-item-next,
+    .carousel-spin .carousel-item.carousel-item-prev {
+        animation-name: none; /* Disable animation until it's active */
+    }
+    .carousel-spin .carousel-item-next .carousel-item
+     {
+        transform: rotate(0deg) !important; /* Reset for incoming item */
+        animation-name: spin !important;
+        animation-direction: normal; /* For carousel-item-next */
+    }
+
+    .carousel-spin .carousel-item
+    .carousel-item-prev  {
+        animation-name: spin-prev !important;
+        animation-direction: reverse; /* For carousel-item-prev */
+    }
