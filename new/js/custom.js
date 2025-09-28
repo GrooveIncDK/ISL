@@ -70,17 +70,23 @@ let currentThemeSetting = calculateSettingAsThemeString({ localStorageTheme, sys
 * 3. Update the theme setting and button text accoridng to current settings
 */
 updateButton({ buttonEl: button, isDark: currentThemeSetting === "dark" });
-updateThemeOnHtmlEl({ theme: currentThemeSetting });
+/*updateThemeOnHtmlEl({ theme: currentThemeSetting });
 
 /**
 * 4. Add an event listener to toggle the theme
 */
 button.addEventListener("click", (event) => {
   const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
+  var pageName = button.dataset.pageId;
+  var element = document.body;
+   element.classList.toggle("dark-mode");
 
-  localStorage.setItem("theme", newTheme);
+  /*localStorage.setItem("theme", newTheme);*/
   updateButton({ buttonEl: button, isDark: newTheme === "dark" });
-  updateThemeOnHtmlEl({ theme: newTheme });
+  /*updateThemeOnHtmlEl({ theme: newTheme });*/
 
-  currentThemeSetting = newTheme;
+  /*currentThemeSetting = newTheme;
+  /** var element = document.body;
+   element.classList.toggle("dark-mode");
+    */
 }); 
