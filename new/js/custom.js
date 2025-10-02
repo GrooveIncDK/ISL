@@ -26,67 +26,45 @@ function calculateSettingAsThemeString({ localStorageTheme, systemSettingDark })
     return localStorageTheme;
   }
 
-  if (systemSettingDark.matches) {
-    return "dark";
+  if (systemSettingDark.matches("dark-theme")) {
+    return "dark-theme";
   }
 
-  return "light";
+  return "light-theme";
 }
 
 /**
-* Utility function to update the button text and aria-label.
+* Utility function to update the theme to either light or dark.
 */
 function updateButton({ buttonEl, isDark }) {
-  const newCta = isDark ? "images/sun.png" : "images/moon-2.png";
+  const newCta = isDark  ? "images/moon-2.png" : "images/sun.png";
   buttonEl.setAttribute("src", newCta);
   
 }
 
-/**
-* Utility function to update the theme setting on the html tag
-*/
-function updateThemeOnHtmlEl({ theme }) {
-  document.querySelector("html").setAttribute("data-theme", theme);
-}
-
-
-/**
-* On page load:
-*/
-
-/**
-* 1. Grab what we need from the DOM and system settings on page load
-*/
+localStorage.setItem("theme","dark-theme");
 const button = document.querySelector(".theme-picker");
 const localStorageTheme = localStorage.getItem("theme");
-const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark)");
+//const localStorageThemeIcon = localStorage.getItem("theme-icon");
+const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark-theme)");
 
 /**
 * 2. Work out the current site settings
 */
-let currentThemeSetting = calculateSettingAsThemeString({ localStorageTheme, systemSettingDark });
 
+let currentThemeSetting = calculateSettingAsThemeString({ localStorageTheme, systemSettingDark });
 /**
 * 3. Update the theme setting and button text accoridng to current settings
 */
-updateButton({ buttonEl: button, isDark: currentThemeSetting === "dark" });
-/*updateThemeOnHtmlEl({ theme: currentThemeSetting });
-
-/**
-* 4. Add an event listener to toggle the theme
-*/
+console.log(currentThemeSetting);
+updateButton({ buttonEl: button, isDark: currentThemeSetting === "dark-theme" });
 button.addEventListener("click", (event) => {
-  const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
-  var pageName = button.dataset.pageId;
-  var element = document.body;
-   element.classList.toggle("dark-mode");
-
-  /*localStorage.setItem("theme", newTheme);*/
-  updateButton({ buttonEl: button, isDark: newTheme === "dark" });
-  /*updateThemeOnHtmlEl({ theme: newTheme });*/
-
-  /*currentThemeSetting = newTheme;
-  /** var element = document.body;
-   element.classList.toggle("dark-mode");
-    */
+  const newTheme = currentThemeSetting === "dark-theme" ? "light-theme" : "dark-theme";
+  var html = document.getElementsByTagName('html');
+    html[0].classList.remove(currentThemeSetting);
+    html[0].classList.add(newTheme);
+ /*localStorage.setItem("theme", newTheme);*/
+  updateButton({ buttonEl: button, isDark: newTheme === "dark-theme" });
+  currentThemeSetting = newTheme;
+  
 }); 

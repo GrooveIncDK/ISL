@@ -13,6 +13,17 @@
   font-style: normal;
 }
 
+:root {
+	--c-bg: #0C354C;
+  --c-font-color: #C0BFBF;
+  --c-font-color-visit: #38D7EA;
+
+	&.light-theme {
+	--c-bg: #B9CDD0;
+  --c-font-color: #383838;
+  --c-font-color-visit: #38D7EA;
+	}
+}
 
 body{
   
@@ -23,25 +34,30 @@ body{
   overflow-x: hidden;
 }
 .home-page {
-  background-color: #0C354C;
-  color: #C0BFBF;
+  background-color: var(--c-bg);
+  color: var(--c-font-color);
   overflow-y: hidden;
   
 }
-.dark-mode {
-  background-color: #B9CDD0;
-  color: #C0BFBF;
-}
+
 /*body {
   color: light-dark(#383838, #B9CDD0);
   background-color: light-dark(#C0BFBF, #0C354C);
-}*/
+}*/  
 
+.nav-item-style-home{
+	
+	color:var(--c-font-color);
+  
+} 
 
+.nav-item-style-home:hover, .active-home {
+	color: var(--c-font-color-visit);
+}
 
 
 .text-color-blue{
-  color: #38D7EA;
+  color: var(--c-font-color-visit);
 }
 .text-color-grey{
   color: #C0BFBF;
@@ -68,15 +84,7 @@ body{
 .nav-item-style-teaching:hover, .active-teaching {
 	color: #38D7EA;
 }
-.nav-item-style-home{
-	
-	color:#C0BFBF;
-  
-} 
 
-.nav-item-style-home:hover, .active-home {
-	color: #38D7EA;
-}
 .navbar-teaching{
 	border-bottom: #C0BFBF solid 2px ;
 	background-color:#0C354C ;
@@ -94,9 +102,7 @@ body{
   /*transition: background-image 0.5s ease-in-out; /* Smooth transition */
 }
 
-/*.image-container:hover {
-  background-image: url('../images/moon-2.png'); /* Your image on hover 
-}*/
+
 .carousel-item{
 	max-height: 550px;
 }
