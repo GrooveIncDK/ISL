@@ -101,7 +101,14 @@ body{
   background-position: center; /* Centers the background image */
   /*transition: background-image 0.5s ease-in-out; /* Smooth transition */
 }
-
+.navbar-toggle-icon{
+  width: 30px; /* Adjust as needed */
+  height: 30px; /* Adjust as needed */
+  background-image: url('../images/menu-1.png');
+  background-size: cover; /* Ensures the image covers the container */
+  background-position: center;
+  display: inline-block;
+}
 
 .carousel-item{
 	max-height: 550px;
@@ -210,6 +217,26 @@ body{
 	height: 100vh;
 	color: white;
 }
+.m-home-section{
+	height: 100vh;
+	color: white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: inline-block;
+}
+.home-sec-2{
+  background-image: url('../images/home-img1.jpg');
+}
+.home-sec-3{
+  background-image: url('../images/m-home-sec-3.jpg');
+}
+.home-sec-4{
+  background-image: url('../images/m-home-sec-4.jpg');
+}
+.home-sec-5{
+  background-image: url('../images/m-home-sec-4.jpg');
+}
 .grey-section{
 	background-color: #383838;
 }
@@ -286,6 +313,32 @@ body{
   position: relative;
   
 }
+@media (max-width: 767px) { 
+    .small-screen{
+      display: block;
+      overflow:scroll;
+      width: 98%;
+      height: 90vh
+    }
+    .big-screen{
+      display: none;
+    }
+    
+}
 
+@media (min-width: 768px)  { 
+  .small-screen{
+    display: none;
+  }
+  .big-screen{
+    display: block;
+  }
+  body{
+  /*height: 100vh;
+  width: 100%;
+  margin: 0;*/
+  overflow-x:hidden;
+}
+ }
 
 
