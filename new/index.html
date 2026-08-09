@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISL — The Institute of Spiritual Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+    /* ====================================================================
+       BRAND PALETTE — sampled directly from ISLlogo.gif and the current
+       site screenshot. Everything below is driven from these variables.
+       ==================================================================== */
+    :root {
+        --white:      #ffffff;
+        --ink:        #262626;   /* body copy — matches the wordmark grey */
+        --ink-soft:   #6b6b6b;   /* secondary copy */
+        --teal:       #2aa9d0;  /* the deeper brand blue — links, headings, primary UI */
+        --cyan:       #3ed6ec;  /* the bright ring cyan — accents, underlines, hovers */
+        --gold:       #f0b106;  /* the site's own CTA gold — reserved for one action at a time */
+        --ink-dot:    #111111;  /* the logo's two black dots */
+        --line:       #e7e7e7;  /* neutral hairline, matches the screenshot's greys */
+        --paper:      #f5f6f7;  /* the screenshot's panel grey */
+        --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        margin: 0;
+        background: var(--white);
+        color: var(--ink);
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { color: inherit; }
+
+    .wrap {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+
+    .eyebrow {
+        font-family: "Inter", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin: 0 0 14px;
+        display: block;
+    }
+
+    .latin {
+        font-family: "Poppins", sans-serif;
+        font-style: italic;
+    }
+
+    h1, h2, h3 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        margin: 0;
+        color: var(--ink);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 3px;
+    }
+
+    /* =========================== Utility bar =========================== */
+    .utility-bar {
+        background: var(--teal);
+        color: rgba(255,255,255,0.82);
+        font-size: 0.8rem;
+    }
+
+    .utility-bar .wrap {
+        display: flex;
+        justify-content: flex-end;
+        gap: 28px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .utility-bar a { text-decoration: none; }
+    .utility-bar a:hover { color: #fff; }
+
+    /* ============================== Nav ================================ */
+    header.site-nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--white);
+        border-bottom: 1px solid var(--line);
+    }
+
+    .nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+    }
+
+    .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--ink);
+    }
+
+    .wordmark img { height: 30px; width: auto; }
+
+    .wordmark .tagline {
+        font-family: "Poppins", sans-serif;
+        font-size: 0.62rem;
+        font-weight: 600;
+        line-height: 1.35;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+    }
+
+    .wordmark .tagline .l1 { color: #9a9a9a; display: block; }
+    .wordmark .tagline .l2 { color: var(--teal); display: block; }
+
+    nav.primary-links {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    nav.primary-links > .nav-item {
+        position: relative;
+    }
+
+    nav.primary-links > .nav-item > a,
+    nav.primary-links > .nav-item > button {
+        font-family: "Inter", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    nav.primary-links > .nav-item > a:hover,
+    nav.primary-links > .nav-item > button:hover,
+    nav.primary-links > .nav-item.open > button {
+        color: var(--teal);
+    }
+
+    .caret { font-size: 0.65em; transition: transform 0.15s ease; }
+    .nav-item.open .caret { transform: rotate(180deg); }
+
+    .nav-cta {
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        background: var(--teal);
+        color: #fff !important;
+        padding: 11px 22px !important;
+        border-radius: 6px;
+    }
+
+    .nav-cta:hover { background: #1f88a8; color: #fff !important; }
+
+    /* ---- Layered dropdown panel: unfolds as a flush strip, not a floating box ---- */
+    .nav-panel {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        width: 100vw;
+        max-width: 100vw;
+        background: var(--paper);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 16px 30px -20px rgba(28,26,31,0.18);
+    }
+
+    .nav-item.open .nav-panel { display: block; }
+
+    .nav-panel-inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 34px 32px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 8px 40px;
+    }
+
+    .nav-panel-inner a {
+        display: block;
+        text-decoration: none;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+        font-size: 0.95rem;
+    }
+
+    .nav-panel-inner a:hover { color: var(--teal); }
+
+    .menu-toggle { display: none; }
+
+    @media (max-width: 900px) {
+        nav.primary-links { display: none; }
+        .menu-toggle {
+            display: inline-flex;
+            background: none;
+            border: 1px solid var(--line);
+            padding: 8px 14px;
+            font-family: "Inter", sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .utility-bar .wrap { justify-content: center; }
+    }
+
+    /* ============================== Hero =============================== */
+    .hero {
+        padding: 88px 0 96px;
+    }
+
+    .hero .wrap {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 64px;
+        align-items: center;
+    }
+
+    .hero-motto {
+        font-family: "Poppins", sans-serif;
+        font-style: italic;
+        font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+        line-height: 1.15;
+        color: var(--ink);
+        margin: 0 0 6px;
+    }
+
+    .hero-gloss {
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin-bottom: 30px;
+    }
+
+    .hero-tagline {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 18px;
+    }
+
+    .hero p.lead {
+        font-size: 1.12rem;
+        color: var(--ink-soft);
+        max-width: 46ch;
+        margin: 0 0 32px;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn {
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 0.92rem;
+        text-decoration: none;
+        padding: 14px 26px;
+        display: inline-block;
+        border-radius: 6px;
+        border: 1px solid transparent;
+    }
+
+    .btn-primary { background: var(--teal); color: #fff; }
+    .btn-primary:hover { background: #1f88a8; }
+
+    .btn-ghost { border-color: var(--ink); color: var(--ink); }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+    .hero-figure {
+        position: relative;
+        border-radius: 14px;
+        aspect-ratio: 4/5;
+        overflow: hidden;
+        background: var(--paper);
+    }
+
+    .hero-figure img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* the logo's ring, echoed as a quiet background signature */
+    .hero-figure::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        border: 22px solid var(--cyan);
+        opacity: 0.35;
+        z-index: 1;
+    }
+
+    /* ========================== Section shells ========================= */
+    section { padding: 84px 0; }
+    section.on-paper { background: var(--paper); }
+    .section-head {
+        max-width: 640px;
+        margin-bottom: 48px;
+    }
+    .section-head h2 {
+        font-size: clamp(1.7rem, 3vw, 2.3rem);
+    }
+    .rule {
+        border: none;
+        border-top: 1px solid var(--line);
+        margin: 0;
+    }
+
+    /* ============================= About ================================ */
+    .about-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 60px;
+        align-items: start;
+    }
+    .about-grid img {
+        border: 1px solid var(--line);
+    }
+    .about-grid p { color: var(--ink-soft); font-size: 1.05rem; margin: 0 0 20px; }
+    .about-grid a.more {
+        font-weight: 600;
+        color: var(--teal);
+        text-decoration: none;
+        border-bottom: 1px solid var(--teal);
+    }
+
+    /* ==================== Principles & Standards plaques ================ */
+    .plaques {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .plaque {
+        background: var(--white);
+        padding: 44px 48px;
+    }
+
+    .plaque .eyebrow { color: var(--teal); }
+
+    .principle {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 14px;
+        margin-bottom: 26px;
+    }
+    .principle:last-child { margin-bottom: 0; }
+    .principle .num {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--teal);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+    .principle .latin-line {
+        font-family: "Poppins", sans-serif;
+        font-style: italic;
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+    }
+    .principle p { margin: 0; color: var(--ink-soft); font-size: 0.98rem; }
+
+    .standards-list { list-style: none; margin: 0; padding: 0; }
+    .standards-list li {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 1.02rem;
+    }
+    .standards-list li:last-child { border-bottom: none; }
+    .standards-list .latin { color: var(--teal); }
+
+    @media (max-width: 800px) {
+        .plaques { grid-template-columns: 1fr; }
+        .about-grid, .hero .wrap { grid-template-columns: 1fr; }
+    }
+
+    /* ============================== Courses ============================= */
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .course-card {
+        background: var(--white);
+        padding: 32px 30px;
+        text-decoration: none;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        min-height: 190px;
+    }
+
+    .course-card:hover { background: var(--paper); }
+
+    .course-card h3 {
+        font-size: 1.18rem;
+        margin-bottom: 12px;
+    }
+
+    .course-card p {
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+        margin: 0;
+        flex-grow: 1;
+    }
+
+    .course-card .go {
+        margin-top: 18px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--gold);
+    }
+
+    /* ============================== Programs ============================= */
+    .programs-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .programs-row a {
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: var(--white);
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        color: var(--ink);
+    }
+    .programs-row a:hover { border-color: var(--teal); color: var(--teal); background: #eef8fb; }
+
+    /* ================================ FAQ ================================ */
+    .faq-list { max-width: 760px; }
+    .faq-list details {
+        border-bottom: 1px solid var(--line);
+        padding: 20px 0;
+    }
+    .faq-list summary {
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.15rem;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary .plus {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        color: var(--gold);
+        font-size: 1.4rem;
+        transition: transform 0.15s ease;
+    }
+    .faq-list details[open] summary .plus { transform: rotate(45deg); }
+    .faq-list .faq-body {
+        color: var(--ink-soft);
+        margin-top: 12px;
+        font-size: 0.98rem;
+        max-width: 60ch;
+    }
+    .faq-list .faq-body a { color: var(--teal); }
+
+    /* ============================== Contact band ========================== */
+    .contact-band {
+        background: var(--teal);
+        color: rgba(255,255,255,0.88);
+    }
+    .contact-band h2 { color: #fff; }
+    .contact-band .section-head p { color: rgba(255,255,255,0.72); }
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .contact-grid .eyebrow { color: var(--gold); }
+    .contact-grid a { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.35); }
+    .contact-grid a:hover { border-color: #fff; }
+    .contact-grid p { margin: 4px 0; color: rgba(255,255,255,0.82); font-size: 0.98rem; }
+
+    /* ================================ Footer ============================== */
+    footer.site-footer {
+        padding: 40px 0;
+        border-top: 1px solid var(--line);
+    }
+    .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+    }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a { text-decoration: none; color: var(--ink-soft); }
+    .footer-links a:hover { color: var(--teal); }
+
+</style>
+</head>
+<body>
+
+    <div class="utility-bar">
+        <div class="wrap">
+            <a href="tel:+4520434974">+45 2043 4974</a>
+            <a href="mailto:admin@ISLearning.org">admin@ISLearning.org</a>
+        </div>
+    </div>
+
+    <header class="site-nav">
+        <div class="wrap nav-row">
+            <a class="wordmark" href="#home">
+                <img src="images/ISLlogo.gif" alt="ISL">
+                <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
+            </a>
+
+            <nav class="primary-links" id="primaryNav">
+                <div class="nav-item"><a href="#home">Home</a></div>
+                <div class="nav-item"><a href="#about">About</a></div>
+
+                <div class="nav-item" data-panel="courses">
+                    <button type="button" aria-expanded="false">Courses <span class="caret">▾</span></button>
+                    <div class="nav-panel">
+                        <div class="nav-panel-inner">
+                            <a href="/courses/courses0.html">Introduction to Spirituality</a>
+                            <a href="/courses/courses1.html">The Science of Happiness</a>
+                            <a href="/courses/courses2.html">The Law of Attraction</a>
+                            <a href="/courses/courses3.html">A Course in Miracles</a>
+                            <a href="/courses/courses4.html">Business Leadership</a>
+                            <a href="/courses/courses5.html">Confronting Life Choices</a>
+                            <a href="/courses/courses6.html">Building Self-Esteem</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item" data-panel="programs">
+                    <button type="button" aria-expanded="false">Programs <span class="caret">▾</span></button>
+                    <div class="nav-panel">
+                        <div class="nav-panel-inner">
+                            <a href="/courses/programs1.html">The Magical 'I AM' Presence</a>
+                            <a href="/courses/programs2.html">Shamanism or Christianity</a>
+                            <a href="/courses/programs3.html">Symbols and Their Meanings</a>
+                            <a href="/courses/programs4.html">Spiritual Psychology</a>
+                            <a href="/courses/programs5.html">Mystical Books</a>
+                            <a href="/courses/programs6.html">Historical Texts and Their Interpretation</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-item"><a href="#faq">FAQ</a></div>
+                <div class="nav-item"><a class="nav-cta" href="#contact">Contact Us</a></div>
+            </nav>
+
+            <button class="menu-toggle" id="mobileToggle" aria-expanded="false">Menu ☰</button>
+        </div>
+    </header>
+
+    <!-- ============================== HERO ============================== -->
+    <section class="hero" id="home">
+        <div class="wrap">
+            <div>
+                <div class="hero-tagline">Decide &middot; Commit &middot; Succeed</div>
+                <h1 class="hero-motto">&ldquo;Vetitum Discepto Est.&rdquo;</h1>
+                <div class="hero-gloss">No compromise. Think for yourself.</div>
+                <p class="lead">
+                    This is your chance to become everything you want to be. ISL has
+                    spent decades organising four thousand years of accumulated
+                    knowledge into courses any person can actually use.
+                </p>
+                <div class="hero-ctas">
+                    <a class="btn btn-primary" href="#courses">Find your course</a>
+                    <a class="btn btn-ghost" href="#about">Read our story</a>
+                </div>
+            </div>
+            <div class="hero-figure">
+                <img src="images/about-img1.jpg" alt="">
+            </div>
+        </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- ============================== ABOUT ============================== -->
+    <section id="about">
+        <div class="wrap about-grid">
+            <img src="images/about.jpg" alt="">
+            <div>
+                <span class="eyebrow">About ISL</span>
+                <h2>A modern institute, an old body of knowledge.</h2>
+                <p style="margin-top:22px;">
+                    ISL is a modern institute set up to accommodate the need for a
+                    better understanding in matters pertaining to the spiritual self.
+                    The objective of every human being on this small planet is to
+                    better understand themselves.
+                </p>
+                <p>
+                    We have accumulated, over the past four thousand years, a
+                    complete, unabridged version of the knowledge of life. ISL has
+                    begun the task of organising this information into clearly
+                    understandable sections of human reasoning.
+                </p>
+                <a class="more" href="/paragraph/about-read-pp1.html">Continue reading</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PRINCIPLES & STANDARDS ======================= -->
+    <section class="on-paper">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="eyebrow">What We Stand On</span>
+                <h2>Our principles and our standards.</h2>
+            </div>
+
+            <div class="plaques">
+                <div class="plaque">
+                    <span class="eyebrow">Our Principles</span>
+
+                    <div class="principle">
+                        <span class="num">1</span>
+                        <div>
+                            <div class="latin-line">&ldquo;Vetitum Discepto Est!&rdquo;</div>
+                            <p>
+                                &lsquo;No compromise.&rsquo; Or more plainly put,
+                                &lsquo;think for yourself.&rsquo; It is all too often
+                                the case that your own feelings or will are put
+                                second. No more.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="principle">
+                        <span class="num">2</span>
+                        <div>
+                            <div class="latin-line" style="font-style:normal;">Truth, faith and belief</div>
+                            <p>
+                                Our principles are our guide, both in what we do and
+                                who we are. Truth is self-honesty, faith is
+                                self-belief, and belief is letting go.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plaque">
+                    <span class="eyebrow">Our Standards</span>
+                    <ul class="standards-list">
+                        <li>Excellence</li>
+                        <li>Achievement above cost</li>
+                        <li>Knowledge &amp; understanding</li>
+                        <li><span class="latin">&lsquo;Nosce te Ipsum&rsquo;</span> — Know thyself</li>
+                        <li>Accept nothing but the truth</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== COURSES ============================= -->
+    <section id="courses">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="eyebrow">Spiritual Courses</span>
+                <h2>Seven ways to begin.</h2>
+            </div>
+
+            <div class="course-grid">
+                <a class="course-card" href="/courses/courses0.html">
+                    <h3>Introduction to Spirituality</h3>
+                    <p>A starting point for anyone new to the work — the ideas the rest of ISL is built on.</p>
+                    <span class="go">Start here →</span>
+                </a>
+                <a class="course-card" href="/courses/courses1.html">
+                    <h3>The Science of Happiness</h3>
+                    <p>A state of inner peace built through self-discovery and self-understanding, not achieved in a few short weeks.</p>
+                    <span class="go">View course →</span>
+                </a>
+                <a class="course-card" href="/courses/courses2.html">
+                    <h3>The Law of Attraction</h3>
+                    <p>The basic ideas of personal creativity, and why you really are the creator of your own life.</p>
+                    <span class="go">View course →</span>
+                </a>
+                <a class="course-card" href="/courses/courses3.html">
+                    <h3>A Course in Miracles</h3>
+                    <p>Working directly with one of the foundational texts of modern spiritual study.</p>
+                    <span class="go">View course →</span>
+                </a>
+                <a class="course-card" href="/courses/courses4.html">
+                    <h3>Business Leadership</h3>
+                    <p>The same principles applied to success in your career, not just your personal life.</p>
+                    <span class="go">View course →</span>
+                </a>
+                <a class="course-card" href="/courses/courses5.html">
+                    <h3>Confronting Life Choices</h3>
+                    <p>If you blame, you lose. If you question, you lose. If you fight, you lose. Learn to work with your own path instead.</p>
+                    <span class="go">View course →</span>
+                </a>
+                <a class="course-card" href="/courses/courses6.html">
+                    <h3>Building Self-Esteem</h3>
+                    <p>Confidence and respect can be gained and lost. No one can take away who you are.</p>
+                    <span class="go">View course →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== PROGRAMS ============================= -->
+    <section class="on-paper">
+        <div class="wrap">
+            <div class="section-head" style="margin-bottom:28px;">
+                <span class="eyebrow">Popular Programs</span>
+                <h2>For deeper, self-directed study.</h2>
+            </div>
+            <div class="programs-row">
+                <a href="/courses/programs1.html">The Magical 'I AM' Presence</a>
+                <a href="/courses/programs2.html">Shamanism or Christianity</a>
+                <a href="/courses/programs3.html">Symbols and Their Meanings</a>
+                <a href="/courses/programs4.html">Spiritual Psychology</a>
+                <a href="/courses/programs5.html">Mystical Books</a>
+                <a href="/courses/programs6.html">Historical Texts and Their Interpretation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================ FAQ ================================ -->
+    <section id="faq">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="eyebrow">Before You Start</span>
+                <h2>Frequently asked questions.</h2>
+            </div>
+
+            <div class="faq-list">
+                <details>
+                    <summary>Where do I start? <span class="plus">+</span></summary>
+                    <div class="faq-body">
+                        Read through the site and get a feel for what you're looking
+                        for, then either order the course that sounds right or
+                        contact the institute to arrange a free, no-obligation
+                        conversation about your own needs.
+                        <a href="/FAQ/wheredo.html">Read the full answer →</a>
+                    </div>
+                </details>
+                <details>
+                    <summary>What will I do? <span class="plus">+</span></summary>
+                    <div class="faq-body">
+                        <a href="/FAQ/whatwill.html">Read the full answer →</a>
+                    </div>
+                </details>
+                <details>
+                    <summary>How long will it take? <span class="plus">+</span></summary>
+                    <div class="faq-body">
+                        <a href="/FAQ/howlong.html">Read the full answer →</a>
+                    </div>
+                </details>
+                <details>
+                    <summary>How much will it cost? <span class="plus">+</span></summary>
+                    <div class="faq-body">
+                        <a href="/FAQ/howmuch.html">Read the full answer →</a>
+                    </div>
+                </details>
+                <details>
+                    <summary>Is there any guarantee? <span class="plus">+</span></summary>
+                    <div class="faq-body">
+                        <a href="/FAQ/isthere.html">Read the full answer →</a>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================== CONTACT ============================== -->
+    <section class="contact-band" id="contact">
+        <div class="wrap">
+            <div class="section-head">
+                <span class="eyebrow">Get In Touch</span>
+                <h2>This is free, and without obligation.</h2>
+            </div>
+
+            <div class="contact-grid">
+                <div>
+                    <span class="eyebrow">Primary Contact</span>
+                    <p>Fynshovedvej 584<br>DK-5390, M&aring;rtofte</p>
+                    <p>CVR-nr. 3115 5327</p>
+                    <p><a href="tel:+4520434974">+45 2043 4974</a></p>
+                    <p><a href="mailto:admin@ISLearning.org">admin@ISLearning.org</a></p>
+                </div>
+                <div>
+                    <span class="eyebrow">Marketing &amp; PR</span>
+                    <p>Administration: Louise Williamson</p>
+                    <p><a href="tel:+4565341500">+45 6534 1500</a></p>
+                    <p><a href="mailto:louise@ISLearning.org">louise@ISLearning.org</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="wrap footer-row">
+            <div>&copy; ISL — The Institute of Spiritual Learning</div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#courses">Courses</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Layered dropdown panels — click to open, click outside / Escape to close.
+        document.querySelectorAll('.nav-item[data-panel]').forEach(function (item) {
+            var btn = item.querySelector('button');
+            btn.addEventListener('click', function () {
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+                if (!isOpen) {
+                    item.classList.add('open');
+                    btn.setAttribute('aria-expanded', 'true');
+                } else {
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.nav-item[data-panel]')) {
+                document.querySelectorAll('.nav-item.open').forEach(function (o) {
+                    o.classList.remove('open');
+                    o.querySelector('button').setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+            }
+        });
+
+        // Mobile menu toggle — reuses the same nav, stacked as a layer beneath the bar.
+        var mobileToggle = document.getElementById('mobileToggle');
+        var primaryNav = document.getElementById('primaryNav');
+        mobileToggle.addEventListener('click', function () {
+            var open = primaryNav.style.display === 'flex';
+            primaryNav.style.display = open ? 'none' : 'flex';
+            primaryNav.style.flexDirection = 'column';
+            primaryNav.style.position = 'absolute';
+            primaryNav.style.top = '100%';
+            primaryNav.style.left = '0';
+            primaryNav.style.right = '0';
+            primaryNav.style.background = '#fff';
+            primaryNav.style.borderTop = '1px solid var(--line)';
+            primaryNav.style.borderBottom = '1px solid var(--line)';
+            mobileToggle.setAttribute('aria-expanded', String(!open));
+        });
+    </script>
+
+</body>
+</html>
