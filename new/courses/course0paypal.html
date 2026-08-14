@@ -1,0 +1,977 @@
+<!doctype html>
+<!--
+================================================================================
+  DEVELOPER NOTES — read before deploying
+
+  This page includes a PayPal SANDBOX checkout (client-id=sb) and a
+  client-side-only enquiry form. Neither is production-ready as-is:
+
+  PAYPAL — GOING LIVE:
+    1. Sign up at https://developer.paypal.com and create an App to get a
+       real client-id.
+    2. Find loadPayPalSDK('sb', 'EUR') near the bottom of the script and
+       replace 'sb' with your real client-id.
+    3. Remove the sandbox banner in the "Reserve your place" card.
+    4. NEVER trust the client-side fee value in production — create and
+       capture the PayPal order server-side instead. See the inline
+       comments around createOrder() / onApprove() for the endpoints
+       you'll need: POST /api/orders and POST /api/orders/:id/capture.
+
+  ENQUIRY FORM:
+    Currently just shows a success message locally — nothing is actually
+    sent anywhere. See the TODO near the form's submit handler for the
+    POST /api/enquiry call you'd wire up to actually receive enquiries.
+
+  CURRENCY:
+    Set to EUR as a reasonable default for a Denmark-based site — change
+    the currency-sym, #course-fee value, and loadPayPalSDK(...) currency
+    argument together if you'd rather use DKK or another currency.
+================================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Spirituality — ISL Courses</title>
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+    /* =========================================================
+       TOKENS — same palette/type as the rest of the ISL site
+    ========================================================= */
+    :root {
+      --clr-primary:       #2aa9d0;
+      --clr-primary-dark:  #1f88a8;
+      --clr-primary-light: #eef8fb;
+      --clr-accent:        #3ed6ec;
+      --clr-gold:          #f0b106;
+      --clr-gold-light:    #fff6e0;
+      --clr-bg:            #f5f6f7;
+      --clr-surface:       #ffffff;
+      --clr-border:        #e7e7e7;
+      --clr-text:          #262626;
+      --clr-text-muted:    #6b6b6b;
+      --clr-text-light:    #9a9a9a;
+      --clr-success:       #1f9d6b;
+      --clr-error:         #c0392b;
+
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   14px;
+      --radius-pill: 999px;
+
+      --shadow-xs:  0 1px 3px rgba(0,0,0,.06);
+      --shadow-sm:  0 2px 10px rgba(0,0,0,.07);
+      --shadow-md:  0 8px 26px rgba(0,0,0,.09);
+
+      --header-h: 60px;
+      --sidebar-w: 340px;
+      --max: 1180px;
+      --transition: .2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.2;
+      color: var(--clr-text);
+      font-weight: 600;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; }
+    ul, ol { list-style: none; }
+
+    :focus-visible { outline: 2px solid var(--clr-primary); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+    /* =========================================================
+       UTILITY BAR + NAV (matches index.html / courses.html)
+    ========================================================= */
+    .utility-bar { background: var(--clr-primary); color: rgba(255,255,255,0.82); font-size: 0.8rem; }
+    .utility-bar .wrap { display: flex; justify-content: flex-end; gap: 28px; padding-top: 8px; padding-bottom: 8px; }
+    .utility-bar a { text-decoration: none; }
+    .utility-bar a:hover { color: #fff; }
+
+    header.site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+      box-shadow: var(--shadow-xs);
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; gap: 20px; }
+
+    .wordmark { display: flex; align-items: center; gap: 12px; }
+    .wordmark img { height: 30px; width: auto; }
+    .wordmark .tagline { font-family: "Poppins", sans-serif; font-size: 0.62rem; font-weight: 600; line-height: 1.35; letter-spacing: 0.03em; text-transform: uppercase; }
+    .wordmark .tagline .l1 { color: #9a9a9a; display: block; }
+    .wordmark .tagline .l2 { color: var(--clr-primary); display: block; }
+
+    .primary-nav { display: flex; align-items: center; gap: 2px; }
+    .primary-nav a {
+      padding: 8px 15px;
+      border-radius: var(--radius-pill);
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--clr-text);
+      transition: color var(--transition), background var(--transition);
+    }
+    .primary-nav a:hover { color: var(--clr-primary); background: var(--clr-primary-light); }
+    .primary-nav a.active { color: var(--clr-primary); background: var(--clr-primary-light); font-weight: 600; }
+    .primary-nav a.nav-cta { background: var(--clr-primary); color: #fff; }
+    .primary-nav a.nav-cta:hover { background: var(--clr-primary-dark); color: #fff; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+      width: 40px; height: 40px;
+      background: none; border: 1px solid var(--clr-border); border-radius: var(--radius-sm);
+    }
+    .hamburger span { display: block; width: 18px; height: 2px; background: var(--clr-text); border-radius: 2px; transition: transform var(--transition), opacity var(--transition); }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: var(--header-h); left: 0; right: 0;
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+      box-shadow: var(--shadow-md);
+      z-index: 99; padding: 16px 24px 24px;
+      flex-direction: column; gap: 4px;
+      animation: slideDown .2s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 12px 16px; border-radius: var(--radius-md); font-weight: 500; color: var(--clr-text-muted); }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--clr-primary); background: var(--clr-primary-light); }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) {
+      .primary-nav { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* =========================================================
+       BREADCRUMB
+    ========================================================= */
+    .breadcrumb-bar { background: var(--clr-surface); border-bottom: 1px solid var(--clr-border); padding: 12px 0; }
+    .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: .83rem; color: var(--clr-text-muted); flex-wrap: wrap; }
+    .breadcrumb a:hover { color: var(--clr-primary); text-decoration: underline; }
+    .breadcrumb .sep { color: var(--clr-text-light); font-size: .7rem; }
+    .breadcrumb .current { color: var(--clr-text); font-weight: 500; }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    .hero {
+      background: linear-gradient(135deg, var(--clr-primary) 0%, #2bb9d9 55%, var(--clr-accent) 100%);
+      padding: 52px 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 70% at 92% 15%, rgba(255,255,255,.22) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 8% 95%, rgba(0,0,0,.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .course-chip {
+      display: inline-block;
+      background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.4);
+      color: #fff;
+      font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); color: #fff; max-width: 700px; margin-bottom: 12px; font-weight: 700; }
+    .hero-tagline { font-size: 1.02rem; color: rgba(255,255,255,.92); max-width: 560px; margin-bottom: 28px; line-height: 1.6; }
+    .meta-strip { display: flex; flex-wrap: wrap; gap: 10px; }
+    .meta-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
+      color: #fff; padding: 8px 16px; border-radius: var(--radius-pill);
+      font-size: .85rem; font-weight: 500;
+    }
+    .meta-pill svg { opacity: .9; flex-shrink: 0; }
+    .meta-pill strong { font-weight: 700; }
+
+    /* =========================================================
+       TWO-COLUMN BODY
+    ========================================================= */
+    .page-body { padding: 44px 0 72px; }
+    .two-col { display: flex; align-items: flex-start; gap: 32px; }
+    .main-col { flex: 1; min-width: 0; }
+    .sidebar-col {
+      width: var(--sidebar-w); flex-shrink: 0;
+      position: sticky; top: calc(var(--header-h) + 24px);
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .section {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 30px 34px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-xs);
+    }
+    .section-title {
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 18px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--clr-primary-light);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title-icon {
+      width: 28px; height: 28px; background: var(--clr-primary-light); border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .section-title-icon svg { width: 16px; height: 16px; color: var(--clr-primary); }
+
+    .placeholder {
+      border: 1px dashed #b9dbe6;
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      background: var(--clr-primary-light);
+      color: var(--clr-text-muted);
+      font-style: italic;
+      font-size: .95rem;
+      line-height: 1.7;
+    }
+    .placeholder + .placeholder { margin-top: 12px; }
+
+    /* Explore list */
+    .explore-list { display: flex; flex-direction: column; gap: 12px; }
+    .explore-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px; background: var(--clr-bg);
+      border-radius: var(--radius-md); border: 1px solid var(--clr-border);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .explore-item:hover { border-color: var(--clr-accent); transform: translateX(3px); }
+    .explore-glyph {
+      width: 34px; height: 34px; background: var(--clr-primary-light); border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--clr-primary);
+    }
+    .explore-glyph svg { width: 18px; height: 18px; }
+    .explore-item-body strong { font-size: .9rem; font-weight: 600; display: block; margin-bottom: 3px; }
+    .explore-item-body span { font-size: .84rem; color: var(--clr-text-muted); font-style: italic; }
+
+    /* Who it's for */
+    .who-intro { color: var(--clr-text-muted); font-size: .95rem; margin-bottom: 20px; }
+    .audience-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .audience-card {
+      background: var(--clr-bg); border: 1px solid var(--clr-border); border-radius: var(--radius-md);
+      padding: 20px 18px; text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .audience-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--clr-accent); }
+    .audience-icon {
+      width: 44px; height: 44px; background: var(--clr-primary-light); border-radius: var(--radius-md);
+      margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; color: var(--clr-primary);
+    }
+    .audience-icon svg { width: 24px; height: 24px; }
+    .audience-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: 6px; }
+    .audience-card p { font-size: .8rem; color: var(--clr-text-muted); line-height: 1.5; font-style: italic; }
+
+    /* How it works */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step { display: flex; align-items: flex-start; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--clr-border); }
+    .step:last-child { border-bottom: none; padding-bottom: 0; }
+    .step-num {
+      width: 34px; height: 34px; background: var(--clr-primary); color: #fff;
+      font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .88rem;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-body h4 { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .step-body p { font-size: .875rem; color: var(--clr-text-muted); font-style: italic; }
+
+    /* =========================================================
+       SIDEBAR CARDS
+    ========================================================= */
+    .sidebar-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-lg); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+    .sidebar-card-title { font-size: 1.02rem; font-weight: 700; margin-bottom: 16px; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 22px; border-radius: var(--radius-pill);
+      font-size: .92rem; font-weight: 600; border: 2px solid transparent;
+      width: 100%; margin-bottom: 10px;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+    }
+    .btn:last-child { margin-bottom: 0; }
+    .btn-primary { background: var(--clr-primary); color: #fff; border-color: var(--clr-primary); }
+    .btn-primary:hover { background: var(--clr-primary-dark); border-color: var(--clr-primary-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(42,169,208,.32); }
+    .btn-outline { background: transparent; color: var(--clr-primary); border-color: var(--clr-primary); }
+    .btn-outline:hover { background: var(--clr-primary-light); transform: translateY(-1px); }
+    .phone-line { text-align: center; font-size: .82rem; color: var(--clr-text-muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--clr-border); }
+    .phone-line a { color: var(--clr-primary); font-weight: 600; }
+
+    .fee-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .fee-label { font-size: .8rem; font-weight: 600; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+    .fee-input-wrap { position: relative; flex: 1; }
+    .fee-input-wrap .currency-sym { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--clr-text-muted); font-size: .95rem; pointer-events: none; }
+    #course-fee { width: 100%; padding: 10px 12px 10px 26px; border: 1px solid var(--clr-border); border-radius: var(--radius-sm); font-size: 1.05rem; font-weight: 700; font-family: inherit; color: var(--clr-text); background: var(--clr-bg); }
+    #course-fee:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(42,169,208,.15); outline: none; }
+
+    .sandbox-banner {
+      background: var(--clr-gold-light); border: 1px solid rgba(240,177,6,.4); border-radius: var(--radius-sm);
+      padding: 8px 12px; font-size: .78rem; color: #7a5a06; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sandbox-banner svg { flex-shrink: 0; color: var(--clr-gold); width: 14px; height: 14px; }
+    .sandbox-banner code { background: rgba(0,0,0,0.06); padding: 1px 4px; border-radius: 4px; }
+
+    #paypal-button-container { min-height: 46px; border-radius: var(--radius-md); overflow: hidden; }
+    .paypal-trust { font-size: .74rem; color: var(--clr-text-light); text-align: center; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .paypal-trust svg { width: 12px; height: 12px; }
+
+    .paypal-status { border-radius: var(--radius-sm); padding: 10px 14px; font-size: .85rem; font-weight: 500; display: none; margin-top: 12px; }
+    .paypal-status.error { display: block; background: #fdf0ef; border: 1px solid rgba(192,57,43,.3); color: var(--clr-error); }
+    .paypal-status.success { display: block; background: #eaf9f2; border: 1px solid rgba(31,157,107,.3); color: var(--clr-success); }
+    .paypal-status.info { display: block; background: var(--clr-primary-light); border: 1px solid rgba(42,169,208,.3); color: var(--clr-primary-dark); }
+
+    .confirmation-panel {
+      background: linear-gradient(135deg, #eaf9f2 0%, #d8f3e6 100%);
+      border: 1px solid rgba(31,157,107,.3); border-radius: var(--radius-md);
+      padding: 22px 20px; text-align: center; display: none;
+    }
+    .confirmation-panel h4 { color: var(--clr-success); font-size: 1rem; margin-bottom: 8px; }
+    .confirmation-panel p { font-size: .84rem; color: #235c41; line-height: 1.5; }
+    .conf-icon { width: 44px; height: 44px; background: var(--clr-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .conf-icon svg { width: 24px; height: 24px; color: #fff; }
+
+    /* =========================================================
+       CONTACT SECTION
+    ========================================================= */
+    #contact { background: var(--clr-surface); border-top: 1px solid var(--clr-border); padding: 68px 0; }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .contact-intro h2 { font-size: 1.7rem; margin-bottom: 14px; }
+    .contact-intro p { color: var(--clr-text-muted); font-size: .95rem; line-height: 1.65; margin-bottom: 26px; }
+    .contact-details { display: flex; flex-direction: column; gap: 14px; }
+    .contact-detail { display: flex; align-items: center; gap: 12px; font-size: .9rem; color: var(--clr-text-muted); }
+    .contact-detail-icon { width: 36px; height: 36px; background: var(--clr-primary-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--clr-primary); }
+    .contact-detail-icon svg { width: 18px; height: 18px; }
+
+    .enquiry-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: .83rem; font-weight: 600; letter-spacing: .02em; }
+    .form-group label span.req { color: var(--clr-error); margin-left: 2px; }
+    .form-group input, .form-group textarea {
+      padding: 12px 16px; border: 1.5px solid var(--clr-border); border-radius: var(--radius-md);
+      font-size: .93rem; font-family: inherit; color: var(--clr-text); background: var(--clr-bg);
+      transition: border-color var(--transition), box-shadow var(--transition); resize: vertical;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(42,169,208,.14); outline: none; }
+    .form-group input.invalid, .form-group textarea.invalid { border-color: var(--clr-error); box-shadow: 0 0 0 3px rgba(192,57,43,.1); }
+    .field-error { font-size: .78rem; color: var(--clr-error); display: none; }
+    .field-error.visible { display: block; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .btn-submit {
+      background: var(--clr-primary); color: #fff; border: none; border-radius: var(--radius-pill);
+      padding: 15px 32px; font-size: 1rem; font-weight: 600; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-submit:hover { background: var(--clr-primary-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(42,169,208,.32); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .form-success {
+      background: linear-gradient(135deg, #eaf9f2 0%, #d8f3e6 100%);
+      border: 1px solid rgba(31,157,107,.3); border-radius: var(--radius-lg);
+      padding: 40px 32px; text-align: center; display: none;
+    }
+    .form-success.visible { display: block; animation: fadeIn .4s ease; }
+    .form-success h3 { color: var(--clr-success); margin-bottom: 10px; font-size: 1.2rem; }
+    .form-success p { color: #235c41; font-size: .93rem; line-height: 1.6; }
+    .success-icon { width: 56px; height: 56px; background: var(--clr-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .success-icon svg { width: 28px; height: 28px; color: #fff; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+
+    /* =========================================================
+       FOOTER — matches index.html / courses.html
+    ========================================================= */
+    footer.site-footer { padding: 40px 0; border-top: 1px solid var(--clr-border); }
+    .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--clr-text-muted); }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a:hover { color: var(--clr-primary); }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 900px) {
+      .two-col { flex-direction: column-reverse; }
+      .sidebar-col { width: 100%; position: static; flex-direction: row; flex-wrap: wrap; }
+      .sidebar-card { flex: 1; min-width: 280px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 640px) {
+      :root { --sidebar-w: 100%; }
+      .hero { padding: 38px 0 34px; }
+      .section { padding: 22px 20px; }
+      .audience-cards { grid-template-columns: 1fr; }
+      .sidebar-col { flex-direction: column; }
+      .sidebar-card { min-width: unset; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-row { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 420px) {
+      .meta-strip { flex-direction: column; }
+      .meta-pill { width: fit-content; }
+    }
+</style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <a href="tel:+4520434974">+45 2043 4974</a>
+    <a href="mailto:admin@ISLearning.org">admin@ISLearning.org</a>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="site-nav" role="banner">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="../index.html">
+      <img src="../images/ISLlogo.gif" alt="ISL">
+      <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a href="../index.html#home">Home</a>
+      <a href="../index.html#about">About</a>
+      <a class="active" href="../courses.html" aria-current="page">Courses</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a class="nav-cta" href="../index.html#contact">Contact Us</a>
+    </nav>
+
+    <button class="hamburger" id="hamburger-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+  <a href="../index.html#home">Home</a>
+  <a href="../index.html#about">About</a>
+  <a class="active" href="../courses.html" aria-current="page">Courses</a>
+  <a href="../index.html#faq">FAQ</a>
+  <a href="../index.html#contact">Contact Us</a>
+</nav>
+
+<!-- ============================================================
+     BREADCRUMB
+============================================================ -->
+<div class="breadcrumb-bar">
+  <div class="wrap">
+    <ol class="breadcrumb">
+      <li><a href="../index.html">Home</a></li>
+      <li aria-hidden="true"><span class="sep">&#8250;</span></li>
+      <li><a href="../courses.html">Courses</a></li>
+      <li aria-hidden="true"><span class="sep">&#8250;</span></li>
+      <li class="current" aria-current="page">Introduction to Spirituality</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" aria-labelledby="course-heading">
+  <div class="wrap hero-inner">
+    <div class="course-chip">Course 00</div>
+    <h1 id="course-heading">Introduction to Spirituality</h1>
+    <p class="hero-tagline">A starting point for anyone new to the work — the ideas the rest of ISL is built on.</p>
+    <div class="meta-strip">
+      <div class="meta-pill">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span><strong>Format:</strong> Add format</span>
+      </div>
+      <div class="meta-pill">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M8 5v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span><strong>Duration:</strong> Add duration</span>
+      </div>
+      <div class="meta-pill">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 2l1.8 3.6 4 .6-2.9 2.8.7 4L8 11l-3.6 1.9.7-4L2.2 6.2l4-.6L8 2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+        <span><strong>Level:</strong> Beginner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TWO-COLUMN PAGE BODY
+============================================================ -->
+<div class="page-body">
+  <div class="wrap">
+    <div class="two-col">
+
+      <main class="main-col" id="main-content" aria-label="Course details">
+
+        <!-- Overview -->
+        <article class="section" aria-labelledby="overview-heading">
+          <h2 class="section-title" id="overview-heading">
+            <span class="section-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 6v4M8 5h.01" stroke-linecap="round"/></svg>
+            </span>
+            Overview
+          </h2>
+          <div class="placeholder">
+            Add the real course overview here — what this course covers, the
+            approach it takes, and why it's the recommended starting point
+            before the other six courses.
+          </div>
+        </article>
+
+        <!-- What you'll explore -->
+        <article class="section" aria-labelledby="explore-heading">
+          <h2 class="section-title" id="explore-heading">
+            <span class="section-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l3 3 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            What you'll explore
+          </h2>
+          <ul class="explore-list">
+            <li class="explore-item">
+              <div class="explore-glyph" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="14" height="10" rx="2"/><path d="M6 16h6M9 13v3" stroke-linecap="round"/></svg>
+              </div>
+              <div class="explore-item-body">
+                <strong>Add a topic</strong>
+                <span>Add a short description of this topic or theme.</span>
+              </div>
+            </li>
+            <li class="explore-item">
+              <div class="explore-glyph" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7"/><path d="M9 2c0 0-4 3.5-4 7s4 7 4 7M9 2c0 0 4 3.5 4 7s-4 7-4 7M2 9h14" stroke-linecap="round"/></svg>
+              </div>
+              <div class="explore-item-body">
+                <strong>Add a topic</strong>
+                <span>Add a short description of this topic or theme.</span>
+              </div>
+            </li>
+            <li class="explore-item">
+              <div class="explore-glyph" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h14v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5z"/><path d="M2 5l7 6 7-6" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="14" height="3" rx="1"/></svg>
+              </div>
+              <div class="explore-item-body">
+                <strong>Add a topic</strong>
+                <span>Add a short description of this topic or theme.</span>
+              </div>
+            </li>
+            <li class="explore-item">
+              <div class="explore-glyph" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="12" height="14" rx="2"/><path d="M6 6h6M6 9h6M6 12h4" stroke-linecap="round"/></svg>
+              </div>
+              <div class="explore-item-body">
+                <strong>Add a topic</strong>
+                <span>Add a short description of this topic or theme.</span>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Who it's for -->
+        <article class="section" aria-labelledby="who-heading">
+          <h2 class="section-title" id="who-heading">
+            <span class="section-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/><circle cx="12" cy="5" r="2" stroke-width="1.3"/><path d="M14.5 13.5c0-2-1.2-3-2.5-3" stroke-linecap="round"/></svg>
+            </span>
+            Who it's for
+          </h2>
+          <p class="who-intro">Add who this course is designed for, and how someone can tell it's the right starting point for them.</p>
+          <div class="audience-cards">
+            <div class="audience-card">
+              <div class="audience-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a4 4 0 100 8 4 4 0 000-8z"/><path d="M20 21v-1a8 8 0 00-16 0v1"/></svg>
+              </div>
+              <h4>Complete Beginners</h4>
+              <p>Add why this course suits someone with no prior experience.</p>
+            </div>
+            <div class="audience-card">
+              <div class="audience-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M12 4l8 8-8 8"/></svg>
+              </div>
+              <h4>Returning Students</h4>
+              <p>Add why this course suits someone coming back to the work.</p>
+            </div>
+            <div class="audience-card">
+              <div class="audience-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V8M6 14l6-6 6 6"/><path d="M5 20h14" stroke-linecap="round"/></svg>
+              </div>
+              <h4>Preparing for Later Courses</h4>
+              <p>Add why this course is a good foundation before the other six.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- How it works -->
+        <article class="section" aria-labelledby="how-heading">
+          <h2 class="section-title" id="how-heading">
+            <span class="section-title-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v12M2 8h12" stroke-linecap="round"/></svg>
+            </span>
+            How it works
+          </h2>
+          <ol class="steps">
+            <li class="step">
+              <div class="step-num" aria-hidden="true">1</div>
+              <div class="step-body"><h4>Add a step</h4><p>Add what happens at this stage of the course.</p></div>
+            </li>
+            <li class="step">
+              <div class="step-num" aria-hidden="true">2</div>
+              <div class="step-body"><h4>Add a step</h4><p>Add what happens at this stage of the course.</p></div>
+            </li>
+            <li class="step">
+              <div class="step-num" aria-hidden="true">3</div>
+              <div class="step-body"><h4>Add a step</h4><p>Add what happens at this stage of the course.</p></div>
+            </li>
+            <li class="step">
+              <div class="step-num" aria-hidden="true">4</div>
+              <div class="step-body"><h4>Add a step</h4><p>Add what happens at this stage of the course.</p></div>
+            </li>
+          </ol>
+        </article>
+
+      </main>
+
+      <!-- ---- SIDEBAR ---- -->
+      <aside class="sidebar-col" aria-label="Enrolment and enquiry">
+
+        <div class="sidebar-card" id="cta-card">
+          <p class="sidebar-card-title">Ready to begin?</p>
+          <a href="#contact" class="btn btn-primary" aria-label="Enquire about this course">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.3"/><path d="M1 4l7 5 7-5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Enquire now
+          </a>
+          <a href="../courses.html" class="btn btn-outline" aria-label="View all courses">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to all courses
+          </a>
+          <div class="phone-line">
+            Prefer to talk it through?
+            <a href="tel:+4520434974">+45 2043 4974</a>
+          </div>
+        </div>
+
+        <div class="sidebar-card" id="enrol-card">
+          <p class="sidebar-card-title">Reserve your place</p>
+
+          <div class="fee-row">
+            <span class="fee-label">Course fee</span>
+            <div class="fee-input-wrap">
+              <span class="currency-sym" aria-hidden="true">€</span>
+              <label for="course-fee" class="visually-hidden">Course fee in EUR</label>
+              <input type="number" id="course-fee" name="course-fee" value="149" min="1" step="0.01" aria-label="Course fee amount in EUR" />
+            </div>
+          </div>
+
+          <div class="sandbox-banner" role="note" aria-label="Sandbox mode notice">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 5.5v2.5M7 9.5h.01" stroke-linecap="round"/></svg>
+            <span>Sandbox mode &mdash; replace <code>client-id=sb</code> to go live.</span>
+          </div>
+
+          <div id="paypal-button-container" aria-label="PayPal checkout"></div>
+          <div id="paypal-status" class="paypal-status" role="alert" aria-live="polite"></div>
+
+          <div class="confirmation-panel" id="confirmation-panel" role="status" aria-live="polite">
+            <div class="conf-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h4>Reservation Confirmed!</h4>
+            <p id="confirmation-msg">Thank you. Your place has been reserved.</p>
+          </div>
+
+          <p class="paypal-trust">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V4a2 2 0 114 0v1" stroke-linecap="round"/></svg>
+            Secure checkout via PayPal &middot; Sandbox mode
+          </p>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="wrap">
+    <div class="contact-inner">
+
+      <div class="contact-intro">
+        <h2 id="contact-heading">Get in touch</h2>
+        <p>Not quite ready to enrol, or have questions before you commit? Fill in the form and someone from ISL will respond within one business day — free, and without obligation.</p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5h14v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5z"/><path d="M2 5l7 6 7-6" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="14" height="3" rx="1"/></svg></div>
+            <span>admin@ISLearning.org</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3h4l1.5 3.5-2 1.2A10 10 0 0011.3 11l1.2-2L16 10.5V15A1 1 0 0115 16 13 13 0 012 3a1 1 0 011-1z"/></svg></div>
+            <span>+45 2043 4974</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3"/><path d="M15 8c0 5-6 9-6 9S3 13 3 8a6 6 0 0112 0z"/></svg></div>
+            <span>Fynshovedvej 584, M&aring;rtofte, Denmark</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form class="enquiry-form" id="enquiry-form" novalidate aria-label="Course enquiry form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Full name <span class="req" aria-label="required">*</span></label>
+              <input type="text" id="f-name" name="name" autocomplete="name" placeholder="Jane Smith" required aria-required="true" aria-describedby="f-name-err" />
+              <span class="field-error" id="f-name-err" role="alert">Please enter your full name.</span>
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email address <span class="req" aria-label="required">*</span></label>
+              <input type="email" id="f-email" name="email" autocomplete="email" placeholder="jane@example.com" required aria-required="true" aria-describedby="f-email-err" />
+              <span class="field-error" id="f-email-err" role="alert">Please enter a valid email address.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone number</label>
+            <input type="tel" id="f-phone" name="phone" autocomplete="tel" placeholder="+45 00 00 00 00" aria-describedby="f-phone-hint" />
+            <span class="field-error" id="f-phone-hint" style="color:var(--clr-text-light);display:block;font-size:.78rem;">Optional — for a callback.</span>
+          </div>
+          <div class="form-group">
+            <label for="f-message">Your message <span class="req" aria-label="required">*</span></label>
+            <textarea id="f-message" name="message" rows="5" placeholder="Tell us a bit about yourself and any questions you have about the course..." required aria-required="true" aria-describedby="f-message-err"></textarea>
+            <span class="field-error" id="f-message-err" role="alert">Please enter a message.</span>
+          </div>
+          <button type="submit" class="btn-submit" id="form-submit-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 9h14M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Send enquiry
+          </button>
+        </form>
+
+        <div class="form-success" id="form-success" role="status" aria-live="polite" aria-atomic="true">
+          <div class="success-icon" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 14l6 6L22 8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Enquiry received!</h3>
+          <p>Thank you for reaching out. Someone from ISL will reply within one business day. In the meantime, feel free to explore the rest of our courses.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <div>&copy; ISL — The Institute of Spiritual Learning</div>
+    <div class="footer-links">
+      <a href="../index.html#about">About</a>
+      <a href="../courses.html">Courses</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  'use strict';
+
+  /* ----------------------------------------------------------
+     MOBILE MENU
+  ---------------------------------------------------------- */
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu   = document.getElementById('mobile-menu');
+
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  document.addEventListener('click', (e) => {
+    if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ----------------------------------------------------------
+     ENQUIRY FORM — inline validation + local success state.
+     TODO (production): POST to /api/enquiry — see README at top.
+  ---------------------------------------------------------- */
+  const enquiryForm = document.getElementById('enquiry-form');
+  const formSuccess = document.getElementById('form-success');
+  const submitBtn   = document.getElementById('form-submit-btn');
+
+  function validateField(input) {
+    const errEl = document.getElementById(input.id + '-err');
+    if (!errEl) return true;
+    let valid = true;
+    if (input.required && !input.value.trim()) {
+      valid = false;
+    } else if (input.type === 'email' && input.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+      valid = false;
+    }
+    input.classList.toggle('invalid', !valid);
+    errEl.classList.toggle('visible', !valid);
+    return valid;
+  }
+
+  ['f-name', 'f-email', 'f-message'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('blur', () => validateField(el));
+  });
+
+  enquiryForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let allValid = true;
+    ['f-name', 'f-email', 'f-message'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!validateField(el)) allValid = false;
+    });
+    if (!allValid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    setTimeout(() => {
+      enquiryForm.style.display = 'none';
+      formSuccess.classList.add('visible');
+      formSuccess.focus();
+      /* TODO (production): POST form data to /api/enquiry — see README. */
+    }, 600);
+  });
+
+  /* ----------------------------------------------------------
+     PAYPAL SDK LOADER — sandbox by default. See README at top
+     for how to switch to a real client-id before going live.
+  ---------------------------------------------------------- */
+  function loadPayPalSDK(clientId = 'sb', currency = 'EUR') {
+    return new Promise((resolve, reject) => {
+      const existing = document.getElementById('paypal-sdk-script');
+      if (existing) existing.remove();
+      if (window.paypal) delete window.paypal;
+
+      const script = document.createElement('script');
+      script.id  = 'paypal-sdk-script';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${encodeURIComponent(currency)}&intent=capture`;
+      script.onload  = () => resolve();
+      script.onerror = () => reject(new Error('Failed to load PayPal SDK. Check your client-id and network connection.'));
+      document.body.appendChild(script);
+    });
+  }
+
+  function renderPayPalButtons() {
+    const container      = document.getElementById('paypal-button-container');
+    const statusEl       = document.getElementById('paypal-status');
+    const confirmPanel   = document.getElementById('confirmation-panel');
+    const confirmMsg     = document.getElementById('confirmation-msg');
+    const courseFeeInput = document.getElementById('course-fee');
+
+    function setStatus(type, message) { statusEl.className = 'paypal-status ' + type; statusEl.textContent = message; }
+    function clearStatus() { statusEl.className = 'paypal-status'; statusEl.textContent = ''; }
+
+    window.paypal.Buttons({
+
+      /* SECURITY WARNING (production): never trust the client-side
+         price. Create the order server-side via POST /api/orders
+         using the authoritative price from your database, and
+         return only the order id to the client. See README. */
+      createOrder(data, actions) {
+        clearStatus();
+        const amount = parseFloat(courseFeeInput.value) || 149;
+        return actions.order.create({
+          purchase_units: [{
+            description: 'Introduction to Spirituality — Course 00',
+            amount: { currency_code: 'EUR', value: amount.toFixed(2) },
+          }],
+          application_context: { shipping_preference: 'NO_SHIPPING' },
+        });
+      },
+
+      /* NOTE (production): capture server-side via
+         POST /api/orders/:orderId/capture and verify the amount
+         before fulfilling. Do not rely on client-side capture for
+         anything financially significant. */
+      onApprove(data, actions) {
+        setStatus('info', 'Processing your payment...');
+        return actions.order.capture().then(function (details) {
+          clearStatus();
+          container.style.display = 'none';
+          const payerName = (details.payer && details.payer.name)
+            ? details.payer.name.given_name + ' ' + details.payer.name.surname
+            : 'valued student';
+          confirmMsg.textContent =
+            'Thank you, ' + payerName + '. Your place on Introduction to Spirituality has been reserved. A confirmation has been sent to ' +
+            (details.payer && details.payer.email_address ? details.payer.email_address : 'your email') + '.';
+          confirmPanel.style.display = 'block';
+          confirmPanel.focus();
+          /* TODO (production): POST capture details to /api/enquiry — see README. */
+        });
+      },
+
+      onError(err) {
+        console.error('PayPal error:', err);
+        setStatus('error', 'Something went wrong with the PayPal checkout. Please try again or contact us directly.');
+      },
+
+      onCancel() {
+        setStatus('info', 'Payment cancelled. You can try again whenever you are ready, or use the enquiry form below.');
+      },
+
+      style: { layout: 'vertical', color: 'blue', shape: 'pill', label: 'pay', tagline: false },
+
+    }).render('#paypal-button-container').catch(err => {
+      console.error('PayPal render error:', err);
+      document.getElementById('paypal-status').className = 'paypal-status error';
+      document.getElementById('paypal-status').textContent = 'Unable to load PayPal checkout. Ensure you are online and try refreshing.';
+    });
+  }
+
+  loadPayPalSDK('sb', 'EUR')
+    .then(() => renderPayPalButtons())
+    .catch(err => {
+      console.error(err.message);
+      const statusEl = document.getElementById('paypal-status');
+      statusEl.className = 'paypal-status error';
+      statusEl.textContent = 'PayPal checkout could not be loaded. Please check your connection and refresh the page.';
+    });
+
+</script>
+</body>
+</html>
