@@ -74,19 +74,30 @@ async function getBookingEligibility() {
   return data.map(r => r.course_id);
 }
 
-async function verifyPayPalOrder(orderId, courseId) {
+async function createPayPalOrder(courseId) {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) throw new Error("Not signed in");
 
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/verify-payment`, {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/create-order`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${session.access_token}`,
-    },
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${session.access_token}` },
+    body: JSON.stringify({ courseId }),
+  });
+  const result = await res.json();
+  if (!res.ok) throw new Error(result.error || "Could not start checkout");
+  return result.orderId;
+}
+
+async function capturePayPalOrder(orderId, courseId) {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) throw new Error("Not signed in");
+
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/capture-order`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${session.access_token}` },
     body: JSON.stringify({ orderId, courseId }),
   });
   const result = await res.json();
-  if (!res.ok) throw new Error(result.error || "Payment verification failed");
+  if (!res.ok) throw new Error(result.error || "Payment could not be confirmed");
   return result;
 }

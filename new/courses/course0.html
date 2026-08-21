@@ -703,7 +703,7 @@
 
           <div class="sandbox-banner" role="note" aria-label="Sandbox mode notice">
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 5.5v2.5M7 9.5h.01" stroke-linecap="round"/></svg>
-            <span>Sandbox mode &mdash; replace <code>client-id=sb</code> to go live.</span>
+            <span>Sandbox mode — set <code>PAYPAL_API_BASE</code> to the live PayPal API and update the secrets to go live.</span>
           </div>
 
           <div id="paypal-button-container" aria-label="PayPal checkout"></div>
@@ -910,52 +910,34 @@
 
     window.paypal.Buttons({
 
-      /* SECURITY WARNING (production): never trust the client-side
-         price. Create the order server-side via POST /api/orders
-         using the authoritative price from your database, and
-         return only the order id to the client. See README. */
+      // Order creation happens entirely server-side now — the
+      // Edge Function prices this from the courses table, so
+      // nothing here can be tampered with via DevTools.
       createOrder(data, actions) {
         clearStatus();
-        const amount = parseFloat(courseFeeInput.value) || 149;
-        return actions.order.create({
-          purchase_units: [{
-            description: 'Introduction to Spirituality — Course 00',
-            amount: { currency_code: 'EUR', value: amount.toFixed(2) },
-          }],
-          application_context: { shipping_preference: 'NO_SHIPPING' },
+        return createPayPalOrder('course-0').catch(err => {
+          console.error('Could not create order:', err);
+          setStatus('error', 'Could not start checkout: ' + err.message);
+          throw err;
         });
       },
 
-      /* NOTE (production): capture server-side via
-         POST /api/orders/:orderId/capture and verify the amount
-         before fulfilling. Do not rely on client-side capture for
-         anything financially significant. */
-      onApprove(data, actions) {
-        setStatus('info', 'Processing your payment...');
-        return actions.order.capture().then(async function (details) {
-          try {
-            // The client-side capture above only confirms PayPal
-            // accepted the payment — it does NOT grant course access.
-            // That only happens once our own server (the Edge
-            // Function) independently re-checks this order with
-            // PayPal and writes the purchase record itself.
-            setStatus('info', 'Confirming your purchase...');
-            await verifyPayPalOrder(data.orderID, 'course-0');
-          } catch (verifyErr) {
-            console.error('Purchase verification failed:', verifyErr);
-            setStatus('error', 'Payment succeeded but we could not confirm access automatically. Please contact ' + 'admin@ISLearning.org with your PayPal receipt and we\'ll sort this out right away.');
-            return;
-          }
+      // Capture happens server-side too — this is the only point
+      // at which course access is actually granted.
+      onApprove(data) {
+        setStatus('info', 'Confirming your purchase...');
+        return capturePayPalOrder(data.orderID, 'course-0').then((result) => {
           clearStatus();
           container.style.display = 'none';
-          const payerName = (details.payer && details.payer.name)
-            ? details.payer.name.given_name + ' ' + details.payer.name.surname
-            : 'valued student';
+          const payerName = result.payerName || 'valued student';
           confirmMsg.textContent =
             'Thank you, ' + payerName + '. Your place on Introduction to Spirituality has been reserved. Head to ' +
             'your account to access the course materials.';
           confirmPanel.style.display = 'block';
           confirmPanel.focus();
+        }).catch(err => {
+          console.error('Capture failed:', err);
+          setStatus('error', 'Payment could not be confirmed. Please contact admin@ISLearning.org with your PayPal receipt and we\'ll sort this out right away.');
         });
       },
 
