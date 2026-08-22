@@ -1,47 +1,361 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en">
 <head>
-<title>ISLearning</title>
-<link rel="shortcut icon" href="images/logo.ico" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISL — The Institute of Spiritual Learning</title>
+<meta name="description" content="A modern institute for the study of spiritual, philosophical and contemplative traditions — seven courses, one arc from the outer world into the inner, and back out again.">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+
+<style>
+  .hero { padding: 76px 0 92px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 56px; align-items: center; }
+  .hero-tagline { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--turquoise-text); margin-bottom: 18px; }
+  .hero-motto { font-family: "Cormorant Garamond", serif; font-weight: 300; font-style: italic; font-size: clamp(2.6rem, 4.4vw, 3.6rem); line-height: 1.15; color: var(--charcoal); margin: 0 0 8px; }
+  .hero-gloss { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 28px; }
+  .hero-gloss .lead-word { color: var(--charcoal); }
+  .hero-gloss .support-word { color: var(--grey-support); }
+  .hero p.lead { font-size: 1.12rem; color: var(--charcoal-soft); max-width: 46ch; margin: 0 0 32px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-plate-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; background: var(--paper); border-radius: 16px; padding: 40px 32px; position: relative; overflow: hidden; }
+  .hero-plate-wrap::before { content: ""; position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; border-radius: 50%; border: 18px solid var(--ring-cyan); opacity: 0.3; }
+  .hero-plate { width: 100%; max-width: 260px; border: 8px solid #fff; box-shadow: 0 18px 40px -18px rgba(20,20,20,0.35); position: relative; z-index: 1; border-radius: 4px; }
+  .hero-plate-cap { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 0.98rem; color: var(--charcoal-soft); text-align: center; position: relative; z-index: 1; }
+
+  .about-illustration-wrap { background: var(--paper); border-radius: 14px; padding: 24px; margin-bottom: 48px; overflow: hidden; }
+  .about-illustration { width: 100%; display: block; border-radius: 8px; }
+  .about-copy { max-width: 720px; }
+  .about-copy p { color: var(--charcoal-soft); font-size: 1.05rem; margin: 0 0 20px; }
+  .about-copy a.more { font-weight: 500; border-bottom: 1px solid var(--turquoise-text); }
+
+  .plaques { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .plaque { background: var(--white); padding: 42px 46px; }
+  .principle { display: grid; grid-template-columns: 28px 1fr; gap: 14px; margin-bottom: 24px; }
+  .principle:last-child { margin-bottom: 0; }
+  .principle .num { width: 26px; height: 26px; border-radius: 50%; background: var(--turquoise); color: var(--charcoal); display: flex; align-items: center; justify-content: center; font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 0.92rem; }
+  .principle .latin-line { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.14rem; margin-bottom: 6px; color: var(--charcoal); }
+  .principle p { margin: 0; color: var(--charcoal-soft); font-size: 0.97rem; }
+  .standards-list { list-style: none; margin: 0; padding: 0; }
+  .standards-list li { padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; }
+  .standards-list li:last-child { border-bottom: none; }
+  .standards-list .latin { color: var(--turquoise-text); }
+
+  .gloss-term { border-bottom: 1.5px dotted var(--turquoise-text); cursor: help; position: relative; }
+  .gloss-term .gloss-flag { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 50%; background: var(--paper); color: var(--turquoise-text); margin-left: 4px; vertical-align: 2px; }
+  .gloss-popover { display: none; margin-top: 14px; background: var(--charcoal); color: rgba(255,255,255,0.92); border-radius: 10px; padding: 16px 18px; max-width: 320px; font-family: "Jost", sans-serif; font-style: normal; box-shadow: 0 14px 30px -14px rgba(0,0,0,0.4); }
+  .gloss-popover.open { display: block; }
+  .gloss-popover .gloss-term-title { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.05rem; color: var(--skyblue); margin-bottom: 4px; }
+  .gloss-popover p { margin: 0; font-size: 0.86rem; color: rgba(255,255,255,0.78); line-height: 1.5; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .course-card { background: var(--white); padding: 30px 28px; color: var(--charcoal); display: flex; flex-direction: column; min-height: 184px; }
+  .course-card:hover { background: var(--paper); }
+  .course-card h3 { font-size: 1.16rem; margin-bottom: 10px; }
+  .course-card .price { font-size: 0.8rem; color: var(--charcoal-soft); font-weight: 500; margin-bottom: 8px; }
+  .course-card p { color: var(--charcoal-soft); font-size: 0.92rem; margin: 0; flex-grow: 1; }
+  .course-card .go { margin-top: 16px; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--turquoise-text); display: inline-flex; align-items: center; gap: 6px; }
+  .course-grid-status { padding: 30px 28px; color: var(--charcoal-soft); grid-column: 1 / -1; background: var(--white); }
+
+  .programs-band { position: relative; background: linear-gradient(120deg, var(--tg-0) 0%, var(--tg-25) 25%, var(--tg-50) 50%, var(--tg-75) 75%, var(--tg-100) 100%); color: rgba(255,255,255,0.92); }
+  .programs-band .scrim { position: absolute; inset: 0; background: rgba(52,52,52,0.45); }
+  .programs-band .wrap { position: relative; z-index: 1; }
+  .programs-band .eyebrow { color: var(--skyblue); display: flex; align-items: center; gap: 9px; }
+  .programs-band h2 { color: #fff; }
+  .programs-band .section-head p { color: rgba(255,255,255,0.82); margin: 10px 0 0; max-width: 56ch; }
+  .programs-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .programs-row span.soon { border: 1px dashed rgba(255,255,255,0.32); background: rgba(255,255,255,0.05); padding: 13px 22px; border-radius: 999px; font-size: 0.92rem; color: rgba(255,255,255,0.6); }
+
+  .faq-list { max-width: 760px; }
+  .faq-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
+  .faq-item summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer; list-style: none; font-family: "Cormorant Garamond", serif; font-weight: 300; font-size: 1.16rem; color: var(--charcoal); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .plus { font-family: "Jost", sans-serif; font-size: 1.3rem; color: var(--turquoise-text); flex-shrink: 0; }
+  .faq-item[open] summary .plus { transform: rotate(45deg); }
+  .faq-body { color: var(--charcoal-soft); margin-top: 12px; font-size: 0.98rem; max-width: 60ch; }
+
+  .contact-band { background: var(--charcoal); color: rgba(255,255,255,0.88); }
+  .contact-band h2 { color: #fff; }
+  .contact-band .eyebrow { color: var(--skyblue); }
+  .contact-band .section-head p { color: rgba(255,255,255,0.78); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; margin-top: 40px; }
+  .contact-grid a { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.4); }
+  .contact-grid a:hover { border-color: var(--gold); color: var(--gold); }
+  .contact-grid p { margin: 4px 0; color: rgba(255,255,255,0.88); font-size: 0.98rem; }
+</style>
 </head>
-<script type="text/javascript">
-/* <![CDATA[ */
-var curl = location.search.substring(1) ? unescape(location.search.substring(1)) : 'main.html';
-document.writeln('<frameset rows="160,*,80" frameborder="0" border="1" framespacing="0">');
-document.writeln('<frame src="frames/top_nav.html" name="topNav"\/>');
-document.writeln('<frameset cols="120,*,120"frameborder="0" border="1" framespacing="0">');
-document.writeln('<frame src="frames/left_blanc.html" name="left_blanc"\/>');
-document.writeln('<frame src="'+curl+'" name="main" \/>');
-document.writeln('<frame src="frames/right_blanc.html" name="right_blanc"\/>');
-document.writeln('<\/frameset>');
-document.writeln('<frame src="frames/footer.html" name="footer"\/>');
-document.writeln('<noframes>');
-document.writeln('<body>');
-document.writeln('<p>Note that this site requires a browser that supports frames.<\/p>');
-document.writeln('<\/body>');
-document.writeln('<\/noframes>');
-document.writeln('<\/frameset>');
-/* ]]> */
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <a href="tel:+4531155327"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +45 3115 5327</a>
+    <a href="mailto:admin@ISLearning.org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" fill="none"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg> admin@ISLearning.org</a>
+  </div>
+</div>
+
+<header class="site-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="index.html">
+      <span data-isl-logo data-height="38px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
+    </a>
+    <nav class="primary-links desktop-only" id="primaryNav">
+      <a href="index.html#home" aria-current="page">Home</a>
+      <a href="index.html#about">About</a>
+      <div class="nav-item" data-panel="courses">
+        <button type="button" aria-expanded="false"><a href="courses.html" style="padding:0;">Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="nav-panel"><div class="nav-panel-inner" id="navCoursesPanel">
+          <a href="courses.html">View all courses</a>
+        </div></div>
+      </div>
+      <a href="index.html#faq">FAQ</a>
+      <span class="nav-auth-slot" id="navAuthSlot"></span>
+      <a class="nav-cta" href="index.html#contact">Contact Us</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"></nav>
+
+<section class="hero" id="home">
+  <div class="wrap">
+    <div>
+      <div class="hero-tagline">Decide &middot; Commit &middot; Succeed</div>
+      <h1 class="hero-motto">&ldquo;Vetitum Discepto Est.&rdquo;</h1>
+      <div class="hero-gloss"><span class="lead-word">No compromise.</span> <span class="support-word">Think for yourself.</span></div>
+      <p class="lead">This is your chance to become everything you want to be. ISL has spent decades organising four thousand years of accumulated knowledge into courses any person can actually use.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#courses">Find your course</a>
+        <a class="btn btn-ghost" href="#about">Read our story</a>
+      </div>
+    </div>
+    <div class="hero-plate-wrap">
+      <img class="hero-plate" src="images/book3d.jpg" alt="">
+      <div class="hero-plate-cap">Four thousand years of accumulated knowledge</div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-illustration-wrap">
+      <img class="about-illustration" src="images/about.jpg" alt="The Institute of Spiritual Learning">
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">About ISL</span>
+      <h2>A modern institute, an old body of knowledge.</h2>
+      <p style="margin-top:20px;">ISL is a modern institute set up to accommodate the need for a better understanding in matters pertaining to the spiritual self. The objective of every human being on this small planet is to better understand themselves.</p>
+      <p>We have accumulated, over the past four thousand years, a complete, unabridged version of the knowledge of life. ISL has begun the task of organising this information into clearly understandable sections of human reasoning.</p>
+    </div>
+  </div>
+</section>
+
+<section class="on-paper">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What We Stand On</span>
+      <h2>Our principles and our standards.</h2>
+    </div>
+    <div class="plaques">
+      <div class="plaque">
+        <span class="eyebrow">Our Principles</span>
+        <div class="principle">
+          <span class="num">1</span>
+          <div>
+            <div class="latin-line">&ldquo;<span class="gloss-term" data-gloss="vetitum" tabindex="0">Vetitum Discepto Est<span class="gloss-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 8v.01" stroke-linecap="round"/></svg></span></span>!&rdquo;</div>
+            <p>&lsquo;No compromise.&rsquo; Or more plainly put, &lsquo;think for yourself.&rsquo; It is all too often the case that your own feelings or will are put second. No more.</p>
+            <div class="gloss-popover" id="gloss-vetitum">
+              <div class="gloss-term-title">Vetitum Discepto Est</div>
+              <p>Latin for &lsquo;the forbidden is disputed&rsquo; &mdash; ISL's founding motto. In plain terms: question everything, including what you've been told not to question.</p>
+            </div>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="num">2</span>
+          <div>
+            <div class="latin-line" style="font-style:normal;">Truth, faith and belief</div>
+            <p>Our principles are our guide, both in what we do and who we are. Truth is self-honesty, faith is self-belief, and belief is letting go.</p>
+          </div>
+        </div>
+      </div>
+      <div class="plaque">
+        <span class="eyebrow">Our Standards</span>
+        <ul class="standards-list">
+          <li>Excellence</li>
+          <li>Achievement above cost</li>
+          <li>Knowledge &amp; understanding</li>
+          <li><span class="latin gloss-term" data-gloss="nosce" tabindex="0">&lsquo;Nosce te Ipsum&rsquo;<span class="gloss-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 8v.01" stroke-linecap="round"/></svg></span></span> &mdash; Know thyself
+            <div class="gloss-popover" id="gloss-nosce">
+              <div class="gloss-term-title">Nosce te Ipsum</div>
+              <p>Latin for &lsquo;know thyself&rsquo; &mdash; inscribed at the Temple of Apollo at Delphi, and the standard every ISL course is ultimately measured against.</p>
+            </div>
+          </li>
+          <li>Accept nothing but the truth</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Spiritual Courses</span>
+      <h2>Seven ways to begin.</h2>
+    </div>
+    <div class="course-grid" id="courseGrid">
+      <div class="course-grid-status">Loading courses&hellip;</div>
+    </div>
+  </div>
+</section>
+
+<section class="programs-band">
+  <div class="scrim"></div>
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:20px;height:20px;"><circle cx="16" cy="20" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="2 54" stroke-linecap="round" transform="rotate(-40 16 20)"/><path d="M8 20a8 8 0 1 1 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="20" r="2.6" fill="currentColor"/><circle cx="28" cy="14" r="4.5" stroke="currentColor" stroke-width="1.6" opacity="0.55"/><circle cx="31" cy="12.3" r="1.4" fill="currentColor" opacity="0.55"/></svg>
+          Popular Programs
+        </span>
+        <h2>For deeper, self-directed study.</h2>
+        <p>Bundled, theme-led study drawing on multiple courses at once &mdash; for students ready to go further on their own. Coming soon as the new curriculum goes live.</p>
+      </div>
+    </div>
+    <div class="programs-row">
+      <span class="soon">Programs launching soon</span>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Before You Start</span>
+      <h2>Frequently asked questions.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Where do I start? <span class="plus">+</span></summary>
+        <div class="faq-body">Read through the site and get a feel for what you're looking for, then either enrol in the course that sounds right or contact the institute to arrange a free, no-obligation conversation about your own needs.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What will I do? <span class="plus">+</span></summary>
+        <div class="faq-body">Each course follows the same shape: a short reading list, specific points to investigate as you read, a practical activity, and a written or practical exercise — which becomes the basis for a personal one-to-one tutorial with Benjamin.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How long will it take? <span class="plus">+</span></summary>
+        <div class="faq-body">It varies by course — durations for the new curriculum are being finalised and will appear on each course's page shortly.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How much will it cost? <span class="plus">+</span></summary>
+        <div class="faq-body">Pricing for the new curriculum is being finalised. Course pages will show a confirmed price as soon as it's set — in the meantime, get in touch and we'll let you know directly.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there any guarantee? <span class="plus">+</span></summary>
+        <div class="faq-body">Contact the institute directly and we're happy to talk through what to expect before you commit to anything.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="contact-band" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Get In Touch</span>
+      <h2>This is free, and without obligation.</h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <span class="eyebrow">Primary Contact</span>
+        <p>Fynshovedvej 584<br>DK-5390, M&aring;rtofte</p>
+        <p>CVR-nr 4156 4296</p>
+        <p><a href="tel:+4531155327">+45 3115 5327</a></p>
+        <p><a href="mailto:admin@ISLearning.org">admin@ISLearning.org</a></p>
+      </div>
+      <div>
+        <span class="eyebrow">Marketing &amp; PR</span>
+        <p>Administration: Benjamin J M W-W Esq.</p>
+        <p><a href="tel:+4531155327">+45 3115 5327</a></p>
+        <p><a href="mailto:admin@ISLearning.org">admin@ISLearning.org</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="full-tagline">The Institute of Spiritual Learning</span>
+    </div>
+    <div class="footer-row">
+      <div>&copy; ISL &mdash; The Institute of Spiritual Learning</div>
+      <div class="footer-links">
+        <a href="index.html#about">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<script>
+document.querySelectorAll('.gloss-term').forEach(function (t) {
+  var pop = document.getElementById('gloss-' + t.dataset.gloss);
+  if (!pop) return;
+  function toggle(e) { e.preventDefault(); pop.classList.toggle('open'); }
+  t.addEventListener('click', toggle);
+  t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') toggle(e); });
+});
+
+function priceLabel(c) {
+  if (!c.price_confirmed) return 'Price to be confirmed';
+  return c.price_dkk.toLocaleString('da-DK') + ' DKK';
+}
+function courseCardHTML(c, i) {
+  var duration = c.duration || 'Duration to be confirmed';
+  var goLabel = i === 0 ? 'Start here' : 'View course';
+  return '<a class="course-card" href="courses/' + c.id + '.html">' +
+    '<h3>' + c.title + '</h3>' +
+    '<div class="price">' + duration + ' &middot; ' + priceLabel(c) + '</div>' +
+    '<p>' + (c.summary || '') + '</p>' +
+    '<span class="go">' + goLabel + ' <svg class="icon" style="width:13px;height:13px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
+  '</a>';
+}
+async function loadCourses() {
+  var grid = document.getElementById('courseGrid');
+  var navPanel = document.getElementById('navCoursesPanel');
+  if (typeof sb === 'undefined' || !sb) { grid.innerHTML = '<div class="course-grid-status">Courses are temporarily unavailable — please check back shortly.</div>'; return; }
+  var { data, error } = await sb.from('courses').select('id,title,summary,duration,price_dkk,price_confirmed,sort_order')
+    .eq('is_professional', false).eq('active', true).order('sort_order', { ascending: true });
+  if (error || !data || !data.length) {
+    grid.innerHTML = '<div class="course-grid-status">Courses are temporarily unavailable — please check back shortly.</div>';
+    return;
+  }
+  grid.innerHTML = data.map(courseCardHTML).join('');
+  if (navPanel) {
+    navPanel.innerHTML = data.map(function (c) { return '<a href="courses/' + c.id + '.html">' + c.title + '</a>'; }).join('') +
+      '<a href="courses.html" style="border-top:1px solid var(--line);margin-top:6px;padding-top:16px;">View all courses</a>';
+  }
+}
+loadCourses();
 </script>
-<noscript>
-
-<frameset rows="160,*,80," frameborder="0" border="1" framespacing="0">
-  <frame name="topNav" src="frames/top_nav.html" scrolling="no" noresize>
-  <frameset cols="120,*,120," frameborder="0" border="1" framespacing="0">
-	<frame name="left_blanc" src="frames/left_blanc.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
-	<frame name="main" src="main.html" marginheight="0" marginwidth="0" scrolling="auto" noresize>
-	<frame name="right_blanc" src="frames/right_blanc.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
-</frameset>
-
-  <frame name="footer" src="frames/footer.html" marginheight="0" marginwidth="0" scrolling="no" noresize>
-
-<noframes>
-<p>Your browser doesn't support frames.go to www.ISLearning.org/simple.html</p>
-</noframes>
-
-</frameset>
-</noscript>
+<script src="assets/js/site-nav.js"></script>
+</body>
 </html>
-                    

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Courses — ISL, The Institute of Spiritual Learning</title>
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night: #171B21; --night-2: #212730;
+  --gold: #F0B106; --turquoise: #2BACCC; --turquoise-text: #6cc9e0; --skyblue: #54ACD9; --lavender: #BE81F7;
+  --charcoal: #343434;
+  --line-dark: rgba(255,255,255,0.14); --ink-on-dark: rgba(255,255,255,0.92); --soft-on-dark: rgba(255,255,255,0.62);
+  --clr-success: #3ddc9b; --clr-error: #ff8a75;
+  --radius-md: 12px; --max: 1000px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;margin:0;color:#fff;}
+a{color:var(--turquoise-text);text-decoration:none;}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+.eyebrow{font-family:"Jost",Arial,sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--skyblue);margin:0 0 14px;display:block;}
+
+header.app-nav{border-bottom:1px solid var(--line-dark);background:var(--night);position:sticky;top:0;z-index:40;}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;flex-wrap:wrap;gap:12px;}
+.wordmark{display:flex;align-items:center;gap:12px;color:#fff;}
+.wordmark .isl-icon{height:30px;width:auto;}
+.wordmark .isl-icon-ring{color:var(--turquoise);}
+.wordmark .isl-icon-dot{fill:var(--night);}
+.wordmark .tagline{font-family:"Jost",Arial,sans-serif;font-size:0.62rem;font-weight:500;line-height:1.3;letter-spacing:0.03em;text-transform:uppercase;color:var(--soft-on-dark);}
+nav.app-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+nav.app-links a{font-family:"Jost",Arial,sans-serif;font-size:0.92rem;font-weight:300;color:var(--soft-on-dark);padding:10px 15px;}
+nav.app-links a.active{color:var(--gold);font-weight:500;}
+nav.app-links a:hover{color:#fff;}
+#signOutBtn{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:999px;padding:9px 18px;cursor:pointer;font-size:.82rem;font-family:"Jost",Arial,sans-serif;}
+#signOutBtn:hover{border-color:var(--turquoise);color:var(--turquoise-text);}
+
+main{padding:0 0 90px;}
+.lib-hero{padding:52px 0 36px;}
+.lib-hero h1{font-style:italic;font-size:clamp(1.9rem,3.6vw,2.3rem);margin-bottom:10px;}
+.sub{color:var(--soft-on-dark);margin:0;max-width:60ch;}
+
+.keep-note{display:flex;gap:16px;align-items:flex-start;background:var(--night-2);border:1px solid var(--line-dark);border-radius:14px;padding:26px 28px;margin-bottom:36px;}
+.keep-note svg{width:26px;height:26px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.keep-note p{margin:0;color:var(--soft-on-dark);font-size:0.96rem;max-width:68ch;}
+.keep-note strong{color:#fff;}
+
+.empty-state{background:var(--night-2);border:1px solid var(--line-dark);border-radius:var(--radius-md);padding:48px;text-align:center;color:var(--soft-on-dark);}
+.empty-state a{color:var(--turquoise-text);font-weight:500;}
+
+.course-block{background:var(--night-2);border:1px solid var(--line-dark);border-radius:14px;padding:28px 28px 24px;margin-bottom:22px;}
+.course-block h2{font-style:italic;font-size:1.4rem;margin:0 0 4px;}
+.course-block .meta{color:var(--soft-on-dark);font-size:.85rem;margin-bottom:20px;}
+.content-item{border-top:1px solid var(--line-dark);padding:18px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.content-item:first-of-type{border-top:none;}
+.content-item h3{font-family:"Jost",Arial,sans-serif;font-weight:500;font-size:.98rem;margin:0 0 4px;color:#fff;}
+.content-item p{font-size:.88rem;color:var(--soft-on-dark);margin:0;}
+.content-item .week{font-family:"Jost",Arial,sans-serif;font-size:.68rem;color:var(--skyblue);font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.attempt-btn{flex-shrink:0;background:rgba(43,172,204,0.12);color:var(--turquoise-text);border:1px solid rgba(43,172,204,0.35);border-radius:999px;padding:9px 16px;font-size:.82rem;font-weight:500;cursor:pointer;white-space:nowrap;font-family:"Jost",Arial,sans-serif;}
+.attempt-btn.done{background:var(--clr-success);color:var(--night);border-color:var(--clr-success);cursor:default;}
+.download-link{display:inline-block;margin-top:6px;font-size:.82rem;color:var(--gold);}
+.no-content-note{color:var(--soft-on-dark);font-size:.9rem;}
+
+.booking-cta{background:rgba(240,177,6,0.08);border:1px solid rgba(240,177,6,0.3);border-radius:var(--radius-md);padding:20px 24px;margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.booking-cta p{margin:0;font-size:.9rem;color:var(--ink-on-dark);}
+.booking-cta .btn-gold{background:var(--gold);color:var(--charcoal);border:none;border-radius:999px;padding:11px 20px;font-weight:500;font-size:.85rem;text-decoration:none;white-space:nowrap;font-family:"Jost",Arial,sans-serif;}
+.loading{text-align:center;padding:70px 0;color:var(--soft-on-dark);}
+</style>
+</head>
+<body>
+<header class="app-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="index.html">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="tagline">The Institute of Spiritual Learning</span>
+    </a>
+    <nav class="app-links">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a class="active" href="account.html">My Courses</a>
+      <button id="signOutBtn" type="button">Sign Out</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="lib-hero">
+    <span class="eyebrow">Your Library</span>
+    <h1 id="pageHeading">Welcome back</h1>
+    <p class="sub" id="welcomeMsg">Loading your account&hellip;</p>
+  </div>
+
+  <div class="keep-note">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <p><strong>Each course leaves you with something.</strong> Where a course has a downloadable workbook, you'll find it here &mdash; yours to keep and return to, on or off the site.</p>
+  </div>
+
+  <div id="content" class="loading">Loading your courses&hellip;</div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<script src="assets/js/site-nav.js"></script>
+<script>
+(async () => {
+  if (typeof sb === 'undefined' || !sb) {
+    document.getElementById('welcomeMsg').textContent = 'Signed-in features are unavailable right now.';
+    document.getElementById('content').className = '';
+    document.getElementById('content').innerHTML = '<div class="empty-state">We couldn&rsquo;t connect to our account system. Please check your connection and refresh the page.</div>';
+    return;
+  }
+  const user = await requireAuth();
+  if (!user) return; // requireAuth already redirected to sign in
+
+  const firstName = (user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name.split(' ')[0] : null;
+  document.getElementById('pageHeading').textContent = firstName ? `Welcome back, ${firstName}` : 'Welcome back';
+  document.getElementById('welcomeMsg').textContent = `Signed in as ${user.email}`;
+
+  const contentEl = document.getElementById('content');
+
+  const [purchases, eligibleCourseIds, progressRows] = await Promise.all([
+    getMyPurchases(),
+    getBookingEligibility(),
+    sb.from('progress').select('content_id').then(r => r.data || []),
+  ]);
+  const attemptedIds = new Set(progressRows.map(r => r.content_id));
+
+  if (purchases.length === 0) {
+    contentEl.className = '';
+    contentEl.innerHTML = `
+      <div class="empty-state">
+        You haven't enrolled in any courses yet.<br>
+        <a href="courses.html">Browse the course catalog &rarr;</a>
+      </div>`;
+    return;
+  }
+
+  // Fetch course titles for display
+  const courseIds = purchases.map(p => p.course_id);
+  const { data: courseRows } = await sb
+    .from('courses').select('id, title, duration').in('id', courseIds);
+  const courseInfo = Object.fromEntries((courseRows || []).map(c => [c.id, c]));
+
+  let html = '';
+  for (const purchase of purchases) {
+    const course = courseInfo[purchase.course_id] || { title: purchase.course_id, duration: '' };
+    const content = await getGatedContent(purchase.course_id);
+    const isEligible = eligibleCourseIds.includes(purchase.course_id);
+    const attemptedCount = content.filter(item => attemptedIds.has(item.id)).length;
+
+    html += `<div class="course-block">
+      <h2>${course.title}</h2>
+      <div class="meta">${course.duration ? course.duration + ' &middot; ' : ''}Purchased ${new Date(purchase.created_at).toLocaleDateString()}${content.length ? ` &middot; ${attemptedCount} of ${content.length} items attempted` : ''}</div>`;
+
+    if (content.length === 0) {
+      html += `<p class="no-content-note">Course materials are being finalised — check back soon.</p>`;
+    } else {
+      for (const item of content) {
+        const done = attemptedIds.has(item.id);
+        html += `
+          <div class="content-item">
+            <div>
+              ${item.week_number ? `<div class="week">Week ${item.week_number}</div>` : ''}
+              <h3>${item.title}</h3>
+              ${item.body ? `<p>${item.body}</p>` : ''}
+              ${item.download_url ? `<a class="download-link" href="${item.download_url}" target="_blank" rel="noopener">Download materials &rarr;</a>` : ''}
+            </div>
+            <button class="attempt-btn${done ? ' done' : ''}" data-content-id="${item.id}" ${done ? 'disabled' : ''}>${done ? 'Attempted ✓' : 'Mark as attempted'}</button>
+          </div>`;
+      }
+    }
+
+    html += `
+      <div class="booking-cta">
+        ${isEligible
+          ? `<p><strong>You're eligible for 1-to-1 contact</strong> on this course.</p>
+             <a class="btn-gold" href="tutorial-booking.html?course=${encodeURIComponent(purchase.course_id)}">Book a session</a>`
+          : `<p>Attempt at least one piece of course content to unlock 1-to-1 booking.</p>`}
+      </div>
+    </div>`;
+  }
+  contentEl.className = '';
+  contentEl.innerHTML = html;
+
+  // Wire up "mark as attempted" buttons
+  contentEl.querySelectorAll('.attempt-btn:not(.done)').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      await markAttempted(btn.dataset.contentId);
+      btn.textContent = 'Attempted ✓';
+      btn.classList.add('done');
+      // Refresh eligibility and counts without losing scroll position on a full nav
+      location.reload();
+    });
+  });
+})();
+
+document.getElementById('signOutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>

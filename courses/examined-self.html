@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Examined Self — ISL, The Institute of Spiritual Learning</title>
+<meta name="description" content="The turn inward, using everything studied so far as material. Jung supplies the architecture of the unconscious and individuation; Laing supplies a more radi...">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+
+<style>
+  .breadcrumb-bar { padding: 18px 0; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .breadcrumb { list-style: none; display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; font-size: 0.84rem; color: var(--charcoal-soft); }
+  .breadcrumb a { color: var(--charcoal-soft); }
+  .breadcrumb a:hover { color: var(--turquoise-text); }
+  .breadcrumb .current { color: var(--charcoal); }
+  .breadcrumb .sep { opacity: 0.5; }
+
+  .hero { padding: 52px 0 40px; }
+  .course-chip { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--turquoise-text); background: var(--turquoise-tint); padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; }
+  .hero h1 { font-style: italic; font-size: clamp(2.1rem, 4vw, 2.9rem); margin-bottom: 12px; }
+  .hero-tagline { color: var(--charcoal-soft); font-size: 1.08rem; max-width: 62ch; margin: 0 0 22px; }
+  .inner-outer-line { display: flex; gap: 10px; align-items: flex-start; background: var(--paper); border-left: 3px solid var(--lavender); border-radius: 0 8px 8px 0; padding: 14px 18px; max-width: 68ch; margin-bottom: 26px; font-size: 0.92rem; color: var(--charcoal-soft); }
+  .inner-outer-line strong { color: var(--charcoal); }
+  .meta-strip { display: flex; flex-wrap: wrap; gap: 12px; }
+  .meta-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; font-size: 0.86rem; color: var(--charcoal); }
+  .meta-pill svg { width: 15px; height: 15px; color: var(--turquoise-text); }
+
+  .page-body { padding: 20px 0 70px; }
+  .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 56px; align-items: start; }
+  .section { margin-bottom: 46px; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-style: italic; margin-bottom: 18px; }
+  .section-title-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--turquoise-tint); color: var(--turquoise-text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-title-icon svg { width: 14px; height: 14px; }
+  .section p { color: var(--charcoal-soft); font-size: 1.02rem; margin: 0; }
+
+  .reading-list, .topics-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .reading-list li, .topics-list li { display: flex; gap: 12px; font-size: 0.98rem; color: var(--charcoal); padding: 14px 16px; background: var(--paper); border-radius: 8px; }
+  .reading-list li svg, .topics-list li svg { width: 16px; height: 16px; color: var(--turquoise-text); flex-shrink: 0; margin-top: 3px; }
+  .reading-list em { font-style: italic; }
+
+  .exercise-card { background: linear-gradient(120deg, var(--tg-0) 0%, var(--tg-25) 25%, var(--tg-50) 50%, var(--tg-75) 75%, var(--tg-100) 100%); border-radius: 14px; padding: 30px 32px; position: relative; overflow: hidden; }
+  .exercise-card::before { content: ""; position: absolute; inset: 0; background: rgba(23,27,33,0.38); }
+  .exercise-card > * { position: relative; z-index: 1; }
+  .exercise-card .eyebrow { color: var(--skyblue); }
+  .exercise-card p { color: rgba(255,255,255,0.92); font-size: 1.02rem; margin: 0; }
+
+  .audience-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .audience-card { border: 1px solid var(--line); border-radius: 10px; padding: 22px 20px; }
+  .audience-card h4 { font-family: "Jost", sans-serif; font-weight: 500; font-size: 0.98rem; margin: 0 0 8px; color: var(--charcoal); }
+  .audience-card p { font-size: 0.9rem; margin: 0; color: var(--charcoal-soft); }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--turquoise); color: var(--charcoal); display: flex; align-items: center; justify-content: center; font-family: "Cormorant Garamond", serif; font-weight: 500; }
+  .step-body h4 { font-family: "Jost", sans-serif; font-weight: 500; font-size: 0.98rem; margin: 0 0 4px; color: var(--charcoal); }
+  .step-body p { font-size: 0.92rem; margin: 0; color: var(--charcoal-soft); }
+
+  .sidebar-col { position: sticky; top: 90px; display: grid; gap: 18px; }
+  .sidebar-card { border: 1px solid var(--line); border-radius: 12px; padding: 26px 24px; }
+  .sidebar-card-title { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.2rem; margin: 0 0 16px; }
+  .sidebar-card .btn { width: 100%; text-align: center; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .sidebar-card .btn svg { width: 15px; height: 15px; }
+  .phone-line { margin-top: 14px; font-size: 0.86rem; color: var(--charcoal-soft); text-align: center; }
+
+  .price-display { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .price-label { font-size: 0.86rem; color: var(--charcoal-soft); }
+  .price-value { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 1.3rem; font-style: italic; color: var(--charcoal); }
+  .enrol-note { font-size: 0.9rem; color: var(--charcoal-soft); margin: 0 0 16px; }
+  .sandbox-banner { display: flex; gap: 8px; align-items: flex-start; background: var(--turquoise-tint); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: var(--turquoise-text); margin-bottom: 14px; }
+  .sandbox-banner svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+  .paypal-status { font-size: 0.85rem; margin-top: 10px; }
+  .paypal-status.error { color: #c0392b; }
+  .paypal-status.info { color: var(--turquoise-text); }
+  .confirmation-panel { display: none; text-align: center; padding: 10px 4px; }
+  .confirmation-panel .conf-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--turquoise-tint); color: var(--turquoise-text); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .confirmation-panel .conf-icon svg { width: 20px; height: 20px; }
+  .confirmation-panel h4 { font-family: "Cormorant Garamond", serif; font-style: italic; margin: 0 0 6px; }
+  .confirmation-panel p { font-size: 0.9rem; color: var(--charcoal-soft); margin: 0; }
+  .paypal-trust { display: flex; align-items: center; gap: 6px; justify-content: center; font-size: 0.78rem; color: var(--charcoal-soft); margin-top: 14px; }
+  .paypal-trust svg { width: 12px; height: 12px; }
+
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .contact-details { display: grid; gap: 14px; margin-top: 24px; }
+  .contact-detail { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--charcoal); }
+  .contact-detail svg { width: 16px; height: 16px; color: var(--turquoise-text); }
+  .form-group { margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-group label { display: block; font-size: 0.86rem; font-weight: 500; margin-bottom: 8px; }
+  .form-group input, .form-group textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 6px; font-family: "Jost", sans-serif; font-size: 0.95rem; color: var(--charcoal); }
+  .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--turquoise); }
+  .form-group input.invalid, .form-group textarea.invalid { border-color: #c0392b; }
+  .field-error { display: none; color: #c0392b; font-size: 0.78rem; margin-top: 4px; }
+  .field-error.visible { display: block; }
+  .req { color: #c0392b; }
+  .btn-submit { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--charcoal); border: none; border-radius: 6px; padding: 14px 26px; font-family: "Jost", sans-serif; font-weight: 500; font-size: 0.94rem; cursor: pointer; }
+  .btn-submit:hover { background: #d99e05; }
+  .btn-submit svg { width: 16px; height: 16px; }
+  .form-note { font-size: 0.82rem; color: var(--charcoal-soft); margin-top: 12px; }
+
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; }
+    .sidebar-col { position: static; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <a href="tel:+4531155327"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +45 3115 5327</a>
+    <a href="mailto:admin@ISLearning.org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" fill="none"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg> admin@ISLearning.org</a>
+  </div>
+</div>
+
+<header class="site-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="../index.html">
+      <span data-isl-logo data-height="38px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
+    </a>
+    <nav class="primary-links desktop-only" id="primaryNav">
+      <a href="../index.html#home">Home</a>
+      <a href="../index.html#about">About</a>
+      <div class="nav-item" data-panel="courses">
+        <button type="button" aria-expanded="false"><a href="../courses.html" style="padding:0;" aria-current="page">Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="nav-panel"><div class="nav-panel-inner" id="navCoursesPanel">
+          <a href="../courses.html">View all courses</a>
+        </div></div>
+      </div>
+      <a href="../index.html#faq">FAQ</a>
+      <span class="nav-auth-slot" id="navAuthSlot"></span>
+      <a class="nav-cta" href="../index.html#contact">Contact Us</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"></nav>
+
+<div class="breadcrumb-bar">
+  <div class="wrap">
+    <ol class="breadcrumb">
+      <li><a href="../index.html">Home</a></li>
+      <li class="sep">&#8250;</li>
+      <li><a href="../courses.html">Courses</a></li>
+      <li class="sep">&#8250;</li>
+      <li class="current">The Examined Self</li>
+    </ol>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="course-chip">Course 06</span>
+    <h1>The Examined Self</h1>
+    <p class="hero-tagline">Jung, Laing &amp; the Psychology of the Inner World</p>
+    <div class="inner-outer-line">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:18px;height:18px;color:var(--lavender);flex-shrink:0;margin-top:2px;"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 2a10 10 0 010 20" stroke-dasharray="2 3"/></svg>
+      <span><strong>Inner / outer:</strong> Primarily inner, with the outer relational thread kept alive through Laing &mdash; direct preparation for the personal work of the flagship course.</span>
+    </div>
+    <div class="meta-strip">
+      <div class="meta-pill">
+        <svg viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <span><strong>Duration:</strong> <span id="metaDuration">Loading&hellip;</span></span>
+      </div>
+      <div class="meta-pill">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5h12v9a1 1 0 01-1 1H3a1 1 0 01-1-1V5z"/><path d="M2 5l6 5 6-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><strong>Format:</strong> Reading, exercise &amp; a personal 1-to-1 tutorial</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page-body">
+  <div class="wrap">
+    <div class="two-col">
+      <main class="main-col">
+
+        <article class="section">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 6v4M8 5h.01" stroke-linecap="round"/></svg></span>Overview</h2>
+          <p>The turn inward, using everything studied so far as material. Jung supplies the architecture of the unconscious and individuation; Laing supplies a more radical, relational reading of selfhood &mdash; how the outer world of family and society can fracture as much as it forms the inner one. Together they give you a modern, psychologically literate vocabulary for what the earlier courses approached through myth and symbol.</p>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l3 3 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>What this course covers</h2>
+          <p>Jung's model of the unconscious, archetypes, and the individuation process; Laing's account of the divided self and the relational roots of psychological distress; and a direct comparison of Jung's more inward, symbolic method against Laing's more outward, relational one.</p>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12v10H2z"/><path d="M2 6h12M5 3v10" stroke-linecap="round"/></svg></span>Suggested reading</h2>
+          <ul class="reading-list"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>C. G. Jung, <em>Man and His Symbols</em></span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>C. G. Jung, <em>Memories, Dreams, Reflections</em></span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>R. D. Laing, <em>The Divided Self</em></span></li></ul>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.5l2.5 1.5" stroke-linecap="round"/></svg></span>Topics of investigation</h2>
+          <ul class="topics-list"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg><span>How does Jung's idea of the archetype relate to the symbols already studied &mdash; the Tree of Life, the medicine wheel, the figures of the Books of the Dead?</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg><span>What does Laing's work suggest about how much of the &ldquo;inner world&rdquo; is actually shaped from outside it?</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg><span>What would Jung's process of individuation look like, described in the language of the earlier courses' traditions?</span></li></ul>
+        </article>
+
+        <article class="section exercise-card">
+          <span class="eyebrow">Practical Activity &amp; Exercise</span>
+          <p>Dream journalling over the course period, followed by a written self-analysis using Jungian concepts &mdash; discussed rather than diagnosed in the tutorial.</p>
+        </article>
+
+        <article class="section" style="margin-top:46px;">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1.5 14c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/><circle cx="12" cy="5" r="2" stroke-width="1.3"/><path d="M14.5 13.5c0-2-1.2-3-2.5-3" stroke-linecap="round"/></svg></span>Who it's for</h2>
+          <div class="audience-cards"><div class="audience-card"><div class="section-title-icon" style="margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a4 4 0 100 8 4 4 0 000-8z"/><path d="M20 21v-1a8 8 0 00-16 0v1"/></svg></div><h4>Students nearing the end of the curriculum</h4><p>This course draws directly on the symbols and traditions studied in Courses 01 through 05.</p></div><div class="audience-card"><div class="section-title-icon" style="margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M12 4l8 8-8 8"/></svg></div><h4>Anyone who wants a modern psychological vocabulary</h4><p>Jung and Laing translate what earlier courses approached through myth and symbol into contemporary terms.</p></div><div class="audience-card"><div class="section-title-icon" style="margin-bottom:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20V8M6 14l6-6 6 6"/><path d="M5 20h14" stroke-linecap="round"/></svg></div><h4>Those preparing for the flagship course</h4><p>The personal reflective work here leads directly into Course 07.</p></div></div>
+        </article>
+
+        <article class="section">
+          <h2 class="section-title"><span class="section-title-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v12M2 8h12" stroke-linecap="round"/></svg></span>How it works</h2>
+          <ol class="steps">
+            <li class="step"><div class="step-num">1</div><div class="step-body"><h4>Read</h4><p>Work through the short, curated reading list above at your own pace.</p></div></li>
+            <li class="step"><div class="step-num">2</div><div class="step-body"><h4>Investigate</h4><p>Follow the specific topics of investigation raised by each text.</p></div></li>
+            <li class="step"><div class="step-num">3</div><div class="step-body"><h4>Practise</h4><p>Complete the course's practical activity and exercise.</p></div></li>
+            <li class="step"><div class="step-num">4</div><div class="step-body"><h4>Tutorial</h4><p>Your exercise becomes the basis of a personal 1-to-1 tutorial with Benjamin.</p></div></li>
+          </ol>
+        </article>
+
+        <div class="section" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;border-top:1px solid var(--line);padding-top:32px;"><a class="btn btn-ghost" href="two-paths.html">&larr; Course 05: The Two Paths</a><a class="btn btn-ghost" href="i-am.html">Course 07: The I AM &rarr;</a></div>
+      </main>
+
+      <aside class="sidebar-col">
+        <div class="sidebar-card">
+          <p class="sidebar-card-title">Ready to begin?</p>
+          <a href="#contact" class="btn btn-ghost"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 3h12a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M1 4l7 5 7-5" stroke-linecap="round"/></svg>Enquire now</a>
+          <a href="../courses.html" class="btn btn-ghost"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to all courses</a>
+          <div class="phone-line">Prefer to talk it through? <a href="tel:+4531155327">+45 3115 5327</a></div>
+        </div>
+
+        <div class="sidebar-card" id="enrol-card">
+          <p class="sidebar-card-title">Enrolment</p>
+          <div id="enrol-card-body"><p class="enrol-note">Loading&hellip;</p></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p style="color:var(--charcoal-soft);margin-top:14px;">Not quite ready to enrol, or have questions before you commit? Send a message below and it opens directly in your email client, addressed to the institute &mdash; free, and without obligation.</p>
+        <div class="contact-details">
+          <div class="contact-detail"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 5h14v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5z"/><path d="M2 5l7 6 7-6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>admin@ISLearning.org</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3h4l1.5 3.5-2 1.2A10 10 0 0011.3 11l1.2-2L16 10.5V15A1 1 0 0115 16 13 13 0 012 3a1 1 0 011-1z"/></svg><span>+45 3115 5327</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3"/><path d="M15 8c0 5-6 9-6 9S3 13 3 8a6 6 0 0112 0z"/></svg><span>Fynshovedvej 584, M&aring;rtofte, Denmark</span></div>
+        </div>
+      </div>
+      <div>
+        <form id="enquiry-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Full name <span class="req">*</span></label>
+              <input type="text" id="f-name" required>
+              <span class="field-error" id="f-name-err">Please enter your full name.</span>
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email address <span class="req">*</span></label>
+              <input type="email" id="f-email" required>
+              <span class="field-error" id="f-email-err">Please enter a valid email address.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone number</label>
+            <input type="tel" id="f-phone">
+          </div>
+          <div class="form-group">
+            <label for="f-message">Your message <span class="req">*</span></label>
+            <textarea id="f-message" rows="5" required placeholder="Tell us a bit about yourself and any questions you have about The Examined Self..."></textarea>
+            <span class="field-error" id="f-message-err">Please enter a message.</span>
+          </div>
+          <button type="submit" class="btn-submit" id="form-submit-btn">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M2 9h14M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Send enquiry
+          </button>
+          <p class="form-note">This opens your email client with the message pre-filled &mdash; nothing is sent automatically.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="full-tagline">The Institute of Spiritual Learning</span>
+    </div>
+    <div class="footer-row">
+      <div>&copy; ISL &mdash; The Institute of Spiritual Learning</div>
+      <div class="footer-links">
+        <a href="../index.html#about">About</a>
+        <a href="../courses.html">Courses</a>
+        <a href="../index.html#faq">FAQ</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>window.ISL_ROOT = "../";</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-client.js"></script>
+<script>
+const COURSE_ID = "examined-self";
+const COURSE_TITLE = "The Examined Self";
+
+async function initEnrolCard() {
+  const durationEl = document.getElementById('metaDuration');
+  const body = document.getElementById('enrol-card-body');
+  if (typeof sb === 'undefined' || !sb) {
+    if (durationEl) durationEl.textContent = 'To be confirmed';
+    body.innerHTML = '<p class="enrol-note">Enrolment is temporarily unavailable — please contact us directly.</p>';
+    return;
+  }
+  const { data: course } = await sb.from('courses').select('price_dkk, price_confirmed, duration').eq('id', COURSE_ID).single();
+  if (durationEl) durationEl.textContent = (course && course.duration) || 'To be confirmed';
+  if (!course) {
+    body.innerHTML = '<p class="enrol-note">Enrolment is temporarily unavailable — please contact us directly.</p>';
+    return;
+  }
+
+  const user = typeof getCurrentUser === 'function' ? await getCurrentUser() : null;
+  if (user) {
+    const purchased = await hasPurchased(COURSE_ID);
+    if (purchased) {
+      body.innerHTML = '<p class="enrol-note">You&rsquo;re already enrolled in this course.</p><a class="btn btn-primary" href="../account.html">Go to My Courses</a>';
+      return;
+    }
+  }
+
+  if (!course.price_confirmed) {
+    body.innerHTML =
+      '<div class="price-display"><span class="price-label">Course fee</span><span class="price-value">To be confirmed</span></div>' +
+      '<p class="enrol-note">Pricing for this course is being finalised. Ask below and we&rsquo;ll let you know the moment enrolment opens.</p>' +
+      '<a class="btn btn-gold" href="mailto:admin@ISLearning.org?subject=' + encodeURIComponent(COURSE_TITLE + ' — notify me when enrolment opens') + '">Notify me</a>';
+    return;
+  }
+
+  body.innerHTML =
+    '<div class="price-display"><span class="price-label">Course fee</span><span class="price-value">' + course.price_dkk.toLocaleString('da-DK') + ' DKK</span></div>' +
+    '<div class="sandbox-banner"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 5.5v2.5M7 9.5h.01" stroke-linecap="round"/></svg><span>Sandbox mode — charged via PayPal in EUR, converted from the DKK price shown.</span></div>' +
+    '<div id="paypal-button-container"></div>' +
+    '<div id="paypal-status" class="paypal-status" role="alert" aria-live="polite"></div>' +
+    '<div class="confirmation-panel" id="confirmation-panel"><div class="conf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>Enrolment Confirmed!</h4><p id="confirmation-msg"></p></div>' +
+    '<p class="paypal-trust"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="5" width="8" height="6" rx="1"/><path d="M4 5V4a2 2 0 114 0v1" stroke-linecap="round"/></svg>Secure checkout via PayPal &middot; Sandbox mode</p>';
+
+  if (!user) {
+    document.getElementById('paypal-button-container').innerHTML =
+      '<a href="../signin.html?returnTo=' + encodeURIComponent(window.location.pathname) + '" class="btn btn-primary">Sign in to enrol</a>';
+    return;
+  }
+
+  loadPayPalSDK().then(renderPayPalButtons).catch(err => {
+    console.error(err.message);
+    const s = document.getElementById('paypal-status');
+    s.className = 'paypal-status error';
+    s.textContent = 'PayPal checkout could not be loaded. Please check your connection and refresh the page.';
+  });
+}
+
+function loadPayPalSDK(clientId = 'BAA2zFmU2CK2zsrHJgHdne3OAsG4AelU7-ymmiMEZqQe-tTrYcDp0MFH5OBFf_ZKCSfA1CvxZEcqCE_txo', currency = 'EUR') {
+  return new Promise((resolve, reject) => {
+    const existing = document.getElementById('paypal-sdk-script');
+    if (existing) existing.remove();
+    if (window.paypal) delete window.paypal;
+    const script = document.createElement('script');
+    script.id = 'paypal-sdk-script';
+    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${encodeURIComponent(currency)}&intent=capture`;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Failed to load PayPal SDK.'));
+    document.body.appendChild(script);
+  });
+}
+
+function renderPayPalButtons() {
+  const container = document.getElementById('paypal-button-container');
+  const statusEl = document.getElementById('paypal-status');
+  const confirmPanel = document.getElementById('confirmation-panel');
+  const confirmMsg = document.getElementById('confirmation-msg');
+  function setStatus(type, message) { statusEl.className = 'paypal-status ' + type; statusEl.textContent = message; }
+  function clearStatus() { statusEl.className = 'paypal-status'; statusEl.textContent = ''; }
+
+  window.paypal.Buttons({
+    createOrder(data, actions) {
+      clearStatus();
+      return createPayPalOrder(COURSE_ID).catch(err => {
+        console.error('Could not create order:', err);
+        setStatus('error', 'Could not start checkout: ' + err.message);
+        throw err;
+      });
+    },
+    onApprove(data) {
+      setStatus('info', 'Confirming your enrolment...');
+      return capturePayPalOrder(data.orderID, COURSE_ID).then((result) => {
+        clearStatus();
+        container.style.display = 'none';
+        const payerName = result.payerName || 'valued student';
+        confirmMsg.textContent = 'Thank you, ' + payerName + '. Your place on ' + COURSE_TITLE + ' has been reserved. Head to My Courses to access the course materials.';
+        confirmPanel.style.display = 'block';
+        confirmPanel.focus && confirmPanel.focus();
+      }).catch(err => {
+        console.error('Capture failed:', err);
+        setStatus('error', "Payment could not be confirmed. Please contact admin@ISLearning.org with your PayPal receipt and we'll sort this out right away.");
+      });
+    },
+    onError(err) { console.error('PayPal error:', err); setStatus('error', 'Something went wrong with the PayPal checkout. Please try again or contact us directly.'); },
+    onCancel() { setStatus('info', 'Payment cancelled. You can try again whenever you are ready, or use the enquiry form below.'); },
+    style: { layout: 'vertical', color: 'blue', shape: 'pill', label: 'pay', tagline: false },
+  }).render('#paypal-button-container').catch(err => {
+    console.error('PayPal render error:', err);
+    document.getElementById('paypal-status').className = 'paypal-status error';
+    document.getElementById('paypal-status').textContent = 'Unable to load PayPal checkout. Ensure you are online and try refreshing.';
+  });
+}
+
+initEnrolCard();
+
+// ---- Enquiry form: composes a mailto: message. No backend exists yet,
+// so this is deliberately honest rather than faking a "message sent" state. ----
+const enquiryForm = document.getElementById('enquiry-form');
+function validateField(input) {
+  const errEl = document.getElementById(input.id + '-err');
+  if (!errEl) return true;
+  let valid = true;
+  if (input.required && !input.value.trim()) valid = false;
+  else if (input.type === 'email' && input.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) valid = false;
+  input.classList.toggle('invalid', !valid);
+  errEl.classList.toggle('visible', !valid);
+  return valid;
+}
+['f-name', 'f-email', 'f-message'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('blur', () => validateField(el));
+});
+enquiryForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let allValid = true;
+  ['f-name', 'f-email', 'f-message'].forEach(id => { if (!validateField(document.getElementById(id))) allValid = false; });
+  if (!allValid) return;
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const message = document.getElementById('f-message').value.trim();
+  const subject = 'Enquiry — ' + COURSE_TITLE;
+  const bodyText = 'Name: ' + name + '\nEmail: ' + email + (phone ? '\nPhone: ' + phone : '') + '\n\n' + message;
+  window.location.href = 'mailto:admin@ISLearning.org?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
+});
+</script>
+<script src="../assets/js/site-nav.js"></script>
+</body>
+</html>

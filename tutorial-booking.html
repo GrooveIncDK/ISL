@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book Your Tutorial — ISL, The Institute of Spiritual Learning</title>
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night: #171B21; --night-2: #212730;
+  --gold: #F0B106; --turquoise: #2BACCC; --turquoise-text: #6cc9e0; --skyblue: #54ACD9; --lavender: #BE81F7;
+  --charcoal: #343434;
+  --line-dark: rgba(255,255,255,0.14); --ink-on-dark: rgba(255,255,255,0.92); --soft-on-dark: rgba(255,255,255,0.62);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;margin:0;color:#fff;}
+a{color:var(--turquoise-text);text-decoration:none;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+.eyebrow{font-family:"Jost",Arial,sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--skyblue);margin:0 0 14px;display:block;}
+
+header.app-nav{border-bottom:1px solid var(--line-dark);background:var(--night);position:sticky;top:0;z-index:40;}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;flex-wrap:wrap;gap:12px;}
+.wordmark{display:flex;align-items:center;gap:12px;color:#fff;}
+.wordmark .isl-icon{height:30px;width:auto;}
+.wordmark .isl-icon-ring{color:var(--turquoise);}
+.wordmark .isl-icon-dot{fill:var(--night);}
+.wordmark .tagline{font-family:"Jost",Arial,sans-serif;font-size:0.62rem;font-weight:500;line-height:1.3;letter-spacing:0.03em;text-transform:uppercase;color:var(--soft-on-dark);}
+nav.app-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+nav.app-links a{font-family:"Jost",Arial,sans-serif;font-size:0.92rem;font-weight:300;color:var(--soft-on-dark);padding:10px 15px;}
+nav.app-links a.active{color:var(--gold);font-weight:500;}
+nav.app-links a:hover{color:#fff;}
+#signOutBtn{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:999px;padding:9px 18px;cursor:pointer;font-size:.82rem;font-family:"Jost",Arial,sans-serif;}
+#signOutBtn:hover{border-color:var(--turquoise);color:var(--turquoise-text);}
+
+.breadcrumb{padding:22px 0 0;font-size:0.86rem;color:var(--soft-on-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.breadcrumb svg{width:12px;height:12px;}
+
+.book-hero{padding:18px 0 32px;}
+.book-hero h1{font-style:italic;font-size:clamp(1.8rem,3.4vw,2.1rem);margin-bottom:10px;}
+.book-hero p{color:var(--soft-on-dark);max-width:60ch;margin:0;}
+
+.context-card{display:flex;gap:16px;align-items:flex-start;background:var(--night-2);border:1px solid var(--turquoise);border-radius:14px;padding:24px 26px;margin-bottom:44px;}
+.context-card svg{width:22px;height:22px;color:var(--turquoise);flex-shrink:0;margin-top:2px;}
+.context-card .label{font-size:0.68rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--skyblue);display:block;margin-bottom:6px;}
+.context-card p{margin:0;color:var(--soft-on-dark);font-size:0.94rem;}
+.context-card .quote{font-style:italic;color:var(--ink-on-dark);}
+
+.honesty-note{display:flex;gap:14px;align-items:flex-start;background:rgba(240,177,6,0.07);border:1px solid rgba(240,177,6,0.3);border-radius:12px;padding:18px 22px;margin-bottom:36px;}
+.honesty-note svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.honesty-note p{margin:0;font-size:0.88rem;color:var(--soft-on-dark);}
+
+.booking-form h2{font-style:italic;font-size:1.3rem;margin-bottom:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.form-group label{display:block;font-size:0.86rem;font-weight:500;margin-bottom:8px;color:#fff;}
+.form-group input, .form-group select, .form-group textarea{width:100%;padding:12px 14px;background:var(--night-2);border:1px solid var(--line-dark);border-radius:8px;color:#fff;font-family:"Jost",Arial,sans-serif;font-size:0.95rem;}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{outline:none;border-color:var(--turquoise);}
+textarea.note{min-height:100px;resize:vertical;}
+
+.confirm-bar{display:flex;align-items:center;justify-content:space-between;background:var(--night-2);border-radius:14px;padding:26px 30px;margin:36px 0 60px;gap:20px;flex-wrap:wrap;}
+.confirm-bar .k{font-size:0.84rem;color:var(--soft-on-dark);margin-bottom:4px;}
+.confirm-bar .v{font-family:"Cormorant Garamond",serif;font-weight:500;font-style:italic;font-size:1.1rem;}
+.btn-confirm{font-weight:500;font-size:0.92rem;padding:15px 28px;border-radius:6px;background:var(--gold);color:var(--charcoal) !important;border:none;cursor:pointer;font-family:"Jost",Arial,sans-serif;}
+.btn-confirm:disabled{opacity:0.5;cursor:not-allowed;}
+
+.room-error{max-width:640px;margin:70px auto;text-align:center;padding:0 24px;}
+.room-error h1{font-style:italic;margin-bottom:14px;}
+.room-error p{color:var(--soft-on-dark);margin-bottom:24px;}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:0.88rem;padding:13px 22px;border-radius:6px;background:var(--gold);color:var(--charcoal) !important;}
+.loading{text-align:center;padding:80px 0;color:var(--soft-on-dark);}
+</style>
+</head>
+<body>
+<header class="app-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="index.html">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="tagline">The Institute of Spiritual Learning</span>
+    </a>
+    <nav class="app-links">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a class="active" href="account.html">My Courses</a>
+      <button id="signOutBtn" type="button">Sign Out</button>
+    </nav>
+  </div>
+</header>
+
+<div id="bookingRoot" class="loading">Loading&hellip;</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<script src="assets/js/site-nav.js"></script>
+<script>
+(async () => {
+  const root = document.getElementById('bookingRoot');
+  const params = new URLSearchParams(window.location.search);
+  const courseId = params.get('course');
+
+  if (typeof sb === 'undefined' || !sb) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>Unavailable</h1><p>We couldn&rsquo;t connect to our account system. Please check your connection and refresh the page.</p></div>';
+    return;
+  }
+  const user = await requireAuth('signin.html');
+  if (!user) return;
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+  if (!courseId) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>No course selected</h1><p>Booking a tutorial starts from a specific course &mdash; head back to My Courses and choose one from there.</p><a class="btn-dl" href="account.html">Go to My Courses</a></div>';
+    return;
+  }
+
+  const [{ data: course }, eligibleCourseIds] = await Promise.all([
+    sb.from('courses').select('id, title').eq('id', courseId).single(),
+    getBookingEligibility(),
+  ]);
+
+  if (!course) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>Course not found</h1><p>We couldn&rsquo;t find that course.</p><a class="btn-dl" href="account.html">Go to My Courses</a></div>';
+    return;
+  }
+
+  if (!eligibleCourseIds.includes(courseId)) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>Not yet unlocked</h1><p>Tutorial booking for ' + esc(course.title) + ' unlocks once you&rsquo;ve engaged with at least one part of the course.</p><a class="btn-dl" href="course-room.html?course=' + esc(courseId) + '">Go to the Course Room</a></div>';
+    return;
+  }
+
+  // Pull a real snippet of what the student wrote, if anything, for honest context —
+  // no fabricated "what you'll discuss" copy.
+  const content = await getGatedContent(courseId);
+  const exerciseIds = content.filter(c => c.content_type === 'exercise').map(c => c.id);
+  let quote = '';
+  if (exerciseIds.length) {
+    const { data: prog } = await sb.from('progress').select('reflection_text').in('content_id', exerciseIds).not('reflection_text', 'is', null).limit(1);
+    if (prog && prog[0] && prog[0].reflection_text) {
+      const t = prog[0].reflection_text.trim();
+      quote = t.length > 220 ? t.slice(0, 220) + '\u2026' : t;
+    }
+  }
+
+  let html = '';
+  html += '<div class="breadcrumb wrap"><a href="account.html">My Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> <a href="course-room.html?course=' + esc(courseId) + '">' + esc(course.title) + '</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> <span>Book Tutorial</span></div>';
+  html += '<div class="wrap book-hero"><span class="eyebrow">' + esc(course.title) + ' &middot; Your Tutorial</span><h1>Book your tutorial</h1><p>The outer expression of the inner work &mdash; a real conversation with Benjamin, built around what you wrote.</p></div>';
+
+  html += '<div class="wrap">';
+  if (quote) {
+    html += '<div class="context-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg><div><span class="label">What you\'ll discuss</span><p class="quote">&ldquo;' + esc(quote) + '&rdquo;</p><p style="margin-top:8px;">From your submitted reflection. Benjamin reads it before the session, so you can go straight into the conversation.</p></div></div>';
+  } else {
+    html += '<div class="context-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h6"/></svg><div><span class="label">What you\'ll discuss</span><p>Whatever you\'d like from ' + esc(course.title) + ' &mdash; there\'s no exercise text on file yet, so this session is open to bring whatever you want to talk through.</p></div></div>';
+  }
+
+  html += '<div class="honesty-note"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 5.5v2.5M7 9.5h.01" stroke-linecap="round"/></svg><p>There\'s no live scheduling system yet, so this doesn\'t book an exact slot automatically. Tell us your preference below and it opens in your email client, addressed to the institute &mdash; Benjamin will confirm a time directly with you.</p></div>';
+
+  html += '<form class="booking-form" id="bookingForm">' +
+    '<h2>Your preference</h2>' +
+    '<div class="form-row">' +
+      '<div class="form-group"><label for="pref-date">Preferred date</label><input type="date" id="pref-date" required></div>' +
+      '<div class="form-group"><label for="pref-time">Preferred time of day</label><select id="pref-time"><option value="Morning">Morning</option><option value="Afternoon">Afternoon</option><option value="Evening">Evening</option><option value="No preference">No preference</option></select></div>' +
+    '</div>' +
+    '<div class="form-group"><label for="pref-note">Anything else to add? (optional)</label><textarea class="note" id="pref-note" placeholder="Alternative times, timezone, or anything you want Benjamin to know ahead of the session..."></textarea></div>' +
+  '</form>';
+
+  html += '<div class="confirm-bar"><div><div class="k">Requesting</div><div class="v" id="confirmSummary">Choose a date to continue</div></div><button class="btn-confirm" type="button" id="confirmBtn" disabled>Request tutorial</button></div>';
+  html += '</div>';
+
+  root.className = '';
+  root.innerHTML = html;
+
+  const dateInput = document.getElementById('pref-date');
+  dateInput.min = new Date().toISOString().split('T')[0];
+  const timeInput = document.getElementById('pref-time');
+  const noteInput = document.getElementById('pref-note');
+  const summary = document.getElementById('confirmSummary');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  function refreshSummary() {
+    if (!dateInput.value) { summary.textContent = 'Choose a date to continue'; confirmBtn.disabled = true; return; }
+    const d = new Date(dateInput.value + 'T00:00:00');
+    const label = d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' });
+    summary.textContent = label + ' \u2014 ' + timeInput.value + ' \u2014 45 minutes';
+    confirmBtn.disabled = false;
+  }
+  dateInput.addEventListener('change', refreshSummary);
+  timeInput.addEventListener('change', refreshSummary);
+
+  confirmBtn.addEventListener('click', () => {
+    const subject = 'Tutorial request \u2014 ' + course.title;
+    const lines = [
+      'Course: ' + course.title,
+      'Student: ' + (user.user_metadata && user.user_metadata.full_name ? user.user_metadata.full_name : user.email),
+      'Email: ' + user.email,
+      'Preferred date: ' + dateInput.value,
+      'Preferred time: ' + timeInput.value,
+    ];
+    if (noteInput.value.trim()) lines.push('', 'Note: ' + noteInput.value.trim());
+    if (quote) lines.push('', 'Exercise excerpt: "' + quote + '"');
+    const bodyText = lines.join('\n');
+    window.location.href = 'mailto:admin@ISLearning.org?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
+  });
+})();
+
+document.getElementById('signOutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>

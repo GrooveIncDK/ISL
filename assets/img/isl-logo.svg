@@ -1,0 +1,20 @@
+<svg viewBox="0 0 903 907" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ISL mark">
+  <defs>
+    <mask id="islStaticOuterRing">
+      <rect width="903" height="907" fill="black"/>
+      <circle cx="459.4" cy="451.7" r="433.5" fill="white"/>
+      <circle cx="454.0" cy="491.4" r="312.8" fill="black"/>
+      <circle cx="122.3" cy="492.2" r="177.3" fill="black"/>
+    </mask>
+    <mask id="islStaticInnerRing">
+      <rect width="903" height="907" fill="black"/>
+      <circle cx="494.6" cy="475.7" r="215.8" fill="white"/>
+      <circle cx="498.3" cy="463.5" r="164.9" fill="black"/>
+      <circle cx="652.8" cy="482.8" r="110.6" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="903" height="907" fill="#3ED6ED" mask="url(#islStaticOuterRing)"/>
+  <rect width="903" height="907" fill="#3ED6ED" mask="url(#islStaticInnerRing)"/>
+  <circle cx="122.3" cy="492.2" r="112.1" fill="#092632"/>
+  <circle cx="652.8" cy="482.8" r="63.8" fill="#092632"/>
+</svg>
