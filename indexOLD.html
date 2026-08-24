@@ -88,21 +88,6 @@
   .contact-grid a { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.4); }
   .contact-grid a:hover { border-color: var(--gold); color: var(--gold); }
   .contact-grid p { margin: 4px 0; color: rgba(255,255,255,0.88); font-size: 0.98rem; }
-
-  /* This page had no mobile breakpoint at all: the two fixed-column grids
-     below (.hero .wrap and .plaques) never collapsed to a single column,
-     so on a phone the hero image and the four principle plaques were all
-     squeezed into half-width columns instead of stacking — the "mashed
-     together" layout. Matches the 900px breakpoint already used for the
-     nav hamburger and on the course-detail pages' .two-col layout. */
-  @media (max-width: 900px) {
-    section { padding: 52px 0; }
-    .hero { padding: 44px 0 56px; }
-    .hero .wrap { grid-template-columns: 1fr; gap: 36px; }
-    .hero-plate-wrap { padding: 28px 24px; }
-    .plaques { grid-template-columns: 1fr; }
-    .plaque { padding: 30px 26px; }
-  }
 </style>
 </head>
 <body>
@@ -114,7 +99,6 @@
   </div>
 </div>
 
-<div class="site-nav-wrap">
 <header class="site-nav">
   <div class="wrap nav-row">
     <a class="wordmark" href="index.html">
@@ -141,7 +125,6 @@
   </div>
 </header>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"></nav>
-</div>
 
 <section class="hero" id="home">
   <div class="wrap">

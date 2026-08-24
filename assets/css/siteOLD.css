@@ -74,15 +74,8 @@ section.on-paper { background: var(--paper); }
 .utility-bar a:hover { color: #fff; }
 .utility-bar svg { width: 14px; height: 14px; }
 
-/* ---- Primary nav ----
-   The sticky positioning lives on .site-nav-wrap (the header PLUS the
-   mobile dropdown menu below it), not on header.site-nav alone. The
-   mobile menu is a sibling of the header, not a child of it, so without
-   this the header would stick on scroll while the open mobile menu
-   (being an ordinary, non-sticky element) scrolled away underneath it —
-   the menu would appear to detach and vanish as soon as you scrolled. */
-.site-nav-wrap { position: sticky; top: 0; z-index: 50; }
-header.site-nav { background: var(--white); border-bottom: 1px solid var(--line); }
+/* ---- Primary nav ---- */
+header.site-nav { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid var(--line); }
 .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; position: relative; }
 .wordmark { display: flex; align-items: center; gap: 12px; color: var(--charcoal); }
 .wordmark .isl-icon { height: 38px; width: auto; }
