@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy &mdash; ISL, The Institute of Spiritual Learning</title>
+<meta name="description" content="Privacy Policy for ISL, The Institute of Spiritual Learning &mdash; what personal data we collect, how we use it, and your rights under the GDPR.">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+
+<style>
+
+  .page-header { padding: 44px 0 12px; }
+  .page-header .crumb { font-size: 0.82rem; color: var(--charcoal-soft); margin-bottom: 18px; }
+  .page-header .crumb a { color: var(--charcoal-soft); }
+  .page-header .crumb a:hover { color: var(--turquoise-text); }
+  .page-header h1 { font-style: italic; font-size: clamp(2rem, 3.6vw, 2.7rem); margin: 6px 0 14px; }
+  .page-header .effective { font-size: 0.86rem; color: var(--charcoal-soft); margin: 0 0 6px; }
+  .page-header .effective strong { color: var(--charcoal); font-weight: 500; }
+  .page-header p.lead { color: var(--charcoal-soft); font-size: 1.02rem; max-width: 68ch; margin: 14px 0 0; }
+
+  .legal-body { padding: 20px 0 90px; }
+  .legal-wrap { max-width: 800px; }
+
+  .toc-card { border: 1px solid var(--line); border-radius: 12px; padding: 26px 28px; margin-bottom: 48px; background: var(--paper); }
+  .toc-card .toc-title { font-family: "Jost", Arial, sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--turquoise-text); margin: 0 0 16px; display: block; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 28px; }
+  .toc-grid a { display: flex; align-items: baseline; gap: 10px; font-size: 0.92rem; color: var(--charcoal); padding: 7px 0; }
+  .toc-grid a:hover { color: var(--turquoise-text); }
+  .toc-num { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--turquoise-text); font-size: 0.94rem; flex-shrink: 0; width: 20px; }
+
+  .legal-section { padding: 34px 0; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+  .legal-section:first-of-type { border-top: none; padding-top: 0; }
+  .legal-section h2 { font-size: 1.32rem; font-style: italic; margin: 0 0 16px; display: flex; gap: 10px; align-items: baseline; }
+  .sec-num { color: var(--turquoise-text); }
+  .legal-section p { color: var(--charcoal-soft); font-size: 1rem; margin: 0 0 14px; }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section p strong { color: var(--charcoal); font-weight: 500; }
+  .legal-section ul, .legal-section ol { margin: 0 0 14px; padding-left: 22px; color: var(--charcoal-soft); font-size: 1rem; }
+  .legal-section ul { list-style: none; padding-left: 0; }
+  .legal-section ul li { position: relative; padding-left: 22px; margin-bottom: 8px; }
+  .legal-section ul li::before { content: ""; position: absolute; left: 4px; top: 0.6em; width: 6px; height: 6px; border-radius: 50%; background: var(--turquoise); }
+  .legal-section ol { padding-left: 24px; }
+  .legal-section ol li { margin-bottom: 8px; }
+  .legal-section ul:last-child, .legal-section ol:last-child { margin-bottom: 0; }
+
+  .fact-list { border: 1px solid var(--line); border-radius: 10px; padding: 6px 20px; margin: 0 0 16px; }
+  .fact-row { display: flex; gap: 10px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 0.95rem; }
+  .fact-row:first-child { border-top: none; }
+  .fact-k { color: var(--charcoal-soft); min-width: 170px; flex-shrink: 0; }
+  .fact-v { color: var(--charcoal); }
+
+  .contact-card { border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin: 0 0 16px; background: var(--paper); max-width: 360px; }
+  .contact-card .cc-name { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; font-size: 1.08rem; color: var(--charcoal); margin: 0 0 8px; }
+  .contact-card .cc-lines { font-size: 0.92rem; color: var(--charcoal-soft); margin: 0; line-height: 1.6; }
+
+  .term-pair { margin: 0 0 18px; }
+  .term-pair:last-child { margin-bottom: 0; }
+  .term-pair h3 { font-family: "Jost", Arial, sans-serif; font-weight: 500; font-size: 0.98rem; color: var(--charcoal); margin: 0 0 6px; }
+  .term-pair p { margin: 0; }
+
+  .related-note { margin-top: 46px; padding: 24px 26px; background: var(--charcoal); color: rgba(255,255,255,0.88); border-radius: 12px; font-size: 0.92rem; }
+  .related-note a { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    .toc-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <a href="tel:+4531155327"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +45 3115 5327</a>
+    <a href="mailto:admin@ISLearning.org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" fill="none"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg> admin@ISLearning.org</a>
+  </div>
+</div>
+
+<div class="site-nav-wrap">
+<header class="site-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="index.html">
+      <span data-isl-logo data-height="38px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
+    </a>
+    <nav class="primary-links desktop-only" id="primaryNav">
+      <a href="index.html#home">Home</a>
+      <a href="index.html#about">About</a>
+      <div class="nav-item" data-panel="courses">
+        <button type="button" aria-expanded="false"><a href="courses.html" style="padding:0;">Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="nav-panel"><div class="nav-panel-inner" id="navCoursesPanel">
+          <a href="courses.html">View all courses</a>
+        </div></div>
+      </div>
+      <a href="index.html#faq">FAQ</a>
+      <span class="nav-auth-slot" id="navAuthSlot"></span>
+      <a class="nav-cta" href="index.html#contact">Contact Us</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"></nav>
+</div>
+
+<div class="page-header">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Privacy Policy</div>
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="effective">Effective date: <strong>23 August 2026</strong></p>
+    <p class="lead">The Institute of Spiritual Learning respects the privacy of students and visitors to ISLearning.org. This Privacy Policy explains what personal information we collect, why we collect it, how we use it and the rights available to individuals under applicable data protection law, including the EU General Data Protection Regulation (GDPR) and applicable Danish data protection legislation.</p>
+  </div>
+</div>
+
+<div class="legal-body">
+  <div class="wrap legal-wrap">
+    <div class="toc-card">
+      <span class="toc-title">On This Page</span>
+      <div class="toc-grid"><a href="#s1"><span class="toc-num">01</span>Data Controller</a><a href="#s2"><span class="toc-num">02</span>What Personal Data We Collect</a><a href="#s3"><span class="toc-num">03</span>Personal Information Concerning Spiritual or Personal Matters</a><a href="#s4"><span class="toc-num">04</span>How We Use Personal Data</a><a href="#s5"><span class="toc-num">05</span>Legal Bases for Processing</a><a href="#s6"><span class="toc-num">06</span>Payment Information</a><a href="#s7"><span class="toc-num">07</span>Website and Server Information</a><a href="#s8"><span class="toc-num">08</span>Cookies</a><a href="#s9"><span class="toc-num">09</span>Data Sharing</a><a href="#s10"><span class="toc-num">10</span>International Transfers</a><a href="#s11"><span class="toc-num">11</span>Data Retention</a><a href="#s12"><span class="toc-num">12</span>Student Assignments</a><a href="#s13"><span class="toc-num">13</span>Data Security</a><a href="#s14"><span class="toc-num">14</span>Your Rights Under the GDPR</a><a href="#s15"><span class="toc-num">15</span>Exercising Your Rights</a><a href="#s16"><span class="toc-num">16</span>Children&#39;s Privacy</a><a href="#s17"><span class="toc-num">17</span>Changes to This Privacy Policy</a><a href="#s18"><span class="toc-num">18</span>Contact</a><a href="#s19"><span class="toc-num">19</span>Final Statement</a></div>
+    </div>
+
+    <section class="legal-section" id="s1"><h2><span class="sec-num">1.</span> Data Controller</h2><p>The data controller responsible for personal data processed through ISLearning.org is:</p>
+<div class="contact-card"><p class="cc-name">ISL &ndash; The Institute of Spiritual Learning</p><p class="cc-lines">Fynshovedvej 584<br>Martofte<br>5390 Denmark<br>CVR number: 26347793</p></div>
+<p>The Institute is operated as a Danish sole proprietorship by Benjamin James Matthew Williamson-Westerman, who is the proprietor, course author and tutor.</p>
+<p>For questions concerning personal data, please use the contact details published on ISLearning.org.</p></section>
+<section class="legal-section" id="s2"><h2><span class="sec-num">2.</span> What Personal Data We Collect</h2><p>The Institute deliberately keeps the amount of personal information collected from students to a minimum.</p>
+<p>For student accounts and course administration, we collect:</p>
+<ul><li>name</li><li>age</li><li>email address</li></ul>
+<p>We may also process information generated through use of the course platform, such as:</p>
+<ul><li>course enrolment</li><li>course progress</li><li>assignment completion</li><li>course completion</li><li>information necessary to arrange the concluding tutorial</li></ul>
+<p>We do not require students to provide unnecessary personal information.</p></section>
+<section class="legal-section" id="s3"><h2><span class="sec-num">3.</span> Personal Information Concerning Spiritual or Personal Matters</h2><p>The courses concern personal introspection, spiritual learning, inner peace and balance in everyday life.</p>
+<p>Students may voluntarily include personal information in assignments or communications with the Institute.</p>
+<p>The Institute does not require students to disclose medical or psychological information.</p>
+<p>Students should therefore avoid including unnecessary sensitive personal information in assignments or communications.</p>
+<p>The courses are not designed to collect or process medical or psychological records.</p>
+<p>Where a student voluntarily provides information that may constitute a special category of personal data under the GDPR, the Institute will process that information only where there is an appropriate legal basis under applicable data protection law.</p></section>
+<section class="legal-section" id="s4"><h2><span class="sec-num">4.</span> How We Use Personal Data</h2><p>Personal data is used only where reasonably necessary for the operation of ISLearning. This includes:</p>
+<ul><li>creating and maintaining student accounts</li><li>providing purchased courses</li><li>administering course access</li><li>monitoring course progress</li><li>recording completion of assignments</li><li>arranging the concluding tutorial</li><li>communicating with students about their course</li><li>administering purchases and payments</li><li>responding to enquiries</li><li>maintaining appropriate business records</li><li>complying with legal obligations</li></ul>
+<p>We do not sell student personal information.</p></section>
+<section class="legal-section" id="s5"><h2><span class="sec-num">5.</span> Legal Bases for Processing</h2><p>Depending upon the particular processing activity, the Institute may rely upon one or more of the following legal bases under the GDPR:</p>
+<div class="term-pair"><h3>Contract</h3><p>Processing may be necessary to provide a course that a student has purchased and to administer the student&#39;s account and course progress.</p></div>
+<div class="term-pair"><h3>Legal obligation</h3><p>Certain information may need to be retained to comply with Danish accounting, tax or other legal requirements.</p></div>
+<div class="term-pair"><h3>Legitimate interests</h3><p>Certain limited processing may be necessary for the legitimate operation, security and administration of ISLearning, provided those interests are not overridden by the individual&#39;s rights.</p></div>
+<div class="term-pair"><h3>Consent</h3><p>Where consent is required by law, the Institute will seek it. Where processing is based on consent, the individual may withdraw that consent, although withdrawal does not affect the lawfulness of processing carried out before withdrawal.</p></div></section>
+<section class="legal-section" id="s6"><h2><span class="sec-num">6.</span> Payment Information</h2><p>Payments are made through PayPal.</p>
+<p>The Institute does not store students&#39; full payment-card information on its own systems.</p>
+<p>Payment information is processed through the payment services used to complete the transaction and may be subject to the relevant payment provider&#39;s own privacy terms.</p>
+<p>The Institute retains only the information reasonably necessary for transaction administration, accounting and legal compliance.</p></section>
+<section class="legal-section" id="s7"><h2><span class="sec-num">7.</span> Website and Server Information</h2><p>ISLearning.org is operated using infrastructure controlled by the Institute.</p>
+<p>The Institute does not intentionally sell or provide student personal data to external data brokers or advertising networks.</p>
+<p>Technical information may nevertheless be processed where necessary for the operation and security of the website, such as server logs, IP addresses, timestamps and technical connection information. Such information may be used to:</p>
+<ul><li>maintain website security</li><li>investigate technical problems</li><li>prevent abuse</li><li>detect unauthorised access</li><li>maintain reliable operation of the platform</li></ul></section>
+<section class="legal-section" id="s8"><h2><span class="sec-num">8.</span> Cookies</h2><p>ISLearning.org may use technically necessary cookies or similar technologies required for:</p>
+<ul><li>account authentication</li><li>maintaining a student&#39;s logged-in session</li><li>remembering necessary platform settings</li><li>providing course functionality</li></ul>
+<p>Where non-essential cookies are introduced, the Institute will obtain any consent required by applicable law before using them.</p></section>
+<section class="legal-section" id="s9"><h2><span class="sec-num">9.</span> Data Sharing</h2><p>The Institute does not routinely share student personal data with third parties.</p>
+<p>Personal data may be disclosed where necessary:</p>
+<ul><li>to comply with a legal obligation</li><li>to comply with a lawful request from a competent authority</li><li>to protect the security or integrity of ISLearning</li><li>to establish, exercise or defend legal claims</li><li>where the student has expressly authorised the disclosure</li></ul>
+<p>Payment transactions are processed through PayPal as described above.</p></section>
+<section class="legal-section" id="s10"><h2><span class="sec-num">10.</span> International Transfers</h2><p>The Institute does not intentionally transfer student personal information outside the European Economic Area except where such transfer is necessary for a service used by the Institute and permitted under applicable data protection law.</p>
+<p>Where an international transfer occurs, the Institute will take the measures required by the GDPR to ensure that the transfer is lawful.</p></section>
+<section class="legal-section" id="s11"><h2><span class="sec-num">11.</span> Data Retention</h2><p>The Institute retains personal information only for as long as reasonably necessary for the purpose for which it was collected.</p>
+<p>Student account information may be retained for the period necessary to administer the student&#39;s course and account.</p>
+<p>Certain transaction, accounting and business records may need to be retained for longer periods because of Danish legal and tax requirements.</p>
+<p>When personal information is no longer required, it will be securely deleted or otherwise disposed of in accordance with applicable law.</p></section>
+<section class="legal-section" id="s12"><h2><span class="sec-num">12.</span> Student Assignments</h2><p>Assignments submitted by students may contain personal reflections or other information voluntarily provided by the student.</p>
+<p>Assignments are used for the purpose of administering the course and conducting the concluding tutorial.</p>
+<p>Students retain ownership of their own original assignment content.</p>
+<p>The Institute will not publicly publish or commercially exploit a student&#39;s personal assignment submissions without separate permission.</p></section>
+<section class="legal-section" id="s13"><h2><span class="sec-num">13.</span> Data Security</h2><p>The Institute takes reasonable technical and organisational measures to protect personal data against:</p>
+<ul><li>unauthorised access</li><li>accidental loss</li><li>destruction</li><li>alteration</li><li>unauthorised disclosure</li><li>other unlawful processing</li></ul>
+<p>Because no internet-connected system can be guaranteed to be completely secure, absolute security cannot be guaranteed.</p></section>
+<section class="legal-section" id="s14"><h2><span class="sec-num">14.</span> Your Rights Under the GDPR</h2><p>Subject to applicable legal conditions and limitations, individuals may have the right to:</p>
+<ul><li>request access to personal data held about them</li><li>request correction of inaccurate or incomplete information</li><li>request deletion of personal data</li><li>request restriction of processing</li><li>object to certain processing</li><li>request portability of certain personal data</li><li>withdraw consent where processing is based upon consent</li></ul>
+<p>Individuals also have the right to complain to the relevant data protection supervisory authority.</p>
+<p>For individuals in Denmark, the relevant supervisory authority is the Danish Data Protection Agency (Datatilsynet).</p></section>
+<section class="legal-section" id="s15"><h2><span class="sec-num">15.</span> Exercising Your Rights</h2><p>To exercise a data protection right or ask a question about how your personal information is handled, contact:</p>
+<div class="contact-card"><p class="cc-name">ISL &ndash; The Institute of Spiritual Learning</p><p class="cc-lines">Fynshovedvej 584<br>Martofte<br>5390 Denmark<br>CVR: 26347793</p></div>
+<p>Please provide sufficient information for us to identify the relevant account and understand your request.</p>
+<p>We may need to verify your identity before releasing, correcting or deleting personal information.</p></section>
+<section class="legal-section" id="s16"><h2><span class="sec-num">16.</span> Children&#39;s Privacy</h2><p>ISLearning courses are available only to persons aged 18 or over.</p>
+<p>The Institute therefore does not intentionally provide course accounts to children or collect children&#39;s personal information for course participation.</p>
+<p>If we become aware that a person under 18 has registered for a course, we will take reasonable steps to address the situation and delete information where appropriate and legally required.</p></section>
+<section class="legal-section" id="s17"><h2><span class="sec-num">17.</span> Changes to This Privacy Policy</h2><p>This Privacy Policy may be updated from time to time to reflect changes in:</p>
+<ul><li>the ISLearning service</li><li>the information collected</li><li>applicable law</li><li>security practices</li><li>the operation of the Institute</li></ul>
+<p>The current version will be published on ISLearning.org.</p></section>
+<section class="legal-section" id="s18"><h2><span class="sec-num">18.</span> Contact</h2><p>For all privacy and data protection enquiries:</p>
+<div class="contact-card"><p class="cc-name">ISL &ndash; The Institute of Spiritual Learning</p><p class="cc-lines">Fynshovedvej 584<br>Martofte<br>5390 Denmark<br>CVR: 26347793</p></div></section>
+<section class="legal-section" id="s19"><h2><span class="sec-num">19.</span> Final Statement</h2><p>The Institute of Spiritual Learning is committed to collecting and retaining only the personal information reasonably necessary to provide its courses and operate the Institute.</p>
+<p>The Institute does not sell student personal information and does not use student information for purposes unrelated to the operation of ISLearning without an appropriate legal basis.</p></section>
+
+    <div class="related-note">Looking for the terms that govern your purchase instead? Read our <a href="terms.html">Terms of Service</a>.</div>
+  </div>
+</div>
+
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-lockup">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="isl-letters">ISL</span>
+      <span class="full-tagline">The Institute of Spiritual Learning</span>
+    </div>
+    <div class="footer-row">
+      <div>&copy; ISL &mdash; The Institute of Spiritual Learning</div>
+      <div class="footer-links">
+        <a href="index.html#about">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html" aria-current="page">Privacy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<script src="assets/js/site-nav.js"></script>
+
+</body>
+</html>
