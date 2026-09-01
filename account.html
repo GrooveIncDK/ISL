@@ -82,7 +82,7 @@ main{padding:0 0 90px;}
       <span data-isl-logo data-height="30px"></span>
       <span class="tagline">The Institute of Spiritual Learning</span>
     </a>
-    <nav class="app-links">
+    <nav class="app-links" id="appLinks">
       <a href="index.html">Home</a>
       <a href="courses.html">Courses</a>
       <a class="active" href="account.html">My Courses</a>
@@ -119,6 +119,14 @@ main{padding:0 0 90px;}
   }
   const user = await requireAuth();
   if (!user) return; // requireAuth already redirected to sign in
+
+  if (await isAdmin()) {
+    const appLinks = document.getElementById('appLinks');
+    const teacherLink = document.createElement('a');
+    teacherLink.href = 'mark-work.html';
+    teacherLink.textContent = 'Teacher Dashboard';
+    appLinks.insertBefore(teacherLink, document.getElementById('signOutBtn'));
+  }
 
   const firstName = (user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name.split(' ')[0] : null;
   document.getElementById('pageHeading').textContent = firstName ? `Welcome back, ${firstName}` : 'Welcome back';

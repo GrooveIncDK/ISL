@@ -122,6 +122,19 @@ function getReturnTo() {
   return params.get('returnTo') || 'account.html';
 }
 
+// Admins land on their Teacher Dashboard by default rather than the
+// student-facing My Courses page, unless a specific returnTo was
+// requested (e.g. a course page sent them here to sign in first).
+async function getPostSignInDestination() {
+  const params = new URLSearchParams(window.location.search);
+  const explicit = params.get('returnTo');
+  if (explicit) return explicit;
+  try {
+    if (await isAdmin()) return 'mark-work.html';
+  } catch (e) { /* fall through to the student default */ }
+  return 'account.html';
+}
+
 // ---- Tab switching ----
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -159,7 +172,7 @@ document.getElementById('signinForm').addEventListener('submit', async (e) => {
     return;
   }
   setStatus('success', 'Signed in — redirecting…');
-  window.location.href = getReturnTo();
+  window.location.href = await getPostSignInDestination();
 });
 
 // ---- Sign up ----
@@ -185,7 +198,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
 
   if (data.session) {
     setStatus('success', 'Account created — redirecting…');
-    window.location.href = getReturnTo();
+    window.location.href = await getPostSignInDestination();
   } else {
     setStatus('info', 'Check your email to confirm your account, then sign in.');
     btn.disabled = false;
