@@ -59,11 +59,38 @@ section.room-section h2{font-style:italic;font-size:1.38rem;margin-bottom:20px;}
 .section-note{color:var(--soft-on-dark);font-size:0.95rem;margin:-8px 0 16px;}
 
 .reading-check{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
-.reading-check li{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--night-2);border-radius:8px;font-size:0.96rem;cursor:pointer;border:none;width:100%;text-align:left;color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;}
-.reading-check .tick{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--line-dark);}
+.reading-check li{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--night-2);border-radius:8px;font-size:0.96rem;cursor:pointer;border:none;width:100%;text-align:left;color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;}
+.reading-check .tick{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;border:1.5px solid var(--line-dark);}
 .reading-check li.read .tick{background:var(--turquoise);border-color:var(--turquoise);color:var(--charcoal);}
 .reading-check li.read span.title{color:var(--soft-on-dark);text-decoration:line-through;text-decoration-color:rgba(255,255,255,0.3);}
 .reading-check li:disabled, .reading-check li.saving{opacity:0.6;cursor:wait;}
+.reading-check .rtext{display:flex;flex-direction:column;gap:4px;}
+.reading-check .rnote{font-size:0.84rem;color:var(--soft-on-dark);font-weight:300;}
+
+.week-block{padding:30px 0;border-top:1px solid var(--line-dark);}
+.week-block:first-of-type{border-top:none;padding-top:6px;}
+.week-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+.week-num{font-family:"Jost",Arial,sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--skyblue);flex-shrink:0;}
+.week-head h3{font-style:italic;font-size:1.28rem;}
+.teaching-body{color:var(--ink-on-dark);font-size:0.98rem;margin:0 0 22px;display:grid;gap:14px;max-width:74ch;}
+.teaching-body p{margin:0;}
+.week-reading{margin-bottom:22px;}
+.week-reading-label{display:block;font-family:"Jost",Arial,sans-serif;font-size:0.76rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft-on-dark);margin-bottom:10px;}
+
+.closing-intro{color:var(--soft-on-dark);font-size:0.96rem;max-width:70ch;margin:-8px 0 22px;}
+
+.tutor-feedback{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line-dark);}
+.tutor-feedback h5{font-family:"Jost",Arial,sans-serif;font-weight:500;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--skyblue);margin:0 0 10px;}
+.tutor-feedback-text{white-space:pre-wrap;line-height:1.7;font-size:0.94rem;color:var(--ink-on-dark);}
+.isl-annot{background:rgba(240,177,6,0.26);border-bottom:1.5px solid var(--gold);border-radius:2px;}
+.isl-annot::after{content:attr(data-idx);font-size:0.62em;vertical-align:super;margin-left:2px;color:var(--gold);font-weight:700;}
+.isl-comment-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;}
+.isl-comment-list li{display:flex;gap:12px;background:var(--night);border:1px solid var(--line-dark);border-radius:8px;padding:12px 14px;align-items:flex-start;}
+.isl-comment-num{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--charcoal);font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.isl-comment-quote{font-style:italic;color:var(--soft-on-dark);font-size:0.82rem;}
+.isl-comment-text{margin:4px 0 0;font-size:0.9rem;}
+.isl-comment-orphaned{margin-top:12px;font-size:0.82rem;color:var(--soft-on-dark);}
+.isl-comment-orphaned ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px;}
 
 .workbook-card{background:linear-gradient(135deg, var(--night-2), #182430);border:1.5px solid var(--gold);border-radius:16px;padding:28px 30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:14px;}
 .workbook-card .icon{width:52px;height:52px;border-radius:12px;background:rgba(240,177,6,0.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -106,7 +133,7 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
       <span data-isl-logo data-height="30px"></span>
       <span class="tagline">The Institute of Spiritual Learning</span>
     </a>
-    <nav class="app-links">
+    <nav class="app-links" id="appLinks">
       <a href="index.html">Home</a>
       <a href="courses.html">Courses</a>
       <a class="active" href="account.html">My Courses</a>
@@ -119,6 +146,7 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/js/supabase-client.js"></script>
+<script src="assets/js/annotations.js"></script>
 <script src="assets/js/site-nav.js"></script>
 <script>
 (async () => {
@@ -133,6 +161,14 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
   }
   const user = await requireAuth('signin.html');
   if (!user) return;
+
+  if (await isAdmin()) {
+    const appLinks = document.getElementById('appLinks');
+    const markLink = document.createElement('a');
+    markLink.href = 'mark-work.html';
+    markLink.textContent = 'Mark Work';
+    appLinks.insertBefore(markLink, document.getElementById('signOutBtn'));
+  }
 
   if (!courseId) {
     root.className = '';
@@ -163,20 +199,52 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
   ]);
   const progressByContent = Object.fromEntries(progressRows.map(r => [r.content_id, r]));
 
-  const reading = content.filter(c => (c.content_type || 'reading') === 'reading');
-  const workbook = content.filter(c => c.content_type === 'workbook');
-  const exercises = content.filter(c => c.content_type === 'exercise');
-  const anyAttempted = content.some(c => progressByContent[c.id]);
+  const allReading = content.filter(c => (c.content_type || 'reading') === 'reading');
+  const allExercises = content.filter(c => c.content_type === 'exercise');
   const eligible = eligibleCourseIds.includes(courseId);
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+  const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:11px;height:11px;"><path d="M20 6L9 17l-5-5"/></svg>';
 
-  let readingStep = reading.length === 0 || reading.every(r => progressByContent[r.id]) ? 'done' : (reading.some(r => progressByContent[r.id]) ? 'current' : 'current');
-  let writeStep = exercises.length > 0 && exercises.every(e => progressByContent[e.id] && progressByContent[e.id].reflection_text) ? 'done' : (readingStep === 'done' ? 'current' : '');
+  let readingStep = allReading.length === 0 || allReading.every(r => progressByContent[r.id]) ? 'done' : 'current';
+  let writeStep = allExercises.length > 0 && allExercises.every(e => progressByContent[e.id] && progressByContent[e.id].reflection_text) ? 'done' : (readingStep === 'done' ? 'current' : '');
+
+  function readingListHtml(items, label) {
+    let h = '';
+    if (label) h += '<span class="week-reading-label">' + esc(label) + '</span>';
+    h += '<ul class="reading-check">' + items.map(r => {
+      const done = !!progressByContent[r.id];
+      return '<li class="' + (done ? 'read' : '') + '" data-content-id="' + r.id + '"><span class="tick">' + (done ? TICK : '') + '</span> <span class="rtext"><span class="title">' + esc(r.title) + '</span>' + (r.body ? '<span class="rnote">' + esc(r.body) + '</span>' : '') + '</span></li>';
+    }).join('') + '</ul>';
+    return h;
+  }
+
+  function workbookCardHtml(w) {
+    return '<div class="workbook-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>' +
+      '<div class="info"><h3>' + esc(w.title) + '</h3>' + (w.body ? '<div class="meta">' + esc(w.body) + '</div>' : '') + '</div>' +
+      (w.download_url ? '<a class="btn-dl" href="' + esc(w.download_url) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg> Download</a>' : '') +
+      '</div>';
+  }
+
+  function exerciseBlockHtml(ex) {
+    const p = progressByContent[ex.id];
+    const savedText = p && p.reflection_text ? p.reflection_text : '';
+    return '<div class="exercise-block" data-content-id="' + ex.id + '">' +
+      '<h4>' + esc(ex.title) + '</h4>' +
+      (ex.body ? '<p class="ex-body">' + esc(ex.body) + '</p>' : '') +
+      '<textarea class="reflection" placeholder="Write your reflection here...">' + esc(savedText) + '</textarea>' +
+      '<div class="save-row"><span class="save-status"></span><button class="btn-save" type="button">Save &amp; submit</button></div>' +
+    '</div>';
+  }
+
+  function teachingHtml(t) {
+    const heading = t.title.replace(/^Week\s*\d+\s*[—-]\s*/, '');
+    return { heading, body: '<div class="teaching-body">' + t.body.split(/\n\s*\n/).map(p => '<p>' + esc(p).replace(/\n/g, ' ') + '</p>').join('') + '</div>' };
+  }
 
   let html = '';
   html += '<div class="breadcrumb wrap"><a href="account.html">My Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> <span>' + esc(course.title) + '</span></div>';
-  html += '<div class="wrap room-hero"><span class="eyebrow">Course Room</span><h1>' + esc(course.title) + '</h1><div class="sub">Your practice space &mdash; the readings, the workbook, and the exercise that leads to your tutorial.</div></div>';
+  html += '<div class="wrap room-hero"><span class="eyebrow">Course Room</span><h1>' + esc(course.title) + '</h1><div class="sub">Your practice space &mdash; the readings, the teaching, and the exercise that leads to your tutorial.</div></div>';
 
   html += '<div class="wrap mech-track">' +
     '<div class="mech-step ' + (readingStep === 'done' ? 'done' : 'current') + '"><span class="dot">' + (readingStep === 'done' ? '&#10003;' : '1') + '</span> Read</div>' +
@@ -186,47 +254,78 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
     '<div class="mech-step ' + (eligible ? 'done' : '') + '"><span class="dot">' + (eligible ? '&#10003;' : '3') + '</span> Tutorial</div>' +
   '</div>';
 
-  html += '<section class="room-section wrap"><h2>Your reading</h2>';
-  if (reading.length === 0) {
-    html += '<div class="empty-note">Reading materials for this course are being finalised &mdash; check back soon.</div>';
-  } else {
-    html += '<ul class="reading-check">' + reading.map(r => {
-      const done = !!progressByContent[r.id];
-      return '<li class="' + (done ? 'read' : '') + '" data-content-id="' + r.id + '"><span class="tick">' + (done ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:11px;height:11px;"><path d="M20 6L9 17l-5-5"/></svg>' : '') + '</span> <span class="title">' + esc(r.title) + '</span></li>';
-    }).join('') + '</ul>';
-  }
-  html += '</section>';
+  // Group content by week. Courses that don't use the weekly mechanic
+  // (no week_number set on any row) fall back to the original flat
+  // by-type layout below.
+  const byWeek = {};
+  content.forEach(c => { const wk = c.week_number || 0; (byWeek[wk] = byWeek[wk] || []).push(c); });
+  const weekNums = Object.keys(byWeek).map(Number).filter(n => n > 0).sort((a, b) => a - b);
 
-  html += '<section class="room-section wrap"><h2>Your workbook</h2>';
-  if (workbook.length === 0) {
-    html += '<div class="empty-note">No downloadable workbook has been added for this course yet.</div>';
-  } else {
-    html += workbook.map(w =>
-      '<div class="workbook-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>' +
-      '<div class="info"><h3>' + esc(w.title) + '</h3>' + (w.body ? '<div class="meta">' + esc(w.body) + '</div>' : '') + '</div>' +
-      (w.download_url ? '<a class="btn-dl" href="' + esc(w.download_url) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg> Download</a>' : '') +
-      '</div>'
-    ).join('');
-    html += '<div class="workbook-note">Yours to keep &mdash; it stays downloaded on your device even after the course ends or your access here changes.</div>';
+  // A week with no 'teaching' and no 'reading' rows (just exercise —
+  // e.g. the closing contemplation) is rendered as the closing
+  // section rather than another numbered week.
+  let closingWeek = null;
+  if (weekNums.length) {
+    const last = weekNums[weekNums.length - 1];
+    const lastItems = byWeek[last];
+    if (lastItems.every(c => c.content_type === 'exercise')) {
+      closingWeek = last;
+      weekNums.pop();
+    }
   }
-  html += '</section>';
 
-  html += '<section class="room-section wrap"><h2>Your exercise</h2>';
-  if (exercises.length === 0) {
-    html += '<div class="empty-note">The exercise for this course is being finalised &mdash; check back soon.</div>';
+  if (weekNums.length === 0 && closingWeek === null) {
+    // Legacy flat layout — no week structure on this course yet.
+    const workbook = content.filter(c => c.content_type === 'workbook');
+
+    html += '<section class="room-section wrap"><h2>Your reading</h2>';
+    html += allReading.length === 0
+      ? '<div class="empty-note">Reading materials for this course are being finalised &mdash; check back soon.</div>'
+      : readingListHtml(allReading);
+    html += '</section>';
+
+    html += '<section class="room-section wrap"><h2>Your workbook</h2>';
+    if (workbook.length === 0) {
+      html += '<div class="empty-note">No downloadable workbook has been added for this course yet.</div>';
+    } else {
+      html += workbook.map(workbookCardHtml).join('');
+      html += '<div class="workbook-note">Yours to keep &mdash; it stays downloaded on your device even after the course ends or your access here changes.</div>';
+    }
+    html += '</section>';
+
+    html += '<section class="room-section wrap"><h2>Your exercise</h2>';
+    html += allExercises.length === 0
+      ? '<div class="empty-note">The exercise for this course is being finalised &mdash; check back soon.</div>'
+      : allExercises.map(exerciseBlockHtml).join('');
+    html += '</section>';
   } else {
-    html += exercises.map(ex => {
-      const p = progressByContent[ex.id];
-      const savedText = p && p.reflection_text ? p.reflection_text : '';
-      return '<div class="exercise-block" data-content-id="' + ex.id + '">' +
-        '<h4>' + esc(ex.title) + '</h4>' +
-        (ex.body ? '<p class="ex-body">' + esc(ex.body) + '</p>' : '') +
-        '<textarea class="reflection" placeholder="Write your reflection here...">' + esc(savedText) + '</textarea>' +
-        '<div class="save-row"><span class="save-status"></span><button class="btn-save" type="button">Save &amp; submit</button></div>' +
-      '</div>';
+    // Weekly layout.
+    html += '<section class="room-section wrap"><h2>Your five weeks</h2>';
+    html += weekNums.map(wk => {
+      const items = byWeek[wk];
+      const teaching = items.find(c => c.content_type === 'teaching');
+      const reading = items.filter(c => c.content_type === 'reading');
+      const workbookItems = items.filter(c => c.content_type === 'workbook');
+      const exercises = items.filter(c => c.content_type === 'exercise');
+      const t = teaching ? teachingHtml(teaching) : null;
+      let h = '<div class="week-block" data-week="' + wk + '">';
+      h += '<div class="week-head"><span class="week-num">Week ' + wk + '</span>' + (t ? '<h3>' + esc(t.heading) + '</h3>' : '') + '</div>';
+      if (t) h += t.body;
+      if (reading.length) h += '<div class="week-reading">' + readingListHtml(reading, "This week's reading") + '</div>';
+      h += workbookItems.map(workbookCardHtml).join('');
+      h += exercises.map(exerciseBlockHtml).join('');
+      h += '</div>';
+      return h;
     }).join('');
+    html += '</section>';
+
+    if (closingWeek !== null) {
+      html += '<section class="room-section wrap"><h2>Your closing contemplation</h2>';
+      html += '<p class="closing-intro">The last step before your tutorial &mdash; bring your five handbook paragraphs together into one closing piece.</p>';
+      html += byWeek[closingWeek].map(exerciseBlockHtml).join('');
+      html += '</section>';
+    }
   }
-  html += '</section>';
 
   html += '<section class="room-section wrap" style="padding-bottom:64px;"><h2>Your tutorial</h2>';
   if (eligible) {
@@ -268,6 +367,22 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
       }
     });
   });
+
+  // Tutor feedback: show any comments the tutor has left on a saved
+  // exercise, right below that exercise. Only fetched for exercises
+  // that already have saved text — nothing to comment on otherwise.
+  for (const block of root.querySelectorAll('.exercise-block')) {
+    const contentId = block.dataset.contentId;
+    const p = progressByContent[contentId];
+    if (!p || !p.reflection_text) continue;
+    const comments = await getComments(contentId, user.id);
+    if (!comments.length) continue;
+    const resolved = islResolveComments(p.reflection_text, comments);
+    const fb = document.createElement('div');
+    fb.className = 'tutor-feedback';
+    fb.innerHTML = '<h5>Tutor feedback</h5><div class="tutor-feedback-text">' + islRenderAnnotated(p.reflection_text, resolved) + '</div>' + islRenderCommentList(resolved, { deletable: false });
+    block.appendChild(fb);
+  }
 })();
 
 document.getElementById('signOutBtn').addEventListener('click', async () => {

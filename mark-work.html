@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mark Student Work — ISL, The Institute of Spiritual Learning</title>
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night: #171B21; --night-2: #212730;
+  --gold: #F0B106; --turquoise: #2BACCC; --turquoise-text: #6cc9e0; --skyblue: #54ACD9; --lavender: #BE81F7;
+  --charcoal: #343434;
+  --line-dark: rgba(255,255,255,0.14); --ink-on-dark: rgba(255,255,255,0.92); --soft-on-dark: rgba(255,255,255,0.62);
+  --clr-error: #ff8a75;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--night);color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;margin:0;color:#fff;}
+a{color:var(--turquoise-text);text-decoration:none;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px;}
+.eyebrow{font-family:"Jost",Arial,sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--skyblue);margin:0 0 14px;display:block;}
+
+header.app-nav{border-bottom:1px solid var(--line-dark);background:var(--night);position:sticky;top:0;z-index:40;}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;flex-wrap:wrap;gap:12px;}
+.wordmark{display:flex;align-items:center;gap:12px;color:#fff;}
+.wordmark .isl-icon{height:30px;width:auto;}
+.wordmark .isl-icon-ring{color:var(--turquoise);}
+.wordmark .isl-icon-dot{fill:var(--night);}
+.wordmark .tagline{font-family:"Jost",Arial,sans-serif;font-size:0.62rem;font-weight:500;line-height:1.3;letter-spacing:0.03em;text-transform:uppercase;color:var(--soft-on-dark);}
+nav.app-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+nav.app-links a{font-family:"Jost",Arial,sans-serif;font-size:0.92rem;font-weight:300;color:var(--soft-on-dark);padding:10px 15px;}
+nav.app-links a.active{color:var(--gold);font-weight:500;}
+nav.app-links a:hover{color:#fff;}
+#signOutBtn{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:999px;padding:9px 18px;cursor:pointer;font-size:.82rem;font-family:"Jost",Arial,sans-serif;}
+#signOutBtn:hover{border-color:var(--turquoise);color:var(--turquoise-text);}
+
+.page-hero{padding:28px 0 8px;}
+.page-hero h1{font-style:italic;font-size:clamp(1.8rem,3.4vw,2.1rem);margin-bottom:6px;}
+.page-hero .sub{color:var(--soft-on-dark);font-size:0.98rem;}
+
+.mark-layout{display:grid;grid-template-columns:340px 1fr;gap:28px;padding:26px 0 70px;align-items:start;}
+@media (max-width:900px){ .mark-layout{grid-template-columns:1fr;} }
+
+.sub-list-wrap h2{font-style:italic;font-size:1.1rem;margin-bottom:14px;}
+.sub-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:78vh;overflow-y:auto;}
+.sub-item{padding:14px 16px;background:var(--night-2);border-radius:8px;cursor:pointer;border:1.5px solid transparent;width:100%;text-align:left;color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;}
+.sub-item:hover{border-color:var(--line-dark);}
+.sub-item.active{border-color:var(--turquoise);}
+.sub-item .who{font-weight:500;font-size:0.94rem;}
+.sub-item .what{font-size:0.82rem;color:var(--soft-on-dark);margin-top:3px;}
+.sub-item .when{font-size:0.74rem;color:var(--soft-on-dark);margin-top:6px;opacity:0.8;}
+
+.mark-pane{min-width:0;}
+.mark-pane-head{margin-bottom:18px;}
+.mark-pane-head h2{font-style:italic;font-size:1.3rem;margin-bottom:4px;}
+.mark-pane-head .who{color:var(--soft-on-dark);font-size:0.92rem;}
+.mark-prompt{background:var(--night-2);border-radius:10px;padding:16px 20px;margin-bottom:18px;font-size:0.9rem;color:var(--soft-on-dark);}
+.mark-prompt strong{color:var(--ink-on-dark);}
+
+.mark-text{white-space:pre-wrap;line-height:1.75;font-size:1.02rem;padding:22px 24px;background:var(--night-2);border-radius:10px;cursor:text;}
+.mark-hint{font-size:0.8rem;color:var(--soft-on-dark);margin:10px 0 0;}
+
+.isl-annot{background:rgba(240,177,6,0.26);border-bottom:1.5px solid var(--gold);border-radius:2px;}
+.isl-annot::after{content:attr(data-idx);font-size:0.62em;vertical-align:super;margin-left:2px;color:var(--gold);font-weight:700;}
+
+.composer{margin-top:16px;background:var(--night-2);border:1.5px solid var(--turquoise);border-radius:10px;padding:16px 18px;}
+.composer[hidden]{display:none;}
+.composer-quote{font-size:0.86rem;color:var(--soft-on-dark);}
+.composer-quote em{color:var(--turquoise-text);font-style:italic;}
+.composer textarea{width:100%;min-height:80px;margin-top:10px;background:var(--night);border:1px solid var(--line-dark);border-radius:8px;color:#fff;padding:12px;font-family:"Jost",Arial,sans-serif;font-size:0.94rem;resize:vertical;}
+.composer-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px;}
+.btn-ghost-sm{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:6px;padding:9px 16px;font-size:0.84rem;cursor:pointer;font-family:"Jost",Arial,sans-serif;}
+.btn-gold-sm{background:var(--gold);border:none;color:var(--charcoal);border-radius:6px;padding:9px 18px;font-size:0.84rem;font-weight:500;cursor:pointer;font-family:"Jost",Arial,sans-serif;}
+.btn-gold-sm:disabled{opacity:0.6;cursor:wait;}
+
+.isl-comment-list{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px;}
+.isl-comment-list li{display:flex;gap:12px;background:var(--night-2);border-radius:8px;padding:14px 16px;align-items:flex-start;}
+.isl-comment-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--charcoal);font-size:0.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.isl-comment-quote{font-style:italic;color:var(--soft-on-dark);font-size:0.86rem;}
+.isl-comment-text{margin:4px 0 0;font-size:0.94rem;}
+.isl-comment-del{background:none;border:1px solid var(--line-dark);color:var(--soft-on-dark);border-radius:6px;padding:6px 10px;font-size:0.76rem;cursor:pointer;flex-shrink:0;font-family:"Jost",Arial,sans-serif;}
+.isl-comment-del:hover{border-color:var(--clr-error);color:var(--clr-error);}
+.isl-comment-orphaned{margin-top:16px;font-size:0.86rem;color:var(--soft-on-dark);}
+.isl-comment-orphaned ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px;}
+
+.empty-note{color:var(--soft-on-dark);font-size:0.92rem;padding:14px 18px;background:var(--night-2);border-radius:8px;}
+.room-error{max-width:640px;margin:70px auto;text-align:center;padding:0 24px;}
+.room-error h1{font-style:italic;margin-bottom:14px;}
+.room-error p{color:var(--soft-on-dark);margin-bottom:24px;}
+.loading{text-align:center;padding:80px 0;color:var(--soft-on-dark);}
+.placeholder-pane{color:var(--soft-on-dark);font-size:0.94rem;padding:40px 20px;text-align:center;background:var(--night-2);border-radius:10px;}
+</style>
+</head>
+<body>
+<header class="app-nav">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="index.html">
+      <span data-isl-logo data-height="30px"></span>
+      <span class="tagline">The Institute of Spiritual Learning</span>
+    </a>
+    <nav class="app-links">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="account.html">My Courses</a>
+      <a class="active" href="mark-work.html">Mark Work</a>
+      <button id="signOutBtn" type="button">Sign Out</button>
+    </nav>
+  </div>
+</header>
+
+<div id="root" class="loading">Loading&hellip;</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<script src="assets/js/annotations.js"></script>
+<script src="assets/js/site-nav.js"></script>
+<script>
+(async () => {
+  const root = document.getElementById('root');
+
+  if (typeof sb === 'undefined' || !sb) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>Unavailable</h1><p>We couldn&rsquo;t connect to our account system. Please check your connection and refresh the page.</p></div>';
+    return;
+  }
+  const user = await requireAuth('signin.html');
+  if (!user) return;
+
+  const admin = await isAdmin();
+  if (!admin) {
+    root.className = '';
+    root.innerHTML = '<div class="room-error"><h1>Not authorised</h1><p>This page is for marking student work and isn&rsquo;t part of your account.</p><a class="btn-ghost-sm" href="account.html">Back to My Courses</a></div>';
+    return;
+  }
+
+  const submissions = await getAllSubmissions();
+
+  root.className = '';
+  root.innerHTML =
+    '<div class="wrap page-hero"><span class="eyebrow">Tutor</span><h1>Mark Student Work</h1><div class="sub">Select a piece of writing, highlight any part of it, and add a comment. Students see your comments on their own copy.</div></div>' +
+    '<div class="wrap mark-layout">' +
+      '<div class="sub-list-wrap"><h2>Submissions</h2><ul class="sub-list" id="subList"></ul></div>' +
+      '<div class="mark-pane" id="markPane"><div class="placeholder-pane">Choose a submission on the left to read and comment on it.</div></div>' +
+    '</div>';
+
+  const subListEl = document.getElementById('subList');
+  const markPaneEl = document.getElementById('markPane');
+
+  if (submissions.length === 0) {
+    subListEl.innerHTML = '<div class="empty-note">No students have submitted any written work yet.</div>';
+  } else {
+    subListEl.innerHTML = submissions.map((s, i) => {
+      const who = (s.profiles && (s.profiles.full_name || s.profiles.email)) || 'Unknown student';
+      const cc = s.course_content || {};
+      const courseTitle = (cc.courses && cc.courses.title) || cc.course_id || '';
+      const what = (cc.week_number ? 'Week ' + cc.week_number + ' — ' : '') + (cc.title || '');
+      const when = s.attempted_at ? new Date(s.attempted_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+      return '<li><button type="button" class="sub-item" data-idx="' + i + '">' +
+        '<div class="who">' + islEsc(who) + '</div>' +
+        '<div class="what">' + islEsc(courseTitle) + (courseTitle && what ? ' &middot; ' : '') + islEsc(what) + '</div>' +
+        '<div class="when">' + islEsc(when) + '</div>' +
+      '</button></li>';
+    }).join('');
+  }
+
+  let activeIdx = null;
+  let currentText = '';
+  let currentSubmission = null;
+  let pendingSelection = null;
+
+  async function openSubmission(idx) {
+    activeIdx = idx;
+    subListEl.querySelectorAll('.sub-item').forEach(el => el.classList.toggle('active', Number(el.dataset.idx) === idx));
+    const s = submissions[idx];
+    currentSubmission = s;
+    currentText = s.reflection_text || '';
+    const cc = s.course_content || {};
+    const who = (s.profiles && (s.profiles.full_name || s.profiles.email)) || 'Unknown student';
+    const courseTitle = (cc.courses && cc.courses.title) || '';
+    const what = (cc.week_number ? 'Week ' + cc.week_number + ' — ' : '') + (cc.title || '');
+
+    markPaneEl.innerHTML =
+      '<div class="mark-pane-head"><h2>' + islEsc(what) + '</h2><div class="who">' + islEsc(who) + (courseTitle ? ' &middot; ' + islEsc(courseTitle) : '') + '</div></div>' +
+      (cc.body ? '<div class="mark-prompt"><strong>Prompt:</strong> ' + islEsc(cc.body) + '</div>' : '') +
+      '<div class="mark-text" id="markText"></div>' +
+      '<div class="mark-hint">Highlight any part of the text above, then add a comment.</div>' +
+      '<div class="composer" id="composer" hidden>' +
+        '<div class="composer-quote">Selected: <em id="composerQuote"></em></div>' +
+        '<textarea id="composerInput" placeholder="Write your comment..."></textarea>' +
+        '<div class="composer-actions"><button type="button" class="btn-ghost-sm" id="composerCancel">Cancel</button><button type="button" class="btn-gold-sm" id="composerSave">Save comment</button></div>' +
+      '</div>' +
+      '<div id="commentListWrap"></div>';
+
+    await renderText();
+
+    const textEl = document.getElementById('markText');
+    textEl.addEventListener('mouseup', onSelectionChange);
+    document.getElementById('composerCancel').addEventListener('click', hideComposer);
+    document.getElementById('composerSave').addEventListener('click', saveComposer);
+  }
+
+  async function renderText() {
+    const textEl = document.getElementById('markText');
+    const comments = await getComments(currentSubmission.content_id, currentSubmission.user_id);
+    const resolved = islResolveComments(currentText, comments);
+    if (!currentText) {
+      textEl.innerHTML = '<span class="isl-annot-empty">(No text submitted yet.)</span>';
+    } else {
+      textEl.innerHTML = islRenderAnnotated(currentText, resolved);
+    }
+    document.getElementById('commentListWrap').innerHTML = islRenderCommentList(resolved, { deletable: true });
+    document.querySelectorAll('.isl-comment-del').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        await deleteComment(btn.dataset.commentId);
+        await renderText();
+      });
+    });
+  }
+
+  function onSelectionChange() {
+    const sel = window.getSelection();
+    const textEl = document.getElementById('markText');
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) return;
+    const range = sel.getRangeAt(0);
+    if (!textEl.contains(range.commonAncestorContainer)) return;
+    const a = islGetTextOffset(textEl, range.startContainer, range.startOffset);
+    const b = islGetTextOffset(textEl, range.endContainer, range.endOffset);
+    const start = Math.min(a, b), end = Math.max(a, b);
+    if (end <= start) return;
+    pendingSelection = { start, end, quoted: currentText.slice(start, end) };
+    document.getElementById('composerQuote').textContent = '“' + pendingSelection.quoted + '”';
+    document.getElementById('composerInput').value = '';
+    document.getElementById('composer').hidden = false;
+    document.getElementById('composerInput').focus();
+  }
+
+  function hideComposer() {
+    pendingSelection = null;
+    const composer = document.getElementById('composer');
+    if (composer) composer.hidden = true;
+    window.getSelection().removeAllRanges();
+  }
+
+  async function saveComposer() {
+    if (!pendingSelection) return;
+    const text = document.getElementById('composerInput').value.trim();
+    if (!text) return;
+    const saveBtn = document.getElementById('composerSave');
+    saveBtn.disabled = true;
+    const { error } = await addComment({
+      contentId: currentSubmission.content_id,
+      studentId: currentSubmission.user_id,
+      startOffset: pendingSelection.start,
+      endOffset: pendingSelection.end,
+      quotedText: pendingSelection.quoted,
+      commentText: text,
+    });
+    saveBtn.disabled = false;
+    if (error) { alert('Could not save comment — please try again.'); return; }
+    hideComposer();
+    await renderText();
+  }
+
+  subListEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.sub-item');
+    if (!btn) return;
+    openSubmission(Number(btn.dataset.idx));
+  });
+
+  if (submissions.length > 0) openSubmission(0);
+})();
+
+document.getElementById('signOutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>
