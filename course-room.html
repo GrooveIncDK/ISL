@@ -15,12 +15,29 @@
 :root{
   --night: #171B21; --night-2: #212730;
   --gold: #F0B106; --turquoise: #2BACCC; --turquoise-text: #6cc9e0; --skyblue: #54ACD9; --lavender: #BE81F7;
-  --charcoal: #343434;
+  --charcoal: #343434; --grey: #979797;
   --line-dark: rgba(255,255,255,0.14); --ink-on-dark: rgba(255,255,255,0.92); --soft-on-dark: rgba(255,255,255,0.62);
   --clr-error: #ff8a75;
+  /* Sampled directly from the Omega Document's own "Negative — Brand
+     Colour" reversal card (page 1): a top-to-bottom Turquoise fade,
+     #2BACCC into a deepened #1F7E95. That card is the one place the
+     source document itself puts the palette into a dark register, so
+     it's the anchor for the site's "night" theme rather than an
+     unrelated navy — extended here with a third stop down into the
+     existing dark base so long, scrolling pages stay readable. */
+  --grad-top: #2BACCC; --grad-mid: #1F7E95;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--night);color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 420px at 50% 0%, rgba(43,172,204,0.30), transparent 72%),
+    linear-gradient(180deg, var(--grad-mid) 0%, var(--night) 46%) no-repeat,
+    var(--night);
+  background-size: 100% 100%, 100% 720px, 100% 100%;
+  background-repeat: no-repeat;
+  color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
 h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;margin:0;color:#fff;}
 a{color:var(--turquoise-text);text-decoration:none;}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
@@ -49,6 +66,9 @@ nav.app-links a:hover{color:#fff;}
 .btn-print{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:999px;padding:10px 20px;cursor:pointer;font-size:.85rem;font-family:"Jost",Arial,sans-serif;flex-shrink:0;}
 .btn-print:hover{border-color:var(--turquoise);color:var(--turquoise-text);}
 .print-only{display:none;}
+.print-only .isl-icon{height:44px;width:auto;margin-bottom:14px;}
+.print-only .isl-icon-ring{color:var(--turquoise);}
+.print-only .isl-icon-dot{fill:var(--charcoal);}
 
 .mech-track{display:flex;align-items:center;gap:0;padding-top:8px;padding-bottom:44px;flex-wrap:wrap;}
 .mech-step{display:flex;align-items:center;gap:10px;font-size:0.84rem;font-weight:500;color:var(--soft-on-dark);}
@@ -95,14 +115,19 @@ section.room-section h2{font-style:italic;font-size:1.38rem;margin-bottom:20px;}
 .isl-comment-orphaned{margin-top:12px;font-size:0.82rem;color:var(--soft-on-dark);}
 .isl-comment-orphaned ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px;}
 
+.top-workbook{padding-top:26px;padding-bottom:4px;}
 .workbook-card{background:linear-gradient(135deg, var(--night-2), #182430);border:1.5px solid var(--gold);border-radius:16px;padding:28px 30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:14px;}
 .workbook-card .icon{width:52px;height:52px;border-radius:12px;background:rgba(240,177,6,0.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .workbook-card .icon svg{width:24px;height:24px;color:var(--gold);}
 .workbook-card .info{flex-grow:1;}
 .workbook-card h3{font-style:italic;font-size:1.1rem;margin-bottom:4px;}
 .workbook-card .meta{font-size:0.84rem;color:var(--soft-on-dark);}
-.btn-dl{flex-shrink:0;display:flex;align-items:center;gap:8px;font-weight:500;font-size:0.88rem;padding:13px 22px;border-radius:6px;background:var(--gold);color:var(--charcoal) !important;}
+.btn-dl{flex-shrink:0;display:flex;align-items:center;gap:8px;font-weight:500;font-size:0.88rem;padding:13px 22px;border-radius:6px;background:var(--gold);color:var(--charcoal) !important;border:none;cursor:pointer;font-family:"Jost",Arial,sans-serif;}
 .btn-dl svg{width:15px;height:15px;}
+.btn-dl:disabled{opacity:0.6;cursor:wait;}
+.dl-wrap{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.dl-status{font-size:0.78rem;color:var(--soft-on-dark);}
+.dl-status.error{color:var(--clr-error);}
 .workbook-note{margin-top:10px;font-size:0.84rem;color:var(--soft-on-dark);}
 
 .exercise-block{margin-bottom:28px;}
@@ -136,20 +161,25 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
   .tutorial-card, textarea.reflection, .save-row, .empty-note,
   .print-hide { display: none !important; }
   .print-only { display: block; }
-  body { background: #fff; color: #111; }
-  a { color: #111; }
-  .week-block, section.room-section { border-top: 1px solid #ccc; }
-  h1, h2, h3, .week-head h3 { color: #111; }
-  .week-num, .eyebrow { color: #555; }
-  .exercise-block h4 { color: #111; }
-  .exercise-block .ex-body { color: #444; }
-  .printed-reflection { display: block; white-space: pre-wrap; color: #111; font-size: 0.95rem; line-height: 1.6; border-left: 3px solid #ccc; padding-left: 14px; margin-top: 8px; }
-  .printed-reflection.empty { color: #888; font-style: italic; }
-  .tutor-feedback { border-top: 1px dashed #999; }
-  .tutor-feedback h5 { color: #555; }
-  .tutor-feedback-text, .isl-comment-text, .isl-comment-quote { color: #111; }
-  .isl-annot { background: none; border-bottom: 1px solid #999; }
-  .isl-comment-list li { background: none; border: 1px solid #ccc; }
+  body { background: #fff; color: var(--charcoal); }
+  a { color: var(--turquoise); }
+  .week-block, section.room-section { border-top: 1px solid rgba(84,172,217,0.35); }
+  h1, h2, h3, .week-head h3 { color: var(--charcoal); }
+  .week-num, .eyebrow { color: var(--turquoise); }
+  .exercise-block h4 { color: var(--charcoal); }
+  .exercise-block .ex-body { color: var(--grey); }
+  .printed-reflection { display: block; white-space: pre-wrap; color: var(--charcoal); font-size: 0.95rem; line-height: 1.6; border-left: 3px solid var(--turquoise); padding-left: 14px; margin-top: 8px; }
+  .printed-reflection.empty { color: var(--grey); font-style: italic; }
+  /* Lavender marks the tutor's own voice throughout print — the same
+     accent the redesigned workbook PDF reserves for its one
+     "this is different from the regular weekly material" moment. */
+  .tutor-feedback { border-top: 1px dashed rgba(190,129,247,0.55); }
+  .tutor-feedback h5 { color: var(--lavender); }
+  .tutor-feedback-text, .isl-comment-text, .isl-comment-quote { color: var(--charcoal); }
+  .isl-annot { background: rgba(190,129,247,0.14); border-bottom: 1px solid var(--lavender); }
+  .isl-annot::after { color: var(--lavender); }
+  .isl-comment-list li { background: none; border: 1px solid rgba(84,172,217,0.4); }
+  .isl-comment-num { background: var(--lavender); }
 }
 </style>
 </head>
@@ -232,6 +262,26 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
   const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:11px;height:11px;"><path d="M20 6L9 17l-5-5"/></svg>';
+  // Same mask-based icon markup as site-nav.js's data-isl-logo helper,
+  // inlined here because this markup is built after that script's own
+  // DOMContentLoaded pass has already run — a data-isl-logo span added
+  // this late would never get its SVG injected.
+  const PRINT_ICON = '<svg class="isl-icon" viewBox="0 0 903 907" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<defs>' +
+    '<mask id="printLogoO"><rect width="903" height="907" fill="black"/>' +
+    '<circle cx="459.4" cy="451.7" r="433.5" fill="white"/>' +
+    '<circle cx="454.0" cy="491.4" r="312.8" fill="black"/>' +
+    '<circle cx="122.3" cy="492.2" r="177.3" fill="black"/></mask>' +
+    '<mask id="printLogoI"><rect width="903" height="907" fill="black"/>' +
+    '<circle cx="494.6" cy="475.7" r="215.8" fill="white"/>' +
+    '<circle cx="498.3" cy="463.5" r="164.9" fill="black"/>' +
+    '<circle cx="652.8" cy="482.8" r="110.6" fill="black"/></mask>' +
+    '</defs>' +
+    '<rect width="903" height="907" fill="currentColor" class="isl-icon-ring" mask="url(#printLogoO)"/>' +
+    '<rect width="903" height="907" fill="currentColor" class="isl-icon-ring" mask="url(#printLogoI)"/>' +
+    '<circle cx="122.3" cy="492.2" r="112.1" class="isl-icon-dot"/>' +
+    '<circle cx="652.8" cy="482.8" r="63.8" class="isl-icon-dot"/>' +
+    '</svg>';
 
   let readingStep = allReading.length === 0 || allReading.every(r => progressByContent[r.id]) ? 'done' : 'current';
   let writeStep = allExercises.length > 0 && allExercises.every(e => progressByContent[e.id] && progressByContent[e.id].reflection_text) ? 'done' : (readingStep === 'done' ? 'current' : '');
@@ -247,9 +297,23 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
   }
 
   function workbookCardHtml(w) {
+    // storage_path (a private Supabase Storage object) is the secure
+    // path: gated by storage.objects RLS on the same paid-purchase
+    // check as course_content itself, and turned into a short-lived
+    // signed URL on click rather than a permanent, shareable link.
+    // download_url is kept only as a fallback for a plain external
+    // link, if one is ever used instead.
+    let dlControl = '';
+    if (w.storage_path) {
+      dlControl = '<div class="dl-wrap"><button type="button" class="btn-dl" data-storage-path="' + esc(w.storage_path) + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg> Download</button>' +
+        '<span class="dl-status" aria-live="polite"></span></div>';
+    } else if (w.download_url) {
+      dlControl = '<a class="btn-dl" href="' + esc(w.download_url) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg> Download</a>';
+    }
     return '<div class="workbook-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>' +
       '<div class="info"><h3>' + esc(w.title) + '</h3>' + (w.body ? '<div class="meta">' + esc(w.body) + '</div>' : '') + '</div>' +
-      (w.download_url ? '<a class="btn-dl" href="' + esc(w.download_url) + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg> Download</a>' : '') +
+      dlControl +
       '</div>';
   }
 
@@ -272,7 +336,21 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   let html = '';
   html += '<div class="breadcrumb wrap"><a href="account.html">My Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> <span>' + esc(course.title) + '</span></div>';
-  html += '<div class="wrap print-only"><span class="eyebrow">My Course Work</span><h1>' + esc(course.title) + '</h1><div class="sub">Printed ' + esc(new Date().toLocaleDateString()) + '</div></div>';
+  html += '<div class="wrap print-only">' + PRINT_ICON + '<span class="eyebrow">My Course Work</span><h1>' + esc(course.title) + '</h1><div class="sub">Printed ' + esc(new Date().toLocaleDateString()) + '</div></div>';
+
+  // The official course workbook (if any) is a whole-course download,
+  // not tied to any one week — shown once, above everything else on
+  // the page (including the "Download my work" button below), so a
+  // student sees ISL's own material before their personal export.
+  const workbookContent = content.filter(c => c.content_type === 'workbook');
+  if (workbookContent.length) {
+    html += '<section class="wrap top-workbook print-hide">' +
+      '<span class="eyebrow">Your course workbook</span>' +
+      workbookContent.map(workbookCardHtml).join('') +
+      '<div class="workbook-note">Yours to keep &mdash; it stays downloaded on your device even after the course ends or your access here changes.</div>' +
+      '</section>';
+  }
+
   html += '<div class="wrap room-hero"><div><span class="eyebrow">Course Room</span><h1>' + esc(course.title) + '</h1><div class="sub">Your practice space &mdash; the readings, the teaching, and the exercise that leads to your tutorial.</div></div><button id="printBtn" type="button" class="btn-print">Download my work</button></div>';
 
   html += '<div class="wrap mech-track">' +
@@ -287,7 +365,11 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
   // (no week_number set on any row) fall back to the original flat
   // by-type layout below.
   const byWeek = {};
-  content.forEach(c => { const wk = c.week_number || 0; (byWeek[wk] = byWeek[wk] || []).push(c); });
+  content.forEach(c => {
+    if (c.content_type === 'workbook') return; // handled globally above, not per-week
+    const wk = c.week_number || 0;
+    (byWeek[wk] = byWeek[wk] || []).push(c);
+  });
   const weekNums = Object.keys(byWeek).map(Number).filter(n => n > 0).sort((a, b) => a - b);
 
   // A week with no 'teaching' and no 'reading' rows (just exercise —
@@ -305,21 +387,13 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   if (weekNums.length === 0 && closingWeek === null) {
     // Legacy flat layout — no week structure on this course yet.
-    const workbook = content.filter(c => c.content_type === 'workbook');
+    // (The workbook, if any, was already rendered above — once,
+    // ahead of the rest of the page — so it isn't repeated here.)
 
     html += '<section class="room-section wrap print-hide"><h2>Your reading</h2>';
     html += allReading.length === 0
       ? '<div class="empty-note">Reading materials for this course are being finalised &mdash; check back soon.</div>'
       : readingListHtml(allReading);
-    html += '</section>';
-
-    html += '<section class="room-section wrap print-hide"><h2>Your workbook</h2>';
-    if (workbook.length === 0) {
-      html += '<div class="empty-note">No downloadable workbook has been added for this course yet.</div>';
-    } else {
-      html += workbook.map(workbookCardHtml).join('');
-      html += '<div class="workbook-note">Yours to keep &mdash; it stays downloaded on your device even after the course ends or your access here changes.</div>';
-    }
     html += '</section>';
 
     html += '<section class="room-section wrap"><h2>Your exercise</h2>';
@@ -334,14 +408,12 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
       const items = byWeek[wk];
       const teaching = items.find(c => c.content_type === 'teaching');
       const reading = items.filter(c => c.content_type === 'reading');
-      const workbookItems = items.filter(c => c.content_type === 'workbook');
       const exercises = items.filter(c => c.content_type === 'exercise');
       const t = teaching ? teachingHtml(teaching) : null;
       let h = '<div class="week-block" data-week="' + wk + '">';
       h += '<div class="week-head"><span class="week-num">Week ' + wk + '</span>' + (t ? '<h3>' + esc(t.heading) + '</h3>' : '') + '</div>';
       if (t) h += t.body;
       if (reading.length) h += '<div class="week-reading">' + readingListHtml(reading, "This week's reading") + '</div>';
-      h += workbookItems.map(workbookCardHtml).join('');
       h += exercises.map(exerciseBlockHtml).join('');
       h += '</div>';
       return h;
@@ -369,6 +441,25 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   const printBtn = document.getElementById('printBtn');
   if (printBtn) printBtn.addEventListener('click', () => window.print());
+
+  // Workbook downloads: fetch a fresh, short-lived signed URL on
+  // click rather than linking straight to a permanent public file —
+  // see getWorkbookSignedUrl() in supabase-client.js.
+  root.querySelectorAll('.btn-dl[data-storage-path]').forEach(btn => {
+    const statusEl = btn.parentElement.querySelector('.dl-status');
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      if (statusEl) { statusEl.textContent = 'Preparing your download…'; statusEl.className = 'dl-status'; }
+      const { url, error } = await getWorkbookSignedUrl(btn.dataset.storagePath);
+      btn.disabled = false;
+      if (error || !url) {
+        if (statusEl) { statusEl.textContent = 'Could not prepare the download — please try again.'; statusEl.className = 'dl-status error'; }
+        return;
+      }
+      if (statusEl) statusEl.textContent = '';
+      window.open(url, '_blank', 'noopener');
+    });
+  });
 
   // Reading: click to toggle attempted
   root.querySelectorAll('.reading-check li').forEach(li => {

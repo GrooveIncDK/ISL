@@ -55,11 +55,31 @@ async function getGatedContent(courseId) {
   // to keep it secure, but we still gate the UI nicely too.
   const { data, error } = await sb
     .from("course_content")
-    .select("id, week_number, title, body, download_url, content_type, sort_order")
+    .select("id, week_number, title, body, download_url, storage_path, content_type, sort_order")
     .eq("course_id", courseId)
     .order("sort_order", { ascending: true });
   if (error) { console.error(error); return []; }
   return data;
+}
+
+// Workbook PDFs live in a PRIVATE Storage bucket, not a public URL —
+// a plain public link never expires and can't be revoked once a
+// purchaser has it (they could repost or share it indefinitely). A
+// signed URL is generated fresh, per request, and only succeeds if
+// storage.objects' own RLS policy confirms this user has a paid
+// purchase for the course the object's folder belongs to (see
+// migration_course_content_storage_path.sql) — the same guarantee
+// course_content's own RLS gives every other gated field. It expires
+// quickly (default 60s, just long enough to start the download); the
+// downloaded file itself is the student's to keep after that.
+const WORKBOOK_BUCKET = "course-workbooks";
+
+async function getWorkbookSignedUrl(storagePath, expirySeconds = 60) {
+  const { data, error } = await sb.storage
+    .from(WORKBOOK_BUCKET)
+    .createSignedUrl(storagePath, expirySeconds);
+  if (error) { console.error(error); return { error }; }
+  return { url: data.signedUrl };
 }
 
 async function markAttempted(contentId) {

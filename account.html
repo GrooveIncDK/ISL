@@ -19,9 +19,24 @@
   --line-dark: rgba(255,255,255,0.14); --ink-on-dark: rgba(255,255,255,0.92); --soft-on-dark: rgba(255,255,255,0.62);
   --clr-success: #3ddc9b; --clr-error: #ff8a75;
   --radius-md: 12px; --max: 1000px;
+  /* Sampled from the Omega Document's own "Negative — Brand Colour"
+     reversal card (page 1): a top-to-bottom Turquoise fade, #2BACCC
+     into a deepened #1F7E95 — the one place the source document puts
+     the palette into a dark register, so it anchors this site's
+     "night" theme instead of an unrelated navy. */
+  --grad-top: #2BACCC; --grad-mid: #1F7E95;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--night);color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 420px at 50% 0%, rgba(43,172,204,0.30), transparent 72%),
+    linear-gradient(180deg, var(--grad-mid) 0%, var(--night) 46%) no-repeat,
+    var(--night);
+  background-size: 100% 100%, 100% 720px, 100% 100%;
+  background-repeat: no-repeat;
+  color:var(--ink-on-dark);font-family:"Jost",Arial,sans-serif;font-weight:300;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
 h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;margin:0;color:#fff;}
 a{color:var(--turquoise-text);text-decoration:none;}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
