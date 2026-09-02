@@ -132,7 +132,7 @@ textarea.note{min-height:100px;resize:vertical;}
 
   if (!eligibleCourseIds.includes(courseId)) {
     root.className = '';
-    root.innerHTML = '<div class="room-error"><h1>Not yet unlocked</h1><p>Tutorial booking for ' + esc(course.title) + ' unlocks once you&rsquo;ve engaged with at least one part of the course.</p><a class="btn-dl" href="course-room.html?course=' + esc(courseId) + '">Go to the Course Room</a></div>';
+    root.innerHTML = '<div class="room-error"><h1>Not yet unlocked</h1><p>Tutorial booking for ' + esc(course.title) + ' unlocks once you&rsquo;ve completed every reading item and exercise, and your tutor has commented on all your written work.</p><a class="btn-dl" href="course-room.html?course=' + esc(courseId) + '">Go to the Course Room</a></div>';
     return;
   }
 
