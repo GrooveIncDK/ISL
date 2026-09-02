@@ -69,6 +69,12 @@
   .sidebar-card .btn svg { width: 15px; height: 15px; }
   .phone-line { margin-top: 14px; font-size: 0.86rem; color: var(--charcoal-soft); text-align: center; }
 
+  .included-card { background: var(--turquoise-tint); border-color: transparent; }
+  .included-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .included-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; line-height: 1.45; color: var(--charcoal); }
+  .included-list li svg { width: 15px; height: 15px; color: var(--turquoise-text); flex-shrink: 0; margin-top: 2px; }
+  .included-note { font-size: 0.78rem; color: var(--charcoal-soft); margin: 14px 0 0; padding-top: 14px; border-top: 1px solid rgba(43,172,204,0.25); }
+
   .price-display { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
   .price-label { font-size: 0.86rem; color: var(--charcoal-soft); }
   .price-value { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 1.3rem; font-style: italic; color: var(--charcoal); }
@@ -241,6 +247,19 @@
         <div class="sidebar-card" id="enrol-card">
           <p class="sidebar-card-title">Enrolment</p>
           <div id="enrol-card-body"><p class="enrol-note">Loading&hellip;</p></div>
+        </div>
+
+        <div class="sidebar-card included-card">
+          <p class="sidebar-card-title">What you get</p>
+          <ul class="included-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Full access to the Course Room &mdash; this course's teaching, delivered week by week</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Curated readings and topics of investigation for every week</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A downloadable course workbook, yours to keep</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Weekly practical exercises, building toward your own written record</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Personal tutor feedback on what you write, direct from Benjamin</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A 1-to-1 tutorial built around your own work</span></li>
+          </ul>
+          <p class="included-note">Everything above unlocks the moment you enrol.</p>
         </div>
       </aside>
     </div>
