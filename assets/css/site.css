@@ -83,7 +83,7 @@ section.on-paper { background: var(--paper); }
    the menu would appear to detach and vanish as soon as you scrolled. */
 .site-nav-wrap { position: sticky; top: 0; z-index: 50; }
 header.site-nav { background: var(--white); border-bottom: 1px solid var(--line); }
-.nav-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; position: relative; }
+.nav-row { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; position: relative; }
 .wordmark { display: flex; align-items: center; gap: 12px; color: var(--charcoal); }
 .wordmark .isl-icon { height: 38px; width: auto; }
 .wordmark .isl-letters { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 1.5rem; color: var(--charcoal); line-height: 1; }
