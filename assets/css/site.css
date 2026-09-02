@@ -15,6 +15,7 @@
   /* Omega Document palette — approved Groove Inc, Aug 2026 */
   --turquoise:      #2BACCC; /* Primary — large fills, icon, UI. NOT small text on white (2.67:1) */
   --turquoise-text: #208199; /* AA-safe darkened variant for links/small text on white (4.50:1) */
+  --turquoise-tint: #EAF6F9; /* Pale wash for badges/icon circles/callout backgrounds behind charcoal or turquoise-text */
   --skyblue:        #54ACD9; /* Secondary — decorative fills; AA-safe as small text on charcoal (4.91:1) */
   --charcoal:       #343434; /* Ink — body text (12.45:1 on white) */
   --charcoal-soft:  #6b6b6b; /* body-safe soft ink for long-form secondary copy */
