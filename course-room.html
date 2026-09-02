@@ -43,9 +43,12 @@ nav.app-links a:hover{color:#fff;}
 .breadcrumb{padding-top:22px;font-size:0.86rem;color:var(--soft-on-dark);display:flex;align-items:center;gap:8px;}
 .breadcrumb svg{width:12px;height:12px;}
 
-.room-hero{padding-top:18px;padding-bottom:32px;}
+.room-hero{padding-top:18px;padding-bottom:32px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
 .room-hero h1{font-style:italic;font-size:clamp(1.8rem,3.4vw,2.1rem);margin-bottom:6px;}
 .room-hero .sub{color:var(--soft-on-dark);font-size:0.98rem;}
+.btn-print{background:none;border:1px solid var(--line-dark);color:var(--ink-on-dark);border-radius:999px;padding:10px 20px;cursor:pointer;font-size:.85rem;font-family:"Jost",Arial,sans-serif;flex-shrink:0;}
+.btn-print:hover{border-color:var(--turquoise);color:var(--turquoise-text);}
+.print-only{display:none;}
 
 .mech-track{display:flex;align-items:center;gap:0;padding-top:8px;padding-bottom:44px;flex-wrap:wrap;}
 .mech-step{display:flex;align-items:center;gap:10px;font-size:0.84rem;font-weight:500;color:var(--soft-on-dark);}
@@ -124,6 +127,30 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 .room-error h1{font-style:italic;margin-bottom:14px;}
 .room-error p{color:var(--soft-on-dark);margin-bottom:24px;}
 .loading{text-align:center;padding:80px 0;color:var(--soft-on-dark);}
+
+.printed-reflection{display:none;}
+
+@media print {
+  header.app-nav, .breadcrumb, .mech-track, .btn-print,
+  .teaching-body, .week-reading, .workbook-card, .workbook-note,
+  .tutorial-card, textarea.reflection, .save-row, .empty-note,
+  .print-hide { display: none !important; }
+  .print-only { display: block; }
+  body { background: #fff; color: #111; }
+  a { color: #111; }
+  .week-block, section.room-section { border-top: 1px solid #ccc; }
+  h1, h2, h3, .week-head h3 { color: #111; }
+  .week-num, .eyebrow { color: #555; }
+  .exercise-block h4 { color: #111; }
+  .exercise-block .ex-body { color: #444; }
+  .printed-reflection { display: block; white-space: pre-wrap; color: #111; font-size: 0.95rem; line-height: 1.6; border-left: 3px solid #ccc; padding-left: 14px; margin-top: 8px; }
+  .printed-reflection.empty { color: #888; font-style: italic; }
+  .tutor-feedback { border-top: 1px dashed #999; }
+  .tutor-feedback h5 { color: #555; }
+  .tutor-feedback-text, .isl-comment-text, .isl-comment-quote { color: #111; }
+  .isl-annot { background: none; border-bottom: 1px solid #999; }
+  .isl-comment-list li { background: none; border: 1px solid #ccc; }
+}
 </style>
 </head>
 <body>
@@ -234,6 +261,7 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
       (ex.body ? '<p class="ex-body">' + esc(ex.body) + '</p>' : '') +
       '<textarea class="reflection" placeholder="Write your reflection here...">' + esc(savedText) + '</textarea>' +
       '<div class="save-row"><span class="save-status"></span><button class="btn-save" type="button">Save &amp; submit</button></div>' +
+      '<div class="printed-reflection' + (savedText ? '' : ' empty') + '">' + (savedText ? esc(savedText) : 'Not yet written.') + '</div>' +
     '</div>';
   }
 
@@ -244,7 +272,8 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   let html = '';
   html += '<div class="breadcrumb wrap"><a href="account.html">My Courses</a> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> <span>' + esc(course.title) + '</span></div>';
-  html += '<div class="wrap room-hero"><span class="eyebrow">Course Room</span><h1>' + esc(course.title) + '</h1><div class="sub">Your practice space &mdash; the readings, the teaching, and the exercise that leads to your tutorial.</div></div>';
+  html += '<div class="wrap print-only"><span class="eyebrow">My Course Work</span><h1>' + esc(course.title) + '</h1><div class="sub">Printed ' + esc(new Date().toLocaleDateString()) + '</div></div>';
+  html += '<div class="wrap room-hero"><div><span class="eyebrow">Course Room</span><h1>' + esc(course.title) + '</h1><div class="sub">Your practice space &mdash; the readings, the teaching, and the exercise that leads to your tutorial.</div></div><button id="printBtn" type="button" class="btn-print">Download my work</button></div>';
 
   html += '<div class="wrap mech-track">' +
     '<div class="mech-step ' + (readingStep === 'done' ? 'done' : 'current') + '"><span class="dot">' + (readingStep === 'done' ? '&#10003;' : '1') + '</span> Read</div>' +
@@ -278,13 +307,13 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
     // Legacy flat layout — no week structure on this course yet.
     const workbook = content.filter(c => c.content_type === 'workbook');
 
-    html += '<section class="room-section wrap"><h2>Your reading</h2>';
+    html += '<section class="room-section wrap print-hide"><h2>Your reading</h2>';
     html += allReading.length === 0
       ? '<div class="empty-note">Reading materials for this course are being finalised &mdash; check back soon.</div>'
       : readingListHtml(allReading);
     html += '</section>';
 
-    html += '<section class="room-section wrap"><h2>Your workbook</h2>';
+    html += '<section class="room-section wrap print-hide"><h2>Your workbook</h2>';
     if (workbook.length === 0) {
       html += '<div class="empty-note">No downloadable workbook has been added for this course yet.</div>';
     } else {
@@ -327,7 +356,7 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
     }
   }
 
-  html += '<section class="room-section wrap" style="padding-bottom:64px;"><h2>Your tutorial</h2>';
+  html += '<section class="room-section wrap print-hide" style="padding-bottom:64px;"><h2>Your tutorial</h2>';
   if (eligible) {
     html += '<div class="tutorial-card unlocked"><div><h3>Ready when you are</h3><p>Book a personal session with Benjamin to discuss your course.</p></div><a class="btn-book unlocked" href="tutorial-booking.html?course=' + esc(courseId) + '">Book tutorial</a></div>';
   } else {
@@ -337,6 +366,9 @@ textarea.reflection{width:100%;min-height:140px;background:var(--night-2);border
 
   root.className = '';
   root.innerHTML = html;
+
+  const printBtn = document.getElementById('printBtn');
+  if (printBtn) printBtn.addEventListener('click', () => window.print());
 
   // Reading: click to toggle attempted
   root.querySelectorAll('.reading-check li').forEach(li => {
