@@ -86,6 +86,18 @@ async function getBookingEligibility() {
   return data.map(r => r.course_id);
 }
 
+// The signed-in user's account type — 'private' or 'business' —
+// set once at sign-up (see migration_catalog_account_type.sql).
+// Signed-out visitors are treated as 'private', which is today's
+// public catalog default.
+async function getAccountType() {
+  const user = await getCurrentUser();
+  if (!user) return 'private';
+  const { data, error } = await sb.from("profiles").select("account_type").eq("id", user.id).single();
+  if (error || !data || !data.account_type) return 'private';
+  return data.account_type;
+}
+
 // ---- Marking tool (requires migration_marking_tool.sql) ----
 
 // Whether the signed-in user is allowed to mark student work.

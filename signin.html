@@ -34,8 +34,8 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-style:italic;font
 .tab.active{color:var(--charcoal);border-bottom-color:var(--turquoise)}
 .field{margin-bottom:16px}
 label{display:block;font-size:.85rem;font-weight:500;margin-bottom:6px;color:var(--charcoal);}
-input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:6px;font-family:"Jost",Arial,sans-serif;font-size:.95rem;color:var(--charcoal);}
-input:focus-visible{outline:none;border-color:var(--turquoise)}
+input,select{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:6px;font-family:"Jost",Arial,sans-serif;font-size:.95rem;color:var(--charcoal);background:var(--white);}
+input:focus-visible,select:focus-visible{outline:none;border-color:var(--turquoise)}
 .btn{width:100%;padding:14px;border:none;border-radius:6px;background:var(--turquoise);color:var(--charcoal);font-weight:500;font-size:.95rem;cursor:pointer;margin-top:8px;font-family:"Jost",Arial,sans-serif;}
 .btn:hover{background:#239bb8}
 .btn:disabled{opacity:.6;cursor:not-allowed}
@@ -99,6 +99,14 @@ input:focus-visible{outline:none;border-color:var(--turquoise)}
       <div class="field">
         <label for="signupPassword">Password</label>
         <input type="password" id="signupPassword" required minlength="8" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="signupAccountType">Account type</label>
+        <select id="signupAccountType" required>
+          <option value="" disabled selected>Select account type&hellip;</option>
+          <option value="private">Private / individual</option>
+          <option value="business">Business</option>
+        </select>
       </div>
       <button type="submit" class="btn" id="signupBtn">Create Account</button>
     </form>
@@ -183,10 +191,16 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
   const fullName = document.getElementById('signupName').value;
   const email = document.getElementById('signupEmail').value;
   const password = document.getElementById('signupPassword').value;
+  const accountType = document.getElementById('signupAccountType').value;
+  if (!accountType) {
+    setStatus('error', 'Please select an account type.');
+    btn.disabled = false;
+    return;
+  }
 
   const { data, error } = await sb.auth.signUp({
     email, password,
-    options: { data: { full_name: fullName } }
+    options: { data: { full_name: fullName, account_type: accountType } }
   });
   if (error) {
     setStatus('error', error.message);

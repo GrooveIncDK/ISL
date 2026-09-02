@@ -129,8 +129,6 @@
         <a href="courses.html">Courses</a>
         <a href="index.html#faq">FAQ</a>
         <a href="index.html#contact">Contact</a>
-        <a href="terms.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
       </div>
     </div>
   </div>
@@ -156,9 +154,20 @@ async function loadCourseList() {
   var list = document.getElementById('courseList');
   var navPanel = document.getElementById('navCoursesPanel');
   if (typeof sb === 'undefined' || !sb) { list.innerHTML = '<div class="course-list-status">Courses are temporarily unavailable — please check back shortly.</div>'; return; }
-  var { data, error } = await sb.from('courses').select('id,title,summary,duration,price_dkk,price_confirmed,sort_order')
-    .eq('is_professional', false).eq('active', true).order('sort_order', { ascending: true });
-  if (error || !data || !data.length) {
+  var accountType = await getAccountType();
+  var cols = 'id,title,summary,duration,price_dkk,price_confirmed,sort_order';
+  // Real, published content is matched to the viewer's own account
+  // type. The old placeholder catalog (never retired) keeps showing
+  // under its original is_professional split so nothing disappears
+  // — 'private' viewers still see the course-0..course-6 set,
+  // 'business' viewers see the pro-1..pro-7 set — until a future
+  // decision to retire the placeholders for good.
+  var [{ data: real, error: realErr }, { data: legacy, error: legacyErr }] = await Promise.all([
+    sb.from('courses').select(cols).eq('active', true).eq('catalog_type', accountType).order('sort_order', { ascending: true }),
+    sb.from('courses').select(cols).eq('active', true).eq('catalog_type', 'placeholder').eq('is_professional', accountType === 'business').order('sort_order', { ascending: true }),
+  ]);
+  var data = (realErr || legacyErr) ? null : [].concat(real || [], legacy || []).sort(function (a, b) { return a.sort_order - b.sort_order; });
+  if (!data || !data.length) {
     list.innerHTML = '<div class="course-list-status">Courses are temporarily unavailable — please check back shortly.</div>';
     return;
   }
