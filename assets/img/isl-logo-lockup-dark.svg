@@ -1,0 +1,34 @@
+<svg viewBox="0 0 2154 648" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Institute of Spiritual Learning">
+  <defs>
+    <mask id="islLockupDarkOuterRing">
+      <rect width="903" height="907" fill="black"/>
+      <circle cx="459.4" cy="451.7" r="433.5" fill="white"/>
+      <circle cx="454.0" cy="491.4" r="312.8" fill="black"/>
+      <circle cx="122.3" cy="492.2" r="177.3" fill="black"/>
+    </mask>
+    <mask id="islLockupDarkInnerRing">
+      <rect width="903" height="907" fill="black"/>
+      <circle cx="494.6" cy="475.7" r="215.8" fill="white"/>
+      <circle cx="498.3" cy="463.5" r="164.9" fill="black"/>
+      <circle cx="652.8" cy="482.8" r="110.6" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- Icon: same ring geometry as the light-background mark, recoloured for a dark ground
+       (cyan ring stays constant; the two dots switch from dark navy to white so they
+       still read against the site's dark theme backgrounds). -->
+  <g transform="translate(195,169) scale(0.341)">
+    <rect width="903" height="907" fill="#3ED6ED" mask="url(#islLockupDarkOuterRing)"/>
+    <rect width="903" height="907" fill="#3ED6ED" mask="url(#islLockupDarkInnerRing)"/>
+    <circle cx="122.3" cy="492.2" r="112.1" fill="#FFFFFF"/>
+    <circle cx="652.8" cy="482.8" r="63.8" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="560" y="344" textLength="1029" lengthAdjust="spacingAndGlyphs"
+        font-family="'Jost', Arial, sans-serif" font-weight="500" font-size="172"
+        letter-spacing="6" fill="#F1F1F1">THE INSTITUTE</text>
+  <text x="559" y="471" textLength="1407" lengthAdjust="spacingAndGlyphs"
+        font-family="'Jost', Arial, sans-serif" font-weight="500" font-size="172"
+        letter-spacing="6" fill="#3ED6ED">OF SPIRITUAL LEARNING</text>
+</svg>

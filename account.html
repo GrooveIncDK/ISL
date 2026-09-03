@@ -53,8 +53,20 @@ header.app-nav{border-bottom:1px solid var(--line-dark);background:var(--night);
 .wordmark{display:flex;align-items:center;gap:12px;color:#fff;}
 .wordmark .isl-icon{height:30px;width:auto;}
 .wordmark .isl-icon-ring{color:var(--turquoise);}
-.wordmark .isl-icon-dot{fill:var(--night);}
-.wordmark .tagline{font-family:"Jost",Arial,sans-serif;font-size:0.62rem;font-weight:500;line-height:1.3;letter-spacing:0.03em;text-transform:uppercase;color:var(--soft-on-dark);}
+/* Dots switch from the light-page's dark-navy fill to solid white on this
+   dark ground — same call already made for isl-logo-lockup-dark.svg (the
+   OG-card lockup): a dark-navy dot on a night-coloured background is
+   nearly invisible, white reads clearly against it. */
+.wordmark .isl-icon-dot{fill:#fff;}
+/* This header was missing the "ISL" letters and the two-line descriptor
+   that every other page's nav shows next to the icon (see chrome.py's
+   nav_html) — it had collapsed to icon + one line of small text. Restoring
+   the same three-part wordmark here, recoloured for this page's dark
+   ground with the vars already defined above. */
+.wordmark .isl-letters{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:1.3rem;color:#fff;line-height:1;}
+.wordmark .tagline{font-family:"Jost",Arial,sans-serif;font-size:0.58rem;font-weight:500;line-height:1.4;letter-spacing:0.04em;text-transform:uppercase;}
+.wordmark .tagline .l1{color:var(--soft-on-dark);display:block;}
+.wordmark .tagline .l2{color:var(--turquoise-text);display:block;}
 nav.app-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
 nav.app-links a{font-family:"Jost",Arial,sans-serif;font-size:0.92rem;font-weight:300;color:var(--soft-on-dark);padding:10px 15px;}
 nav.app-links a.active{color:var(--gold);font-weight:500;}
@@ -101,7 +113,8 @@ main{padding:0 0 90px;}
   <div class="wrap nav-row">
     <a class="wordmark" href="index.html">
       <span data-isl-logo data-height="30px"></span>
-      <span class="tagline">The Institute of Spiritual Learning</span>
+      <span class="isl-letters">ISL</span>
+      <span class="tagline"><span class="l1">The Institute</span><span class="l2">of Spiritual Learning</span></span>
     </a>
     <nav class="app-links" id="appLinks">
       <a href="index.html">Home</a>
