@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /account.html
+Disallow: /course-room.html
+Disallow: /tutorial-booking.html
+Disallow: /mark-work.html
+Disallow: /courses/course0.html
+Disallow: /EnquireNow.html
+
+Sitemap: https://islearning.org/sitemap.xml
