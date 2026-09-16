@@ -15,7 +15,6 @@
   /* Omega Document palette — approved Groove Inc, Aug 2026 */
   --turquoise:      #2BACCC; /* Primary — large fills, icon, UI. NOT small text on white (2.67:1) */
   --turquoise-text: #208199; /* AA-safe darkened variant for links/small text on white (4.50:1) */
-  --turquoise-tint: #EAF6F9; /* Pale wash for badges/icon circles/callout backgrounds behind charcoal or turquoise-text */
   --skyblue:        #54ACD9; /* Secondary — decorative fills; AA-safe as small text on charcoal (4.91:1) */
   --charcoal:       #343434; /* Ink — body text (12.45:1 on white) */
   --charcoal-soft:  #6b6b6b; /* body-safe soft ink for long-form secondary copy */
@@ -84,7 +83,7 @@ section.on-paper { background: var(--paper); }
    the menu would appear to detach and vanish as soon as you scrolled. */
 .site-nav-wrap { position: sticky; top: 0; z-index: 50; }
 header.site-nav { background: var(--white); border-bottom: 1px solid var(--line); }
-.nav-row { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; position: relative; }
+.nav-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; position: relative; }
 .wordmark { display: flex; align-items: center; gap: 12px; color: var(--charcoal); }
 .wordmark .isl-icon { height: 38px; width: auto; }
 .wordmark .isl-letters { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 1.5rem; color: var(--charcoal); line-height: 1; }
@@ -155,3 +154,11 @@ footer.site-footer { padding: 44px 0 36px; border-top: 1px solid var(--line); }
 .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
 .footer-links a { color: var(--charcoal-soft); }
 .footer-links a:hover { color: var(--turquoise-text); }
+
+/* Dedicated legal row — company/compliance info, kept visually separate from the nav-style footer-links above */
+.footer-legal { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 20px; font-size: 0.78rem; color: var(--charcoal-soft); }
+.footer-legal .legal-cvr { letter-spacing: 0.01em; }
+.footer-legal .legal-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.footer-legal a { color: var(--charcoal-soft); }
+.footer-legal a:hover { color: var(--turquoise-text); }
+.footer-legal a[aria-current="page"] { color: var(--turquoise-text); }

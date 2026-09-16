@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Courses — ISL, The Institute of Spiritual Learning</title>
 <meta name="description" content="Seven courses, one arc: from the outer world into the inner, and back out again transformed.">
-<link rel="canonical" href="https://islearning.org/courses.html">
 <link rel="icon" href="images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
@@ -14,18 +13,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<meta property="og:site_name" content="ISL — The Institute of Spiritual Learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Courses — ISL, The Institute of Spiritual Learning">
-<meta property="og:description" content="Seven courses, one arc: from the outer world into the inner, and back out again transformed.">
-<meta property="og:url" content="https://islearning.org/courses.html">
-<meta property="og:image" content="https://islearning.org/images/og/isl-share-default.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Courses — ISL, The Institute of Spiritual Learning">
-<meta name="twitter:description" content="Seven courses, one arc: from the outer world into the inner, and back out again transformed.">
-<meta name="twitter:image" content="https://islearning.org/images/og/isl-share-default.png">
 
 <style>
   .page-header { padding: 44px 0 12px; }
@@ -68,7 +55,6 @@
   </div>
 </div>
 
-<div class="site-nav-wrap">
 <header class="site-nav">
   <div class="wrap nav-row">
     <a class="wordmark" href="index.html">
@@ -95,7 +81,6 @@
   </div>
 </header>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation"></nav>
-</div>
 
 <div class="page-header">
   <div class="wrap">
@@ -146,6 +131,13 @@
         <a href="index.html#contact">Contact</a>
       </div>
     </div>
+    <div class="footer-legal">
+      <span class="legal-cvr">ISL &ndash; The Institute of Spiritual Learning &middot; CVR 26347793</span>
+      <div class="legal-links">
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -169,20 +161,9 @@ async function loadCourseList() {
   var list = document.getElementById('courseList');
   var navPanel = document.getElementById('navCoursesPanel');
   if (typeof sb === 'undefined' || !sb) { list.innerHTML = '<div class="course-list-status">Courses are temporarily unavailable — please check back shortly.</div>'; return; }
-  var accountType = await getAccountType();
-  var cols = 'id,title,summary,duration,price_dkk,price_confirmed,sort_order';
-  // Real, published content is matched to the viewer's own account
-  // type. The old course-template catalog (kept deliberately, not
-  // retired) keeps showing under its original is_professional split
-  // so nothing disappears — 'private' viewers still see the
-  // course-0..course-6 set, 'business' viewers see the pro-1..pro-7
-  // set.
-  var [{ data: real, error: realErr }, { data: legacy, error: legacyErr }] = await Promise.all([
-    sb.from('courses').select(cols).eq('active', true).eq('catalog_type', accountType).order('sort_order', { ascending: true }),
-    sb.from('courses').select(cols).eq('active', true).eq('catalog_type', 'template').eq('is_professional', accountType === 'business').order('sort_order', { ascending: true }),
-  ]);
-  var data = (realErr || legacyErr) ? null : [].concat(real || [], legacy || []).sort(function (a, b) { return a.sort_order - b.sort_order; });
-  if (!data || !data.length) {
+  var { data, error } = await sb.from('courses').select('id,title,summary,duration,price_dkk,price_confirmed,sort_order')
+    .eq('is_professional', false).eq('active', true).order('sort_order', { ascending: true });
+  if (error || !data || !data.length) {
     list.innerHTML = '<div class="course-list-status">Courses are temporarily unavailable — please check back shortly.</div>';
     return;
   }
